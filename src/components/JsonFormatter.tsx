@@ -46,21 +46,56 @@ export default function JsonFormatter() {
     router.push(newPath);
   };
 
+  // 防抖函数
+  const debounce = (fn: Function, ms = 300) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return function(this: any, ...args: any[]) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    };
+  };
+
   const handleInputEditorDidMount: OnMount = (editor, monaco) => {
     inputEditorRef.current = editor;
     monacoRef.current = monaco;
+    
+    // 优化编辑器性能
+    editor.updateOptions({
+      renderLineHighlight: 'none', // 禁用行高亮以提高性能
+      renderWhitespace: 'none',    // 禁用空白字符渲染
+      renderControlCharacters: false,
+      guides: { indentation: false }, // 正确的属性名
+      scrollBeyondLastLine: false,
+      // 大文件处理优化
+      largeFileOptimizations: true,
+    });
+    
     // 设置输入编辑器的默认值
     editor.setValue(jsonInput);
+    
+    // 使用防抖处理输入变化，避免频繁更新状态
+    const debouncedInputChange = debounce((value: string) => {
+      setJsonInput(value);
+    }, 300);
+    
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
-      setJsonInput(editor.getValue());
+      debouncedInputChange(editor.getValue());
     });
   };
 
   const handleOutputEditorDidMount: OnMount = (editor, monaco) => {
     outputEditorRef.current = editor;
-    // 设置输出编辑器为只读
-    editor.updateOptions({ readOnly: true });
+    // 优化性能
+    editor.updateOptions({
+      readOnly: true,
+      renderLineHighlight: 'none',
+      renderWhitespace: 'none',
+      renderControlCharacters: false,
+      guides: { indentation: false },
+      scrollBeyondLastLine: false,
+      largeFileOptimizations: true,
+    });
   };
 
   const formatJson = () => {
@@ -544,6 +579,34 @@ export default function JsonFormatter() {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
+  // 处理触摸调整大小（针对移动设备）
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>, isInput: boolean) => {
+    const startY = e.touches[0].clientY;
+    const startHeight = isInput ? 
+      (inputEditorRef.current?.getDomNode()?.offsetHeight || 500) :
+      (outputContainerRef.current?.offsetHeight || 500);
+    
+    const handleTouchMove = (moveEvent: TouchEvent) => {
+      const newHeight = startHeight + moveEvent.touches[0].clientY - startY;
+      if (newHeight > 200) { // 设置最小高度
+        if (isInput) {
+          inputEditorHeight.current = `${newHeight}px`;
+        } else {
+          outputEditorHeight.current = `${newHeight}px`;
+        }
+        setEditorHeight(`${newHeight}px`);
+      }
+    };
+    
+    const handleTouchEnd = () => {
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+    
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+  };
+
   // 保存历史记录
   const saveToHistory = (item: {
     id: string;
@@ -587,6 +650,72 @@ export default function JsonFormatter() {
       console.error(t('jsonErrors.clearHistoryError'), error);
     }
   };
+
+  useEffect(() => {
+    // 检测设备类型并调整界面
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      // 移动设备上默认设置较小的编辑器高度
+      setEditorHeight("400px");
+      inputEditorHeight.current = "400px";
+      outputEditorHeight.current = "400px";
+    }
+  }, []);
+
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleWindowResize = () => {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile && parseInt(editorHeight) > 400) {
+        setEditorHeight("400px");
+        inputEditorHeight.current = "400px";
+        outputEditorHeight.current = "400px";
+      }
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, [editorHeight]);
+
+  useEffect(() => {
+    // 动态更新页面标题以提高SEO
+    document.title = t('title') + ' - ' + t('subtitle');
+    
+    // 添加动态元描述
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t('description'));
+    } else {
+      const newMetaDescription = document.createElement('meta');
+      newMetaDescription.name = 'description';
+      newMetaDescription.content = t('description');
+      document.head.appendChild(newMetaDescription);
+    }
+  }, [t]);
+
+  // 添加键盘快捷键支持
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl/Cmd + Shift + F 格式化JSON
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
+        e.preventDefault();
+        formatJson();
+      }
+      // Ctrl/Cmd + Shift + C 压缩/解压JSON
+      else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        compressJson();
+      }
+      // Ctrl/Cmd + Shift + L 切换行号
+      else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'L') {
+        e.preventDefault();
+        toggleLineNumbers();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
@@ -730,8 +859,10 @@ export default function JsonFormatter() {
                   <button
                     onClick={formatJson}
                     className="inline-flex items-center px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 whitespace-nowrap"
+                    aria-label={t('formatBtn')}
+                    title={`${t('formatBtn')} (Ctrl+Shift+F)`}
                   >
-                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17l6-6" />
                     </svg>
@@ -795,6 +926,7 @@ export default function JsonFormatter() {
               <div 
                 className="h-1 bg-gray-200 dark:bg-gray-700 cursor-ns-resize hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                 onMouseDown={(e) => handleResize(e, true)}
+                onTouchStart={(e) => handleTouchStart(e, true)}
               />
             </div>
           </div>
@@ -814,8 +946,10 @@ export default function JsonFormatter() {
                   <button
                     onClick={compressJson}
                     className="inline-flex items-center px-2 py-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 whitespace-nowrap"
+                    aria-label={isCompressed ? t('formatBtn') : t('compressBtn')}
+                    title={`${isCompressed ? t('formatBtn') : t('compressBtn')} (Ctrl+Shift+C)`}
                   >
-                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                     </svg>
                     <span className="truncate max-w-[60px] sm:max-w-none">{isCompressed ? t('formatBtn') : t('compressBtn')}</span>
@@ -823,8 +957,10 @@ export default function JsonFormatter() {
                   <button
                     onClick={toggleLineNumbers}
                     className="inline-flex items-center px-2 py-1 text-xs bg-teal-600 hover:bg-teal-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 whitespace-nowrap"
+                    aria-label={showLineNumbers ? t('lineNumbers.hide') : t('lineNumbers.show')}
+                    title={`${showLineNumbers ? t('lineNumbers.hide') : t('lineNumbers.show')} (Ctrl+Shift+L)`}
                   >
-                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                     <span className="truncate max-w-[60px] sm:max-w-none">{showLineNumbers ? t('lineNumbers.hide') : t('lineNumbers.show')}</span>
@@ -895,6 +1031,7 @@ export default function JsonFormatter() {
                 <div 
                   className="h-1 bg-gray-200 dark:bg-gray-700 cursor-ns-resize hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                   onMouseDown={(e) => handleResize(e, false)}
+                  onTouchStart={(e) => handleTouchStart(e, false)}
                 />
               )}
             </div>
