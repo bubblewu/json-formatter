@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "JSON Formatter & Validator",
+    "description": "A powerful tool for formatting, validating and analyzing JSON data"
+  },
+  "nav": {
+    "home": "Home",
+    "tools": "Tools",
+    "settings": "Settings",
+    "about": "About"
+  },
+  "editor": {
+    "input": "Input JSON",
+    "output": "Output",
+    "format": "Format",
+    "minify": "Minify",
+    "validate": "Validate",
+    "clear": "Clear",
+    "copy": "Copy",
+    "download": "Download",
+    "upload": "Upload",
+    "placeholder": "Paste your JSON here or upload a file...",
+    "valid": "JSON is valid",
+    "invalid": "Invalid JSON",
+    "error": "Error: {message}",
+    "example": "Load Example",
+    "errorTitle": "Error",
+    "copied": "Copied!"
+  },
+  "tools": {
+    "converter": "Converter",
+    "analyzer": "Analyzer",
+    "diff": "JSON Diff",
+    "path": "JSON Path",
+    "schema": "Schema Generator"
+  },
+  "settings": {
+    "theme": "Theme",
+    "language": "Language",
+    "indent": "Indent Size",
+    "fontsize": "Font Size",
+    "wordwrap": "Word Wrap",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
+  },
+  "collaboration": {
+    "share": "Share",
+    "collaborate": "Collaborate",
+    "newSession": "New Session",
+    "joinSession": "Join Session",
+    "copied": "Link copied to clipboard"
+  }
+} 

@@ -1,26 +1,382 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 17, 24, 39;
+  --background-rgb: 249, 250, 251;
+  --font-inter: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --primary-color: 37, 99, 235;
+  --secondary-color: 55, 65, 81;
+  --accent-color: 124, 58, 237;
+  --success-color: 16, 185, 129;
+  --error-color: 239, 68, 68;
+  --warning-color: 245, 158, 11;
+  --border-radius: 0.5rem;
+  --transition-speed: 0.2s;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --foreground-rgb: 243, 244, 246;
+  --background-rgb: 17, 24, 39;
+  --primary-color: 59, 130, 246;
+  --secondary-color: 156, 163, 175;
+  --accent-color: 139, 92, 246;
+  --success-color: 34, 197, 94;
+  --error-color: 248, 113, 113;
+  --warning-color: 251, 191, 36;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+  font-family: var(--font-inter);
+  transition: background-color var(--transition-speed) ease-in-out, 
+              color var(--transition-speed) ease-in-out;
+}
+
+/* 布局相关 */
+.max-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .max-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .max-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.editor-container {
+  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--transition-speed) ease-in-out;
+}
+
+.dark .editor-container {
+  background-color: rgb(31, 41, 55);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25), 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.editor-container:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dark .editor-container:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+}
+
+/* 按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  --tw-ring-offset-width: 2px;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-primary:focus {
+  --tw-ring-color: #3b82f6;
+}
+
+.btn-secondary {
+  background-color: #4b5563;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #374151;
+}
+
+.btn-secondary:focus {
+  --tw-ring-color: #6b7280;
+}
+
+.btn-success {
+  background-color: #16a34a;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #15803d;
+}
+
+.btn-success:focus {
+  --tw-ring-color: #22c55e;
+}
+
+.btn-outline {
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.dark .btn-outline {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
+}
+
+.dark .btn-outline:hover {
+  background-color: #1f2937;
+}
+
+/* 编辑器样式 */
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  background-color: rgb(243, 244, 246);
+}
+
+.dark .editor-header {
+  background-color: rgb(31, 41, 55);
+  border-color: #374151;
+}
+
+.editor-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.dark .editor-title {
+  color: #d1d5db;
+}
+
+.editor-content {
+  min-height: 400px;
+  padding: 0;
+}
+
+/* CodeMirror 自定义样式 */
+.cm-editor {
+  height: 100%;
+  min-height: 400px;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.cm-editor.cm-focused {
+  outline: none !important;
+}
+
+.dark .cm-editor {
+  background-color: rgb(31, 41, 55);
+  color: rgb(226, 232, 240);
+}
+
+.dark .cm-gutters {
+  background-color: rgb(31, 41, 55);
+  color: rgb(148, 163, 184);
+  border-right: 1px solid rgb(51, 65, 85);
+}
+
+/* 状态指示器 */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.status-indicator.valid {
+  color: #16a34a;
+}
+
+.dark .status-indicator.valid {
+  color: #22c55e;
+}
+
+.status-indicator.invalid {
+  color: #dc2626;
+}
+
+.dark .status-indicator.invalid {
+  color: #ef4444;
+}
+
+.status-indicator .icon {
+  margin-right: 0.375rem;
+}
+
+/* 面板样式 */
+.sidebar-panel {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: transform var(--transition-speed) ease-in-out, 
+              box-shadow var(--transition-speed) ease-in-out;
+}
+
+.dark .sidebar-panel {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.sidebar-panel:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.dark .sidebar-panel:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+}
+
+.panel-header {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .panel-header {
+  background-color: #111827;
+  border-color: #374151;
+}
+
+.panel-content {
+  padding: 1rem;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.5);
+}
+
+/* 抑制水合错误 */
+.hydration-fix * {
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 响应式布局增强 */
+@media (max-width: 768px) {
+  .editor-content {
+    min-height: 300px;
+  }
+  
+  .cm-editor {
+    min-height: 300px;
+  }
+}
+
+/* 工具栏样式 */
+.toolbar {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .toolbar {
+  background-color: #1f2937;
+}
+
+/* 悬浮提示 */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 10;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: white;
+  background-color: #111827;
+  border-radius: 0.375rem;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition-property: opacity;
+  bottom: 125%;
+  left: 50%;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }

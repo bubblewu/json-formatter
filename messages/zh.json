@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "JSON 格式化与验证工具",
+    "description": "一个强大的工具，用于格式化、验证和分析 JSON 数据"
+  },
+  "nav": {
+    "home": "首页",
+    "tools": "工具",
+    "settings": "设置",
+    "about": "关于"
+  },
+  "editor": {
+    "input": "输入 JSON",
+    "output": "输出",
+    "format": "格式化",
+    "minify": "压缩",
+    "validate": "验证",
+    "clear": "清除",
+    "copy": "复制",
+    "download": "下载",
+    "upload": "上传",
+    "placeholder": "在此粘贴您的 JSON 或上传文件...",
+    "valid": "JSON 格式有效",
+    "invalid": "JSON 格式无效",
+    "error": "错误: {message}",
+    "example": "加载示例",
+    "errorTitle": "错误",
+    "copied": "已复制!"
+  },
+  "tools": {
+    "converter": "转换器",
+    "analyzer": "分析器",
+    "diff": "JSON 对比",
+    "path": "JSON 路径查询",
+    "schema": "模式生成器"
+  },
+  "settings": {
+    "theme": "主题",
+    "language": "语言",
+    "indent": "缩进大小",
+    "fontsize": "字体大小",
+    "wordwrap": "自动换行",
+    "dark": "深色",
+    "light": "浅色",
+    "system": "系统"
+  },
+  "collaboration": {
+    "share": "分享",
+    "collaborate": "协作",
+    "newSession": "新建会话",
+    "joinSession": "加入会话",
+    "copied": "链接已复制到剪贴板"
+  }
+} 
