@@ -1,54 +1,40 @@
 {
   "app": {
-    "title": "JSON Formatter & Validator",
-    "description": "A powerful tool for formatting, validating and analyzing JSON data"
+    "title": "JSON Formatter",
+    "tagline": "A powerful tool for formatting and validating JSON"
   },
   "nav": {
     "home": "Home",
+    "about": "About",
     "tools": "Tools",
-    "settings": "Settings",
-    "about": "About"
+    "language": "Language"
   },
-  "editor": {
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "formatter": {
     "input": "Input JSON",
-    "output": "Output",
+    "output": "Output JSON",
+    "placeholder": "Paste your JSON here...",
     "format": "Format",
     "minify": "Minify",
-    "validate": "Validate",
     "clear": "Clear",
     "copy": "Copy",
     "download": "Download",
-    "upload": "Upload",
-    "placeholder": "Paste your JSON here or upload a file...",
-    "valid": "JSON is valid",
+    "copied": "Copied!",
+    "valid": "Valid JSON",
     "invalid": "Invalid JSON",
-    "error": "Error: {message}",
-    "example": "Load Example",
-    "errorTitle": "Error",
-    "copied": "Copied!"
+    "error": "Error",
+    "loading": "Loading...",
+    "example": "Example"
   },
-  "tools": {
-    "converter": "Converter",
-    "analyzer": "Analyzer",
-    "diff": "JSON Diff",
-    "path": "JSON Path",
-    "schema": "Schema Generator"
-  },
-  "settings": {
-    "theme": "Theme",
-    "language": "Language",
-    "indent": "Indent Size",
-    "fontsize": "Font Size",
-    "wordwrap": "Word Wrap",
-    "dark": "Dark",
-    "light": "Light",
-    "system": "System"
-  },
-  "collaboration": {
-    "share": "Share",
-    "collaborate": "Collaborate",
-    "newSession": "New Session",
-    "joinSession": "Join Session",
-    "copied": "Link copied to clipboard"
+  "footer": {
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us",
+    "github": "GitHub"
   }
 } 

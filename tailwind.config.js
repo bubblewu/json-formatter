@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  darkMode: 'class',
+module.exports = {
+  darkMode: ["class"],
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   theme: {
     screens: {
@@ -16,7 +17,7 @@ export default {
     },
     extend: {
       colors: {
-        primary: {
+        blue: {
           50: '#eff6ff',
           100: '#dbeafe',
           200: '#bfdbfe',
@@ -28,6 +29,34 @@ export default {
           800: '#1e40af',
           900: '#1e3a8a',
           950: '#172554',
+        },
+        'apple-blue': {
+          light: 'rgb(0, 122, 255)',
+          dark: 'rgb(10, 132, 255)',
+        },
+        'apple-purple': {
+          light: 'rgb(88, 86, 214)',
+          dark: 'rgb(94, 92, 230)',
+        },
+        'apple-green': {
+          light: 'rgb(52, 199, 89)',
+          dark: 'rgb(48, 209, 88)',
+        },
+        'apple-red': {
+          light: 'rgb(255, 59, 48)',
+          dark: 'rgb(255, 69, 58)',
+        },
+        'apple-yellow': {
+          light: 'rgb(255, 204, 0)',
+          dark: 'rgb(255, 214, 10)',
+        },
+        'apple-teal': {
+          light: 'rgb(90, 200, 250)',
+          dark: 'rgb(100, 210, 255)',
+        },
+        'apple-gray': {
+          light: 'rgb(142, 142, 147)',
+          dark: 'rgb(152, 152, 157)',
         },
       },
       fontFamily: {

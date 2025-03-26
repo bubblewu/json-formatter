@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# 确保在项目目录中运行
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-cd "$SCRIPT_DIR"
-
-echo "正在清理Next.js缓存..."
-# 删除.next目录
+# 清除缓存和依赖
+echo "正在清除Next.js缓存..."
 rm -rf .next
-# 删除node_modules/.cache目录
-rm -rf node_modules/.cache
+echo "正在删除node_modules..."
+rm -rf node_modules
+echo "正在删除package-lock.json..."
+rm -f package-lock.json
 
-echo "正在启动Next.js应用开发服务器..."
-# 使用--turbopack=false参数，避免相关问题
-npm run dev -- --turbopack=false 
+# 重新安装依赖并启动开发服务器
+echo "正在安装依赖..."
+npm install
+echo "安装完成。启动开发服务器..."
+npm run dev 
