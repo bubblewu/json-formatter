@@ -7,8 +7,11 @@
   "copyBtn": "Copy",
   "downloadBtn": "Download",
   "uploadBtn": "Upload",
+  "compressBtn": "Compress",
   "placeholder": "Paste your JSON here...",
   "language": "Language",
+  "inputLabel": "Input JSON",
+  "outputLabel": "Result",
   "theme": {
     "light": "Light",
     "dark": "Dark"
@@ -23,6 +26,7 @@
   },
   "success": {
     "copied": "Copied to clipboard",
-    "formatted": "JSON formatted successfully"
+    "formatted": "JSON formatted successfully",
+    "compressed": "JSON compressed successfully"
   }
 } 

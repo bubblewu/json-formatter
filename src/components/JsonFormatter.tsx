@@ -68,6 +68,31 @@ export default function JsonFormatter() {
     }
   };
 
+  const compressJson = () => {
+    const inputValue = inputEditorRef.current ? inputEditorRef.current.getValue() : jsonInput;
+    
+    if (!inputValue.trim()) {
+      setError(t('errors.empty'));
+      setJsonOutput('');
+      return;
+    }
+
+    try {
+      const parsedJson = JSON.parse(inputValue);
+      const compressedJson = JSON.stringify(parsedJson);
+      setJsonOutput(compressedJson);
+      setError(null);
+      setSuccess(t('success.compressed'));
+      
+      setTimeout(() => {
+        setSuccess(null);
+      }, 3000);
+    } catch {
+      setError(t('errors.invalid'));
+      setJsonOutput('');
+    }
+  };
+
   const clearJson = () => {
     if (inputEditorRef.current) {
       inputEditorRef.current.setValue('');
@@ -180,56 +205,6 @@ export default function JsonFormatter() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div className="h-[400px] border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
-          <Editor
-            height="400px"
-            defaultLanguage="json"
-            defaultValue={jsonInput}
-            theme={theme === 'dark' ? 'vs-dark' : 'vs'}
-            onMount={handleInputEditorDidMount}
-            options={{
-              minimap: { enabled: false },
-              lineNumbers: showLineNumbers ? 'on' : 'off',
-              scrollBeyondLastLine: false,
-              fontSize: 14,
-              automaticLayout: true,
-              folding: true,
-              foldingHighlight: true,
-              foldingStrategy: 'auto',
-              showFoldingControls: 'always',
-              tabSize: 2,
-            }}
-          />
-        </div>
-        <div className="h-[400px] border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
-          <Editor
-            height="400px"
-            language="json"
-            value={jsonOutput}
-            theme={theme === 'dark' ? 'vs-dark' : 'vs'}
-            onMount={handleOutputEditorDidMount}
-            options={{
-              readOnly: true,
-              minimap: { enabled: false },
-              lineNumbers: showLineNumbers ? 'on' : 'off',
-              scrollBeyondLastLine: false,
-              fontSize: 14,
-              automaticLayout: true,
-              folding: true,
-              foldingHighlight: true,
-              foldingStrategy: 'auto',
-              showFoldingControls: 'always',
-              tabSize: 2,
-              bracketPairColorization: {
-                enabled: true,
-                independentColorPoolPerBracketType: true,
-              },
-            }}
-          />
-        </div>
-      </div>
-
       {error && (
         <div className="p-3 mb-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md">
           {error}
@@ -242,42 +217,119 @@ export default function JsonFormatter() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2">
-        <button
-          onClick={formatJson}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-        >
-          {t('formatBtn')}
-        </button>
-        <button
-          onClick={clearJson}
-          className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors"
-        >
-          {t('clearBtn')}
-        </button>
-        <button
-          onClick={copyToClipboard}
-          disabled={!jsonOutput}
-          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors disabled:bg-green-400 disabled:cursor-not-allowed"
-        >
-          {t('copyBtn')}
-        </button>
-        <button
-          onClick={downloadJson}
-          disabled={!jsonOutput}
-          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors disabled:bg-purple-400 disabled:cursor-not-allowed"
-        >
-          {t('downloadBtn')}
-        </button>
-        <label className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md transition-colors cursor-pointer">
-          {t('uploadBtn')}
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
-        </label>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div className="flex flex-col">
+          <div className="flex justify-end gap-2 mb-2">
+            <button
+              onClick={formatJson}
+              className="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+            >
+              {t('formatBtn')}
+            </button>
+            <button
+              onClick={compressJson}
+              className="px-3 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors"
+            >
+              {t('compressBtn')}
+            </button>
+            <button
+              onClick={clearJson}
+              className="px-3 py-1.5 text-sm bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors"
+            >
+              {t('clearBtn')}
+            </button>
+            <label className="px-3 py-1.5 text-sm bg-yellow-600 hover:bg-yellow-700 text-white rounded-md transition-colors cursor-pointer">
+              {t('uploadBtn')}
+              <input
+                type="file"
+                accept=".json"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+            </label>
+          </div>
+          <div className="relative h-[400px] border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 z-10 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800 flex items-center">
+              <div className="w-1 h-4 bg-blue-600 rounded-r mr-2"></div>
+              <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                {t('inputLabel')}
+              </h3>
+            </div>
+            <div className="h-full pt-10">
+              <Editor
+                height="100%"
+                defaultLanguage="json"
+                defaultValue={jsonInput}
+                theme={theme === 'dark' ? 'vs-dark' : 'vs'}
+                onMount={handleInputEditorDidMount}
+                options={{
+                  minimap: { enabled: false },
+                  lineNumbers: showLineNumbers ? 'on' : 'off',
+                  scrollBeyondLastLine: false,
+                  fontSize: 14,
+                  automaticLayout: true,
+                  folding: true,
+                  foldingHighlight: true,
+                  foldingStrategy: 'auto',
+                  showFoldingControls: 'always',
+                  tabSize: 2,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="flex justify-end gap-2 mb-2">
+            <button
+              onClick={copyToClipboard}
+              disabled={!jsonOutput}
+              className="px-3 py-1.5 text-sm bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors disabled:bg-green-400 disabled:cursor-not-allowed"
+            >
+              {t('copyBtn')}
+            </button>
+            <button
+              onClick={downloadJson}
+              disabled={!jsonOutput}
+              className="px-3 py-1.5 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors disabled:bg-purple-400 disabled:cursor-not-allowed"
+            >
+              {t('downloadBtn')}
+            </button>
+          </div>
+          <div className="relative h-[400px] border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 z-10 px-3 py-2 bg-green-50 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800 flex items-center">
+              <div className="w-1 h-4 bg-green-600 rounded-r mr-2"></div>
+              <h3 className="text-sm font-medium text-green-800 dark:text-green-200">
+                {t('outputLabel')}
+              </h3>
+            </div>
+            <div className="h-full pt-10">
+              <Editor
+                height="100%"
+                language="json"
+                value={jsonOutput}
+                theme={theme === 'dark' ? 'vs-dark' : 'vs'}
+                onMount={handleOutputEditorDidMount}
+                options={{
+                  readOnly: true,
+                  minimap: { enabled: false },
+                  lineNumbers: showLineNumbers ? 'on' : 'off',
+                  scrollBeyondLastLine: false,
+                  fontSize: 14,
+                  automaticLayout: true,
+                  folding: true,
+                  foldingHighlight: true,
+                  foldingStrategy: 'auto',
+                  showFoldingControls: 'always',
+                  tabSize: 2,
+                  bracketPairColorization: {
+                    enabled: true,
+                    independentColorPoolPerBracketType: true,
+                  },
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

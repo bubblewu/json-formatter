@@ -7,8 +7,11 @@
   "copyBtn": "复制",
   "downloadBtn": "下载",
   "uploadBtn": "上传",
+  "compressBtn": "压缩",
   "placeholder": "在此粘贴您的JSON...",
   "language": "语言",
+  "inputLabel": "输入JSON",
+  "outputLabel": "输出结果",
   "theme": {
     "light": "浅色",
     "dark": "深色"
@@ -23,6 +26,7 @@
   },
   "success": {
     "copied": "已复制到剪贴板",
-    "formatted": "JSON格式化成功"
+    "formatted": "JSON格式化成功",
+    "compressed": "JSON压缩成功"
   }
 } 
