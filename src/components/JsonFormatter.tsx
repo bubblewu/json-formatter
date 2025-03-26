@@ -73,10 +73,153 @@ export default function JsonFormatter() {
     // 设置输入编辑器的默认值
     editor.setValue(jsonInput);
     
+    // 监听选中文本变化
+    editor.onDidChangeCursorSelection((e) => {
+      if (outputEditorRef.current) {
+        const outputEditor = outputEditorRef.current;
+        const inputModel = editor.getModel();
+        const outputModel = outputEditor.getModel();
+        
+        if (inputModel && outputModel) {
+          const inputText = inputModel.getValue();
+          const outputText = outputModel.getValue();
+          
+          // 获取选中的文本
+          const selection = editor.getSelection();
+          if (selection) {
+            const selectedText = inputModel.getValueInRange(selection);
+            
+            // 在输出文本中查找对应的位置
+            const outputIndex = outputText.indexOf(selectedText);
+            if (outputIndex !== -1) {
+              // 计算输出文本中的行和列
+              const outputLines = outputText.substring(0, outputIndex).split('\n');
+              const lineNumber = outputLines.length;
+              const column = outputLines[outputLines.length - 1].length + 1;
+              
+              // 创建选中范围
+              const outputSelection = new monaco.Selection(
+                lineNumber,
+                column,
+                lineNumber,
+                column + selectedText.length
+              );
+              
+              // 设置输出编辑器的选中范围
+              outputEditor.setSelection(outputSelection);
+              
+              // 确保选中区域在视图中可见
+              outputEditor.revealPositionInCenter({
+                lineNumber,
+                column
+              });
+            }
+          }
+        }
+      }
+    });
+    
     // 使用防抖处理输入变化，避免频繁更新状态
     const debouncedInputChange = debounce((value: string) => {
       setJsonInput(value);
-    }, 300);
+      // 自动触发格式化
+      if (value.trim()) {
+        try {
+          const parsedJson = JSON.parse(value);
+          const formattedJson = JSON.stringify(parsedJson, null, 2);
+          setJsonOutput(formattedJson);
+          setError(null);
+          
+          // 清除编辑器中的错误标记
+          if (monacoRef.current) {
+            try {
+              const model = editor.getModel();
+              if (model) {
+                monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+              }
+            } catch (err) {
+              console.error(t('jsonErrors.clearMarkError'), err);
+            }
+          }
+        } catch (e: any) {
+          // 获取错误信息和位置
+          const errorMessage = e.message || t('errors.invalid');
+          setJsonOutput('');
+          
+          // 尝试从错误消息中提取位置信息
+          const positionMatch = errorMessage.match(/at position (\d+)/);
+          const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
+          
+          let errorPosition = 0;
+          if (positionMatch && positionMatch[1]) {
+            errorPosition = parseInt(positionMatch[1], 10);
+          }
+          
+          // 设置精确的错误消息
+          const formattedError = errorMessage
+            .replace('JSON.parse:', '')
+            .replace('Unexpected token', t('jsonErrors.unexpectedToken'))
+            .replace('Expected', t('jsonErrors.expected'))
+            .replace('in JSON at position', t('jsonErrors.inPosition'));
+          
+          // 提供修复建议
+          const fixSuggestion = getFixSuggestion(errorMessage, value, errorPosition);
+          const errorWithSuggestion = typeof fixSuggestion === 'string' 
+            ? `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion}`
+            : `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion.fixDescription}`;
+          
+          setError(errorWithSuggestion);
+          
+          // 如果编辑器已初始化，添加错误标记
+          if (monacoRef.current) {
+            try {
+              const model = editor.getModel();
+              
+              if (model) {
+                // 计算出错位置的行和列
+                let lineNumber = 1;
+                let column = 1;
+                
+                if (lineColumnMatch) {
+                  lineNumber = parseInt(lineColumnMatch[1], 10);
+                  column = parseInt(lineColumnMatch[2], 10);
+                } else if (errorPosition > 0) {
+                  // 手动计算行号和列号
+                  const textUntilPosition = value.substring(0, errorPosition);
+                  const lines = textUntilPosition.split('\n');
+                  lineNumber = lines.length;
+                  column = lines[lines.length - 1].length + 1;
+                }
+                
+                // 创建错误标记
+                const marker = {
+                  severity: monacoRef.current.MarkerSeverity.Error,
+                  startLineNumber: lineNumber,
+                  startColumn: column,
+                  endLineNumber: lineNumber,
+                  endColumn: column + 1,
+                  message: errorWithSuggestion
+                };
+                
+                // 设置标记到编辑器
+                monacoRef.current.editor.setModelMarkers(model, 'owner', [marker]);
+                
+                // 将视图滚动到错误位置
+                editor.revealPositionInCenter({ lineNumber, column });
+                
+                // 光标定位到错误位置
+                editor.setPosition({ lineNumber, column });
+              }
+            } catch (err) {
+              console.error(t('jsonErrors.clearMarkError'), err);
+            }
+          }
+        }
+      } else {
+        setJsonOutput('');
+        setError(null);
+      }
+    }, 500); // 增加防抖时间到500ms，避免频繁触发
     
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
@@ -1132,6 +1275,22 @@ export default function JsonFormatter() {
                   defaultValue={jsonInput}
                   theme={theme === 'dark' ? 'vs-dark' : 'vs'}
                   onMount={handleInputEditorDidMount}
+                  onChange={(value) => {
+                    if (value) {
+                      try {
+                        const parsedJson = JSON.parse(value);
+                        const formattedJson = JSON.stringify(parsedJson, null, 2);
+                        setJsonOutput(formattedJson);
+                        setError(null);
+                      } catch (e: any) {
+                        setJsonOutput('');
+                        setError(e.message);
+                      }
+                    } else {
+                      setJsonOutput('');
+                      setError(null);
+                    }
+                  }}
                   options={{
                     minimap: { enabled: false },
                     lineNumbers: showLineNumbers ? 'on' : 'off',
