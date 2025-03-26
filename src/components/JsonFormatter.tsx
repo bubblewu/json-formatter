@@ -19,6 +19,9 @@ export default function JsonFormatter() {
   const [showLineNumbers, setShowLineNumbers] = useState(true);
   const outputEditorRef = useRef<any>(null);
   const inputEditorRef = useRef<any>(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const outputContainerRef = useRef<HTMLDivElement>(null);
+  const [editorHeight, setEditorHeight] = useState("500px");
 
   const handleLanguageChange = (locale: string) => {
     const currentLocale = pathname.split('/')[1];
@@ -148,10 +151,57 @@ export default function JsonFormatter() {
     setShowLineNumbers(!showLineNumbers);
   };
 
+  const toggleFullScreen = () => {
+    if (!outputContainerRef.current) return;
+    
+    if (!document.fullscreenElement) {
+      outputContainerRef.current.requestFullscreen().catch(err => {
+        console.error(`全屏模式出错: ${err.message}`);
+      });
+      setIsFullScreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  };
+  
+  // 监听全屏状态变化
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+    
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+  
+  // 监听调整大小
+  const handleResize = (e: React.MouseEvent<HTMLDivElement>) => {
+    const startY = e.clientY;
+    const startHeight = outputContainerRef.current?.offsetHeight || 500;
+    
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const newHeight = startHeight + moveEvent.clientY - startY;
+      if (newHeight > 200) { // 设置最小高度
+        setEditorHeight(`${newHeight}px`);
+      }
+    };
+    
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm mt-0 pt-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
@@ -245,49 +295,49 @@ export default function JsonFormatter() {
           </div>
         )}
 
-        {/* 功能按钮区域 */}
-        <div className="flex flex-wrap items-center justify-center mb-6 gap-3">
-          <button
-            onClick={formatJson}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17l6-6" />
-            </svg>
-            {t('formatBtn')}
-          </button>
-          <button
-            onClick={clearJson}
-            className="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            {t('clearBtn')}
-          </button>
-          <label className="inline-flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 cursor-pointer">
-            <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            {t('uploadBtn')}
-            <input
-              type="file"
-              accept=".json"
-              onChange={handleFileUpload}
-              className="hidden"
-            />
-          </label>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="flex flex-col">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
-              <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800 flex items-center">
-                <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
-                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                  {t('inputLabel')}
-                </h3>
+              <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800 flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
+                  <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                    {t('inputLabel')}
+                  </h3>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={formatJson}
+                    className="inline-flex items-center px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  >
+                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17l6-6" />
+                    </svg>
+                    {t('formatBtn')}
+                  </button>
+                  <button
+                    onClick={clearJson}
+                    className="inline-flex items-center px-3 py-1 text-xs bg-gray-600 hover:bg-gray-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                  >
+                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    {t('clearBtn')}
+                  </button>
+                  <label className="inline-flex items-center px-3 py-1 text-xs bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 cursor-pointer">
+                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    {t('uploadBtn')}
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
               </div>
               <div className="h-[500px]">
                 <Editor
@@ -314,7 +364,10 @@ export default function JsonFormatter() {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div 
+              ref={outputContainerRef}
+              className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 ${isFullScreen ? 'fixed inset-0 z-50' : 'relative'}`}
+            >
               <div className="px-4 py-3 bg-green-50 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800 flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-1 h-5 bg-green-600 rounded-r mr-3"></div>
@@ -361,9 +414,22 @@ export default function JsonFormatter() {
                     </svg>
                     {t('downloadBtn')}
                   </button>
+                  <button
+                    onClick={toggleFullScreen}
+                    className="inline-flex items-center px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  >
+                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      {isFullScreen ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4H4v5m10-5h5v5M4 14h5v5H4m10 0h5v-5" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                      )}
+                    </svg>
+                    {isFullScreen ? '退出全屏' : '全屏'}
+                  </button>
                 </div>
               </div>
-              <div className="h-[500px]">
+              <div style={{ height: isFullScreen ? 'calc(100% - 55px)' : editorHeight }}>
                 <Editor
                   height="100%"
                   language="json"
@@ -390,6 +456,12 @@ export default function JsonFormatter() {
                   }}
                 />
               </div>
+              {!isFullScreen && (
+                <div 
+                  className="h-1 bg-gray-200 dark:bg-gray-700 cursor-ns-resize hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                  onMouseDown={handleResize}
+                />
+              )}
             </div>
           </div>
         </div>
