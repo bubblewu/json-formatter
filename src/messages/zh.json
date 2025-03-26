@@ -38,5 +38,32 @@
   "exitFullscreenBtn": "退出全屏",
   "footer": {
     "copyright": "© 2025 JSON格式化工具 | 您的效率好帮手"
+  },
+  "historyBtn": "历史记录",
+  "backToFormatter": "返回格式化器",
+  "history": {
+    "title": "历史记录",
+    "searchPlaceholder": "搜索历史记录...",
+    "empty": "暂无历史记录",
+    "noResults": "没有找到匹配的记录",
+    "input": "输入",
+    "output": "输出",
+    "copy": "复制",
+    "operations": {
+      "format": "格式化",
+      "compress": "压缩",
+      "unescape": "去除转义"
+    },
+    "time": {
+      "today": "今天 {time}",
+      "yesterday": "昨天 {time}",
+      "daysAgo": "{days}天前 {time}"
+    },
+    "timeFilter": {
+      "all": "全部",
+      "today": "今天",
+      "week": "最近一周",
+      "month": "最近一月"
+    }
   }
 } 

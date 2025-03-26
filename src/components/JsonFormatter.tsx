@@ -57,6 +57,10 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
       setJsonOutput('');
       return;
     }
@@ -67,6 +71,16 @@ export default function JsonFormatter() {
       setJsonOutput(formattedJson);
       setError(null);
       setSuccess(t('success.formatted'));
+      
+      // 保存到历史记录
+      const historyItem = {
+        id: Date.now().toString(),
+        timestamp: Date.now(),
+        input: inputValue,
+        output: formattedJson,
+        operation: 'format' as const
+      };
+      saveToHistory(historyItem);
       
       // 清除编辑器中的错误标记
       if (inputEditorRef.current && monacoRef.current) {
@@ -81,9 +95,10 @@ export default function JsonFormatter() {
         }
       }
       
+      // 2秒后自动清除成功提示
       setTimeout(() => {
         setSuccess(null);
-      }, 3000);
+      }, 2000);
     } catch (e: any) {
       // 获取错误信息和位置
       const errorMessage = e.message || t('errors.invalid');
@@ -152,6 +167,11 @@ export default function JsonFormatter() {
           console.error('设置错误标记时出错:', err);
         }
       }
+      
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
     }
   };
 
@@ -160,6 +180,10 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
       setJsonOutput('');
       return;
     }
@@ -173,12 +197,32 @@ export default function JsonFormatter() {
         setJsonOutput(formattedJson);
         setError(null);
         setSuccess(t('success.formatted'));
+        
+        // 保存到历史记录
+        const historyItem = {
+          id: Date.now().toString(),
+          timestamp: Date.now(),
+          input: inputValue,
+          output: formattedJson,
+          operation: 'format' as const
+        };
+        saveToHistory(historyItem);
       } else {
         // 如果当前是格式化状态，则进行压缩
         const compressedJson = JSON.stringify(parsedJson);
         setJsonOutput(compressedJson);
         setError(null);
         setSuccess(t('success.compressed'));
+        
+        // 保存到历史记录
+        const historyItem = {
+          id: Date.now().toString(),
+          timestamp: Date.now(),
+          input: inputValue,
+          output: compressedJson,
+          operation: 'compress' as const
+        };
+        saveToHistory(historyItem);
       }
       
       setIsCompressed(!isCompressed);
@@ -196,9 +240,10 @@ export default function JsonFormatter() {
         }
       }
       
+      // 2秒后自动清除成功提示
       setTimeout(() => {
         setSuccess(null);
-      }, 3000);
+      }, 2000);
     } catch (e: any) {
       // 获取错误信息和位置
       const errorMessage = e.message || t('errors.invalid');
@@ -267,6 +312,11 @@ export default function JsonFormatter() {
           console.error('设置错误标记时出错:', err);
         }
       }
+      
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
     }
   };
 
@@ -285,6 +335,10 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
       return;
     }
 
@@ -312,7 +366,7 @@ export default function JsonFormatter() {
             setSuccess(t('success.noEscapeNeeded') || '字符串不需要转义');
             setTimeout(() => {
               setSuccess(null);
-            }, 3000);
+            }, 2000);
             return;
           }
           
@@ -325,6 +379,16 @@ export default function JsonFormatter() {
             setJsonInput(formattedJson);
             setError(null);
             setSuccess(t('success.unescaped') || '成功去除转义字符');
+            
+            // 保存到历史记录
+            const historyItem = {
+              id: Date.now().toString(),
+              timestamp: Date.now(),
+              input: inputValue,
+              output: formattedJson,
+              operation: 'unescape' as const
+            };
+            saveToHistory(historyItem);
           } else {
             // 如果不是对象，直接显示
             if (inputEditorRef.current) {
@@ -333,22 +397,40 @@ export default function JsonFormatter() {
             setJsonInput(String(unescapedJson));
             setError(null);
             setSuccess(t('success.unescaped') || '成功去除转义字符');
+            
+            // 保存到历史记录
+            const historyItem = {
+              id: Date.now().toString(),
+              timestamp: Date.now(),
+              input: inputValue,
+              output: String(unescapedJson),
+              operation: 'unescape' as const
+            };
+            saveToHistory(historyItem);
           }
         } catch (e) {
           // 如果再次解析失败，保持原始字符串
           setError(t('errors.invalidEscape') || '无法去除转义，不是有效的JSON字符串');
+          // 5秒后自动清除错误提示
+          setTimeout(() => {
+            setError(null);
+          }, 5000);
         }
       } else {
         // 如果不是字符串，提示用户
         setError(t('errors.notString') || '输入不是JSON字符串，无法去除转义');
+        // 5秒后自动清除错误提示
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
       }
     } catch (e) {
       setError(t('errors.invalid'));
+      // 5秒后自动清除错误提示
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
     }
-    
-    setTimeout(() => {
-      setSuccess(null);
-    }, 3000);
   };
 
   const copyToClipboard = () => {
@@ -357,9 +439,10 @@ export default function JsonFormatter() {
     navigator.clipboard.writeText(jsonOutput).then(() => {
       setSuccess(t('success.copied'));
       
+      // 2秒后自动清除成功提示
       setTimeout(() => {
         setSuccess(null);
-      }, 3000);
+      }, 2000);
     });
   };
 
@@ -450,6 +533,27 @@ export default function JsonFormatter() {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
+  // 保存历史记录的函数
+  const saveToHistory = (item: {
+    id: string;
+    timestamp: number;
+    input: string;
+    output: string;
+    operation: 'format' | 'compress' | 'unescape';
+  }) => {
+    try {
+      const savedHistory = localStorage.getItem('jsonFormatterHistory');
+      const history = savedHistory ? JSON.parse(savedHistory) : [];
+      
+      // 限制历史记录数量为50条
+      const newHistory = [item, ...history].slice(0, 50);
+      
+      localStorage.setItem('jsonFormatterHistory', JSON.stringify(newHistory));
+    } catch (error) {
+      console.error('保存历史记录失败:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
@@ -479,6 +583,17 @@ export default function JsonFormatter() {
             
             {/* 右侧导航项目 */}
             <div className="flex items-center space-x-4">
+              {/* 历史记录按钮 */}
+              <button
+                onClick={() => router.push(`/${pathname.split('/')[1]}/history`)}
+                className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                <svg className="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-gray-700 dark:text-gray-300">{t('historyBtn')}</span>
+              </button>
+              
               {/* 主题切换按钮 */}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -527,22 +642,42 @@ export default function JsonFormatter() {
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {error && (
           <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg overflow-hidden shadow-sm">
-            <div className="px-4 py-3 flex items-center bg-red-100 dark:bg-red-900/30 border-b border-red-200 dark:border-red-800">
-              <svg className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="font-medium text-red-800 dark:text-red-300">{error}</span>
+            <div className="px-4 py-3 flex items-center justify-between bg-red-100 dark:bg-red-900/30 border-b border-red-200 dark:border-red-800">
+              <div className="flex items-center">
+                <svg className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="font-medium text-red-800 dark:text-red-300">{error}</span>
+              </div>
+              <button
+                onClick={() => setError(null)}
+                className="ml-4 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 focus:outline-none"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
         )}
 
         {success && (
           <div className="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg overflow-hidden shadow-sm">
-            <div className="px-4 py-3 flex items-center bg-green-100 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800">
-              <svg className="h-5 w-5 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="font-medium text-green-800 dark:text-green-300">{success}</span>
+            <div className="px-4 py-3 flex items-center justify-between bg-green-100 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800">
+              <div className="flex items-center">
+                <svg className="h-5 w-5 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="font-medium text-green-800 dark:text-green-300">{success}</span>
+              </div>
+              <button
+                onClick={() => setSuccess(null)}
+                className="ml-4 text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 focus:outline-none"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
         )}

@@ -38,5 +38,32 @@
   "exitFullscreenBtn": "Exit Fullscreen",
   "footer": {
     "copyright": "© 2025 JSON Formatter | Your Efficiency Helper"
+  },
+  "historyBtn": "History",
+  "backToFormatter": "Back to Formatter",
+  "history": {
+    "title": "History",
+    "searchPlaceholder": "Search history...",
+    "empty": "No history records",
+    "noResults": "No matching records found",
+    "input": "Input",
+    "output": "Output",
+    "copy": "Copy",
+    "operations": {
+      "format": "Format",
+      "compress": "Compress",
+      "unescape": "Unescape"
+    },
+    "time": {
+      "today": "Today at {time}",
+      "yesterday": "Yesterday at {time}",
+      "daysAgo": "{days} days ago at {time}"
+    },
+    "timeFilter": {
+      "all": "All",
+      "today": "Today",
+      "week": "Last Week",
+      "month": "Last Month"
+    }
   }
 } 
