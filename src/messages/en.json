@@ -17,8 +17,8 @@
     "dark": "Dark"
   },
   "lineNumbers": {
-    "show": "Show Line Numbers",
-    "hide": "Hide Line Numbers"
+    "show": "Show Line Number",
+    "hide": "Hide Line Number"
   },
   "errors": {
     "invalid": "Invalid JSON",

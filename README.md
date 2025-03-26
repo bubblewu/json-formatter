@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JSON Formatter
 
-## Getting Started
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-14-blue.svg)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4.svg)](https://tailwindcss.com/)
 
-First, run the development server:
+A powerful online tool to format, validate, and beautify your JSON data. The JSON Formatter provides a user-friendly interface to improve the readability of your JSON, making it easier to debug and work with.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **JSON Formatting**: Format disorganized JSON into a clean, indented structure
+- **JSON Validation**: Instantly validate your JSON with detailed error messages
+- **JSON Compression**: Compress formatted JSON to a single line
+- **Escape Character Removal**: Easily remove escape characters from JSON strings
+- **Copy & Download**: Copy to clipboard or download your formatted JSON
+- **Syntax Highlighting**: Enjoy syntax highlighting for better readability
+- **Multi-language Support**: Available in 8 languages: English, Chinese, Spanish, French, German, Japanese, Korean, and Russian
+- **Dark Mode**: Toggle between light and dark themes for comfortable viewing
+- **History**: Keep track of your previously formatted JSON
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js**: For server-side rendering and routing
+- **React**: For building the user interface
+- **Next-Intl**: For internationalization
+- **Monaco Editor**: For code editing with syntax highlighting
+- **Tailwind CSS**: For styling
 
-## Learn More
+## Live Demo
 
-To learn more about Next.js, take a look at the following resources:
+Visit [https://json-formatter.vercel.app](https://json-formatter.vercel.app) to use the JSON Formatter online.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Open Source
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is open source and available under the MIT License. Contributions are welcome!
 
-## Deploy on Vercel
+## Keywords
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+JSON, JSON formatter, JSON validator, JSON beautifier, JSON pretty print, JSON editor, online JSON formatter, JSON tools, escape JSON, format JSON online, free JSON formatter

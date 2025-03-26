@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/i18n/request';
+import StructuredData from '@/components/StructuredData';
 
 interface HistoryItem {
   id: string;
@@ -136,6 +137,7 @@ export default function HistoryPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+      <StructuredData />
       {/* 导航栏 */}
       <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -166,7 +168,7 @@ export default function HistoryPage() {
             
             {/* 右侧导航项目 */}
             <div className="flex items-center space-x-4">
-              {/* 主题切换按钮 */}
+              {/* 返回按钮 */}
               <button
                 onClick={() => router.push(`/${pathname.split('/')[1]}`)}
                 className="inline-flex items-center px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -350,10 +352,10 @@ export default function HistoryPage() {
         </div>
       </main>
 
-      {/* 页脚 */}
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-4">
-        <div className="container mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
-          {t('footer.copyright')}
+      {/* 添加页脚 */}
+      <footer className="py-6 px-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+        <div className="container mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
+          <p>{t('footer.copyright')}</p>
         </div>
       </footer>
     </div>
