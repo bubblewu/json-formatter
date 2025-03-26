@@ -13,6 +13,10 @@
     "light": "Light",
     "dark": "Dark"
   },
+  "lineNumbers": {
+    "show": "Show Line Numbers",
+    "hide": "Hide Line Numbers"
+  },
   "errors": {
     "invalid": "Invalid JSON",
     "empty": "JSON is empty"

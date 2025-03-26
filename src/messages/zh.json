@@ -13,6 +13,10 @@
     "light": "浅色",
     "dark": "深色"
   },
+  "lineNumbers": {
+    "show": "显示行号",
+    "hide": "隐藏行号"
+  },
   "errors": {
     "invalid": "无效的JSON",
     "empty": "JSON为空"
