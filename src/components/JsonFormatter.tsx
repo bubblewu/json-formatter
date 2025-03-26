@@ -61,17 +61,46 @@ export default function JsonFormatter() {
     inputEditorRef.current = editor;
     monacoRef.current = monaco;
     
-    // 优化编辑器性能
-    editor.updateOptions({
-      renderLineHighlight: 'none', // 禁用行高亮以提高性能
-      renderWhitespace: 'none',    // 禁用空白字符渲染
+    // 配置编辑器
+    const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+      renderLineHighlight: 'none',
+      renderWhitespace: 'none',
       renderControlCharacters: false,
-      guides: { indentation: false }, // 正确的属性名
+      guides: { indentation: false },
       scrollBeyondLastLine: false,
-      // 大文件处理优化
       largeFileOptimizations: true,
+      // 添加JSONC支持
+      comments: {
+        insertSpace: true,
+        ignoreEmptyLines: true,
+      },
+    };
+
+    editor.updateOptions(options);
+
+    // 设置语言
+    monaco.editor.setModelLanguage(editor.getModel()!, 'jsonc');
+
+    // 配置JSONC语言支持
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+      validate: true,
+      allowComments: true,
+      schemas: [],
     });
-    
+
+    // 配置格式化规则
+    monaco.languages.json.jsonDefaults.setModeConfiguration({
+      documentFormattingEdits: true,
+      documentRangeFormattingEdits: true,
+      completionItems: true,
+      hovers: true,
+      documentSymbols: true,
+      tokens: true,
+      colors: true,
+      foldingRanges: true,
+      diagnostics: true,
+    });
+
     // 设置输入编辑器的默认值
     editor.setValue(jsonInput);
     
@@ -127,7 +156,9 @@ export default function JsonFormatter() {
       // 自动触发格式化
       if (value.trim()) {
         try {
-          const parsedJson = JSON.parse(value);
+          // 移除注释后再解析JSON
+          const jsonWithoutComments = value.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+          const parsedJson = JSON.parse(jsonWithoutComments);
           const formattedJson = JSON.stringify(parsedJson, null, 2);
           setJsonOutput(formattedJson);
           setError(null);
@@ -221,7 +252,7 @@ export default function JsonFormatter() {
         setJsonOutput('');
         setError(null);
       }
-    }, 500); // 增加防抖时间到500ms，避免频繁触发
+    }, 500);
     
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
@@ -248,7 +279,6 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      // 5秒后自动清除错误提示
       setTimeout(() => {
         setError(null);
       }, 5000);
@@ -257,7 +287,9 @@ export default function JsonFormatter() {
     }
 
     try {
-      const parsedJson = JSON.parse(inputValue);
+      // 移除注释后再解析JSON
+      const jsonWithoutComments = inputValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+      const parsedJson = JSON.parse(jsonWithoutComments);
       const formattedJson = JSON.stringify(parsedJson, null, 2);
       setJsonOutput(formattedJson);
       setError(null);
@@ -595,7 +627,6 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      // 5秒后自动清除错误提示
       setTimeout(() => {
         setError(null);
       }, 5000);
@@ -604,7 +635,9 @@ export default function JsonFormatter() {
     }
 
     try {
-      const parsedJson = JSON.parse(inputValue);
+      // 移除注释后再解析JSON
+      const jsonWithoutComments = inputValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+      const parsedJson = JSON.parse(jsonWithoutComments);
       
       if (isCompressed) {
         // 如果当前是压缩状态，则恢复格式化
@@ -750,7 +783,6 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      // 5秒后自动清除错误提示
       setTimeout(() => {
         setError(null);
       }, 5000);
@@ -1085,6 +1117,112 @@ export default function JsonFormatter() {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  useEffect(() => {
+    if (monacoRef.current) {
+      // 获取编辑器实例
+      const editor = monacoRef.current.editor.getEditors()[0];
+      
+      // 配置编辑器
+      monaco.editor.defineTheme('jsonc-theme', {
+        base: 'vs',
+        inherit: true,
+        rules: [
+          { token: 'comment', foreground: '6A9955' },
+          { token: 'string', foreground: 'CE9178' },
+          { token: 'number', foreground: 'B5CEA8' },
+          { token: 'keyword', foreground: '569CD6' },
+          { token: 'operator', foreground: 'D4D4D4' },
+          { token: 'delimiter', foreground: 'D4D4D4' },
+        ],
+        colors: {},
+      });
+
+      monaco.editor.setTheme('jsonc-theme');
+
+      // 配置JSONC语言支持
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        validate: true,
+        allowComments: true,
+        schemas: [],
+      });
+
+      // 配置格式化规则
+      monaco.languages.json.jsonDefaults.setModeConfiguration({
+        documentFormattingEdits: true,
+        documentRangeFormattingEdits: true,
+        completionItems: true,
+        hovers: true,
+        documentSymbols: true,
+        tokens: true,
+        colors: true,
+        foldingRanges: true,
+        diagnostics: true,
+      });
+
+      // 设置编辑器选项
+      const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+        minimap: { enabled: false },
+        fontSize: 14,
+        lineNumbers: 'on',
+        scrollBeyondLastLine: false,
+        automaticLayout: true,
+        wordWrap: 'on',
+        formatOnPaste: true,
+        formatOnType: true,
+        insertSpaces: true,
+        detectIndentation: true,
+        renderWhitespace: 'selection',
+        scrollbar: {
+          vertical: 'visible',
+          horizontal: 'visible',
+          useShadows: false,
+          verticalScrollbarSize: 10,
+          horizontalScrollbarSize: 10,
+          arrowSize: 30,
+        },
+        // 添加JSONC支持
+        comments: {
+          insertSpace: true,
+          ignoreEmptyLines: true,
+        },
+      };
+
+      editor.updateOptions(options);
+
+      // 设置语言
+      monaco.editor.setModelLanguage(editor.getModel()!, 'jsonc');
+
+      // 设置示例内容
+      if (editor.getValue().trim() === '') {
+        editor.setValue(exampleJsonc);
+      }
+    }
+  }, [monacoRef.current]);
+
+  // 添加示例JSONC
+  const exampleJsonc = `{
+    // 这是一个示例JSONC文件
+    "name": "JSON Formatter",
+    "version": "1.0.0",
+    "description": "一个支持JSONC的格式化工具",
+    
+    /* 这是一个多行注释
+     * 可以包含多行内容
+     */
+    "features": [
+      "JSON格式化",
+      "JSONC支持",  // 支持单行注释
+      "实时验证",
+      "错误提示"
+    ],
+    
+    "settings": {
+      "indentSize": 2,
+      "useSpaces": true,
+      "maxLineLength": 80  // 每行最大长度
+    }
+  }`;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
