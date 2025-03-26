@@ -1,0 +1,91 @@
+{
+  "title": "JSON 포맷터",
+  "subtitle": "JSON 데이터 형식화, 검증 및 미화",
+  "description": "JSON 데이터를 형식화, 검증 및 미화하기 위한 무료 온라인 도구",
+  "formatBtn": "형식화",
+  "clearBtn": "지우기",
+  "copyBtn": "복사",
+  "downloadBtn": "다운로드",
+  "uploadBtn": "업로드",
+  "compressBtn": "압축",
+  "placeholder": "여기에 JSON을 붙여넣으세요...",
+  "language": "언어",
+  "inputLabel": "입력 JSON",
+  "outputLabel": "결과",
+  "theme": {
+    "light": "라이트",
+    "dark": "다크"
+  },
+  "lineNumbers": {
+    "show": "줄 번호 표시",
+    "hide": "줄 번호 숨기기"
+  },
+  "errors": {
+    "invalid": "유효하지 않은 JSON",
+    "empty": "JSON이 비어 있습니다",
+    "invalidEscape": "이스케이프 문자를 제거할 수 없습니다, 유효한 JSON 문자열이 아닙니다",
+    "notString": "입력이 JSON 문자열이 아니어서 이스케이프 문자를 제거할 수 없습니다"
+  },
+  "success": {
+    "copied": "클립보드에 복사됨",
+    "formatted": "JSON 형식화 성공",
+    "compressed": "JSON 압축 성공",
+    "unescaped": "이스케이프 문자 제거 성공",
+    "noEscapeNeeded": "문자열에 이스케이프 해제가 필요하지 않음"
+  },
+  "removeEscapeBtn": "이스케이프 제거",
+  "fullscreenBtn": "전체 화면",
+  "exitFullscreenBtn": "전체 화면 종료",
+  "footer": {
+    "copyright": "© 2025 JSON 포맷터 | 효율성 도우미"
+  },
+  "historyBtn": "기록",
+  "backToFormatter": "포맷터로 돌아가기",
+  "history": {
+    "title": "기록",
+    "searchPlaceholder": "기록 검색...",
+    "empty": "기록이 없습니다",
+    "noResults": "일치하는 기록이 없습니다",
+    "input": "입력",
+    "output": "출력",
+    "copy": "복사",
+    "clear": "기록 지우기",
+    "operations": {
+      "format": "형식화",
+      "compress": "압축",
+      "unescape": "이스케이프 해제"
+    },
+    "time": {
+      "today": "오늘 {time}",
+      "yesterday": "어제 {time}",
+      "daysAgo": "{days}일 전 {time}"
+    },
+    "timeFilter": {
+      "all": "전체",
+      "today": "오늘",
+      "week": "지난 주",
+      "month": "지난 달"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "ru": "Русский"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "예상치 못한 토큰",
+    "expected": "예상됨",
+    "inPosition": "위치에서",
+    "clearMarkError": "마커 지우기 오류",
+    "setMarkError": "오류 마커 설정 오류",
+    "fullscreenError": "전체 화면 모드 진입 오류",
+    "saveHistoryError": "기록 저장 오류",
+    "getHistoryError": "기록 가져오기 오류",
+    "clearHistoryError": "기록 지우기 오류"
+  }
+} 

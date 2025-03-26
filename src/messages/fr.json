@@ -1,0 +1,91 @@
+{
+  "title": "Formateur JSON",
+  "subtitle": "Formater, Valider et Embellir les Données JSON",
+  "description": "Un outil gratuit en ligne pour formater, valider et embellir vos données JSON",
+  "formatBtn": "Formater",
+  "clearBtn": "Effacer",
+  "copyBtn": "Copier",
+  "downloadBtn": "Télécharger",
+  "uploadBtn": "Importer",
+  "compressBtn": "Compresser",
+  "placeholder": "Collez votre JSON ici...",
+  "language": "Langue",
+  "inputLabel": "JSON d'entrée",
+  "outputLabel": "Résultat",
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "lineNumbers": {
+    "show": "Afficher numéros de ligne",
+    "hide": "Masquer numéros de ligne"
+  },
+  "errors": {
+    "invalid": "JSON invalide",
+    "empty": "JSON est vide",
+    "invalidEscape": "Impossible de supprimer les caractères d'échappement, ce n'est pas une chaîne JSON valide",
+    "notString": "L'entrée n'est pas une chaîne JSON, impossible de supprimer les caractères d'échappement"
+  },
+  "success": {
+    "copied": "Copié dans le presse-papiers",
+    "formatted": "JSON formaté avec succès",
+    "compressed": "JSON compressé avec succès",
+    "unescaped": "Caractères d'échappement supprimés avec succès",
+    "noEscapeNeeded": "La chaîne n'a pas besoin d'être désescapée"
+  },
+  "removeEscapeBtn": "Retirer l'échappement",
+  "fullscreenBtn": "Plein écran",
+  "exitFullscreenBtn": "Quitter le plein écran",
+  "footer": {
+    "copyright": "© 2025 Formateur JSON | Votre Assistant d'Efficacité"
+  },
+  "historyBtn": "Historique",
+  "backToFormatter": "Retour au formateur",
+  "history": {
+    "title": "Historique",
+    "searchPlaceholder": "Rechercher dans l'historique...",
+    "empty": "Aucun enregistrement historique",
+    "noResults": "Aucun enregistrement correspondant trouvé",
+    "input": "Entrée",
+    "output": "Sortie",
+    "copy": "Copier",
+    "clear": "Effacer l'historique",
+    "operations": {
+      "format": "Formater",
+      "compress": "Compresser",
+      "unescape": "Désescaper"
+    },
+    "time": {
+      "today": "Aujourd'hui à {time}",
+      "yesterday": "Hier à {time}",
+      "daysAgo": "Il y a {days} jours à {time}"
+    },
+    "timeFilter": {
+      "all": "Tous",
+      "today": "Aujourd'hui",
+      "week": "Dernière semaine",
+      "month": "Dernier mois"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "ru": "Русский"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Jeton inattendu",
+    "expected": "Attendu",
+    "inPosition": "à la position",
+    "clearMarkError": "Erreur lors de l'effacement des marqueurs",
+    "setMarkError": "Erreur lors de la définition des marqueurs d'erreur",
+    "fullscreenError": "Erreur lors de l'entrée en mode plein écran",
+    "saveHistoryError": "Erreur lors de l'enregistrement de l'historique",
+    "getHistoryError": "Erreur lors de la récupération des enregistrements historiques",
+    "clearHistoryError": "Erreur lors de l'effacement des enregistrements historiques"
+  }
+} 

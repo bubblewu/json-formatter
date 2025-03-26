@@ -69,7 +69,13 @@
   },
   "languages": {
     "en": "English",
-    "zh": "Chinese"
+    "zh": "Chinese",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "ru": "Russian"
   },
   "jsonErrors": {
     "unexpectedToken": "Unexpected token",

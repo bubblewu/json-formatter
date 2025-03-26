@@ -658,7 +658,7 @@ export default function JsonFormatter() {
                   >
                     {locales.map((locale) => (
                       <option key={locale} value={locale}>
-                        {locale === 'en' ? 'English' : '中文'}
+                        {t(`languages.${locale}`)}
                       </option>
                     ))}
                   </select>

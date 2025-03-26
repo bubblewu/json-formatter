@@ -69,7 +69,13 @@
   },
   "languages": {
     "en": "English",
-    "zh": "中文"
+    "zh": "中文",
+    "es": "西班牙语",
+    "fr": "法语",
+    "de": "德语",
+    "ja": "日语",
+    "ko": "韩语",
+    "ru": "俄语"
   },
   "jsonErrors": {
     "unexpectedToken": "意外的字符",

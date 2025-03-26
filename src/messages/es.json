@@ -1,0 +1,91 @@
+{
+  "title": "Formateador JSON",
+  "subtitle": "Formatear, Validar y Embellecer Datos JSON",
+  "description": "Una herramienta gratuita en línea para formatear, validar y embellecer sus datos JSON",
+  "formatBtn": "Formatear",
+  "clearBtn": "Limpiar",
+  "copyBtn": "Copiar",
+  "downloadBtn": "Descargar",
+  "uploadBtn": "Subir",
+  "compressBtn": "Comprimir",
+  "placeholder": "Pegue su JSON aquí...",
+  "language": "Idioma",
+  "inputLabel": "JSON de entrada",
+  "outputLabel": "Resultado",
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "lineNumbers": {
+    "show": "Mostrar números de línea",
+    "hide": "Ocultar números de línea"
+  },
+  "errors": {
+    "invalid": "JSON inválido",
+    "empty": "JSON está vacío",
+    "invalidEscape": "No se pueden eliminar caracteres de escape, no es una cadena JSON válida",
+    "notString": "La entrada no es una cadena JSON, no se pueden eliminar caracteres de escape"
+  },
+  "success": {
+    "copied": "Copiado al portapapeles",
+    "formatted": "JSON formateado con éxito",
+    "compressed": "JSON comprimido con éxito",
+    "unescaped": "Caracteres de escape eliminados con éxito",
+    "noEscapeNeeded": "La cadena no necesita eliminar escape"
+  },
+  "removeEscapeBtn": "Eliminar escape",
+  "fullscreenBtn": "Pantalla completa",
+  "exitFullscreenBtn": "Salir de pantalla completa",
+  "footer": {
+    "copyright": "© 2025 Formateador JSON | Su Ayudante de Eficiencia"
+  },
+  "historyBtn": "Historial",
+  "backToFormatter": "Volver al formateador",
+  "history": {
+    "title": "Historial",
+    "searchPlaceholder": "Buscar historial...",
+    "empty": "No hay registros históricos",
+    "noResults": "No se encontraron registros coincidentes",
+    "input": "Entrada",
+    "output": "Salida",
+    "copy": "Copiar",
+    "clear": "Borrar historial",
+    "operations": {
+      "format": "Formatear",
+      "compress": "Comprimir",
+      "unescape": "Eliminar escape"
+    },
+    "time": {
+      "today": "Hoy a las {time}",
+      "yesterday": "Ayer a las {time}",
+      "daysAgo": "Hace {days} días a las {time}"
+    },
+    "timeFilter": {
+      "all": "Todos",
+      "today": "Hoy",
+      "week": "Última semana",
+      "month": "Último mes"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "ru": "Русский"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Token inesperado",
+    "expected": "Esperado",
+    "inPosition": "en posición",
+    "clearMarkError": "Error al borrar marcadores",
+    "setMarkError": "Error al establecer marcadores de error",
+    "fullscreenError": "Error al entrar en modo de pantalla completa",
+    "saveHistoryError": "Error al guardar registro histórico",
+    "getHistoryError": "Error al recuperar registros históricos",
+    "clearHistoryError": "Error al borrar registros históricos"
+  }
+} 
