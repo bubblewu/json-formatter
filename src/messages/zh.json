@@ -45,10 +45,11 @@
     "title": "历史记录",
     "searchPlaceholder": "搜索历史记录...",
     "empty": "暂无历史记录",
-    "noResults": "没有找到匹配的记录",
+    "noResults": "未找到匹配的记录",
     "input": "输入",
     "output": "输出",
     "copy": "复制",
+    "clear": "清除历史",
     "operations": {
       "format": "格式化",
       "compress": "压缩",
@@ -65,5 +66,20 @@
       "week": "最近一周",
       "month": "最近一月"
     }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "意外的字符",
+    "expected": "应该是",
+    "inPosition": "在位置",
+    "clearMarkError": "清除标记时出错",
+    "setMarkError": "设置错误标记时出错",
+    "fullscreenError": "全屏模式出错",
+    "saveHistoryError": "保存历史记录失败",
+    "getHistoryError": "获取历史记录失败",
+    "clearHistoryError": "清除历史记录失败"
   }
 } 

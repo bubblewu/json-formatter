@@ -19,14 +19,25 @@ export default function JsonFormatter() {
   const [success, setSuccess] = useState<string | null>(null);
   const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [isCompressed, setIsCompressed] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [userId, setUserId] = useState<string>('');
   const outputEditorRef = useRef<any>(null);
   const inputEditorRef = useRef<any>(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const outputContainerRef = useRef<HTMLDivElement>(null);
   const [editorHeight, setEditorHeight] = useState("600px");
   const inputEditorHeight = useRef("600px");
   const outputEditorHeight = useRef("600px");
   const monacoRef = useRef<Monaco | null>(null);
+
+  // 生成或获取用户ID
+  useEffect(() => {
+    let storedUserId = localStorage.getItem('jsonFormatterUserId');
+    if (!storedUserId) {
+      storedUserId = 'user_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('jsonFormatterUserId', storedUserId);
+    }
+    setUserId(storedUserId);
+  }, []);
 
   const handleLanguageChange = (locale: string) => {
     const currentLocale = pathname.split('/')[1];
@@ -91,7 +102,7 @@ export default function JsonFormatter() {
             monacoRef.current.editor.setModelMarkers(model, 'owner', []);
           }
         } catch (err) {
-          console.error('清除标记时出错:', err);
+          console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
       
@@ -116,9 +127,9 @@ export default function JsonFormatter() {
       // 设置精确的错误消息
       const formattedError = errorMessage
         .replace('JSON.parse:', '')
-        .replace('Unexpected token', '意外的字符')
-        .replace('Expected', '应该是')
-        .replace('in JSON at position', '在位置');
+        .replace('Unexpected token', t('jsonErrors.unexpectedToken'))
+        .replace('Expected', t('jsonErrors.expected'))
+        .replace('in JSON at position', t('jsonErrors.inPosition'));
       
       setError(`${t('errors.invalid')}: ${formattedError}`);
       
@@ -164,7 +175,7 @@ export default function JsonFormatter() {
             editor.setPosition({ lineNumber, column });
           }
         } catch (err) {
-          console.error('设置错误标记时出错:', err);
+          console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
       
@@ -236,7 +247,7 @@ export default function JsonFormatter() {
             monacoRef.current.editor.setModelMarkers(model, 'owner', []);
           }
         } catch (err) {
-          console.error('清除标记时出错:', err);
+          console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
       
@@ -261,9 +272,9 @@ export default function JsonFormatter() {
       // 设置精确的错误消息
       const formattedError = errorMessage
         .replace('JSON.parse:', '')
-        .replace('Unexpected token', '意外的字符')
-        .replace('Expected', '应该是')
-        .replace('in JSON at position', '在位置');
+        .replace('Unexpected token', t('jsonErrors.unexpectedToken'))
+        .replace('Expected', t('jsonErrors.expected'))
+        .replace('in JSON at position', t('jsonErrors.inPosition'));
       
       setError(`${t('errors.invalid')}: ${formattedError}`);
       
@@ -309,7 +320,7 @@ export default function JsonFormatter() {
             editor.setPosition({ lineNumber, column });
           }
         } catch (err) {
-          console.error('设置错误标记时出错:', err);
+          console.error(t('jsonErrors.setMarkError'), err);
         }
       }
       
@@ -363,7 +374,7 @@ export default function JsonFormatter() {
           
           if (!needsUnescaping) {
             setError(null);
-            setSuccess(t('success.noEscapeNeeded') || '字符串不需要转义');
+            setSuccess(t('success.noEscapeNeeded'));
             setTimeout(() => {
               setSuccess(null);
             }, 2000);
@@ -378,7 +389,7 @@ export default function JsonFormatter() {
             }
             setJsonInput(formattedJson);
             setError(null);
-            setSuccess(t('success.unescaped') || '成功去除转义字符');
+            setSuccess(t('success.unescaped'));
             
             // 保存到历史记录
             const historyItem = {
@@ -396,7 +407,7 @@ export default function JsonFormatter() {
             }
             setJsonInput(String(unescapedJson));
             setError(null);
-            setSuccess(t('success.unescaped') || '成功去除转义字符');
+            setSuccess(t('success.unescaped'));
             
             // 保存到历史记录
             const historyItem = {
@@ -410,7 +421,7 @@ export default function JsonFormatter() {
           }
         } catch (e) {
           // 如果再次解析失败，保持原始字符串
-          setError(t('errors.invalidEscape') || '无法去除转义，不是有效的JSON字符串');
+          setError(t('errors.invalidEscape'));
           // 5秒后自动清除错误提示
           setTimeout(() => {
             setError(null);
@@ -418,7 +429,7 @@ export default function JsonFormatter() {
         }
       } else {
         // 如果不是字符串，提示用户
-        setError(t('errors.notString') || '输入不是JSON字符串，无法去除转义');
+        setError(t('errors.notString'));
         // 5秒后自动清除错误提示
         setTimeout(() => {
           setError(null);
@@ -484,7 +495,7 @@ export default function JsonFormatter() {
     
     if (!document.fullscreenElement) {
       outputContainerRef.current.requestFullscreen().catch(err => {
-        console.error(`全屏模式出错: ${err.message}`);
+        console.error(`${t('jsonErrors.fullscreenError')}: ${err.message}`);
       });
       setIsFullScreen(true);
     } else {
@@ -533,7 +544,7 @@ export default function JsonFormatter() {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  // 保存历史记录的函数
+  // 保存历史记录
   const saveToHistory = (item: {
     id: string;
     timestamp: number;
@@ -542,15 +553,38 @@ export default function JsonFormatter() {
     operation: 'format' | 'compress' | 'unescape';
   }) => {
     try {
-      const savedHistory = localStorage.getItem('jsonFormatterHistory');
+      const historyKey = `jsonFormatterHistory_${userId}`;
+      const savedHistory = localStorage.getItem(historyKey);
       const history = savedHistory ? JSON.parse(savedHistory) : [];
       
-      // 限制历史记录数量为50条
-      const newHistory = [item, ...history].slice(0, 50);
+      // 限制历史记录数量为100条
+      const newHistory = [item, ...history].slice(0, 100);
       
-      localStorage.setItem('jsonFormatterHistory', JSON.stringify(newHistory));
+      localStorage.setItem(historyKey, JSON.stringify(newHistory));
     } catch (error) {
-      console.error('保存历史记录失败:', error);
+      console.error(t('jsonErrors.saveHistoryError'), error);
+    }
+  };
+
+  // 获取历史记录
+  const getHistory = () => {
+    try {
+      const historyKey = `jsonFormatterHistory_${userId}`;
+      const savedHistory = localStorage.getItem(historyKey);
+      return savedHistory ? JSON.parse(savedHistory) : [];
+    } catch (error) {
+      console.error(t('jsonErrors.getHistoryError'), error);
+      return [];
+    }
+  };
+
+  // 清除历史记录
+  const clearHistory = () => {
+    try {
+      const historyKey = `jsonFormatterHistory_${userId}`;
+      localStorage.removeItem(historyKey);
+    } catch (error) {
+      console.error(t('jsonErrors.clearHistoryError'), error);
     }
   };
 

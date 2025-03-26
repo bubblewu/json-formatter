@@ -2,10 +2,12 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/i18n/request';
+import { useTranslations } from 'next-intl';
 
 export default function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations();
 
   const handleLanguageChange = (locale: string) => {
     const currentLocale = pathname.split('/')[1];
@@ -23,7 +25,7 @@ export default function LanguageSwitcher() {
       >
         {locales.map((locale) => (
           <option key={locale} value={locale}>
-            {locale === 'en' ? 'English' : '中文'}
+            {t(`languages.${locale}`)}
           </option>
         ))}
       </select>

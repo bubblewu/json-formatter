@@ -23,14 +23,29 @@ export default function HistoryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredHistory, setFilteredHistory] = useState<HistoryItem[]>([]);
   const [timeFilter, setTimeFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
+  const [userId, setUserId] = useState<string>('');
 
   useEffect(() => {
-    // 从 localStorage 获取历史记录
-    const savedHistory = localStorage.getItem('jsonFormatterHistory');
-    if (savedHistory) {
-      setHistory(JSON.parse(savedHistory));
+    // 获取用户ID
+    const storedUserId = localStorage.getItem('jsonFormatterUserId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      // 如果没有用户ID，重定向到首页
+      router.push(`/${pathname.split('/')[1]}`);
     }
-  }, []);
+  }, [pathname, router]);
+
+  useEffect(() => {
+    // 从 localStorage 获取当前用户的历史记录
+    if (userId) {
+      const historyKey = `jsonFormatterHistory_${userId}`;
+      const savedHistory = localStorage.getItem(historyKey);
+      if (savedHistory) {
+        setHistory(JSON.parse(savedHistory));
+      }
+    }
+  }, [userId]);
 
   useEffect(() => {
     // 根据搜索词和时间筛选过滤历史记录
@@ -109,6 +124,16 @@ export default function HistoryPage() {
     router.push(newPath);
   };
 
+  // 清除历史记录
+  const handleClearHistory = () => {
+    if (userId) {
+      const historyKey = `jsonFormatterHistory_${userId}`;
+      localStorage.removeItem(historyKey);
+      setHistory([]);
+      setFilteredHistory([]);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
@@ -165,7 +190,7 @@ export default function HistoryPage() {
                   >
                     {locales.map((locale) => (
                       <option key={locale} value={locale}>
-                        {locale === 'en' ? 'English' : '中文'}
+                        {t(`languages.${locale}`)}
                       </option>
                     ))}
                   </select>
@@ -183,11 +208,21 @@ export default function HistoryPage() {
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800">
-            <div className="flex items-center">
-              <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
-              <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200">
-                {t('history.title')}
-              </h2>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
+                <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200">
+                  {t('history.title')}
+                </h2>
+              </div>
+              {history.length > 0 && (
+                <button
+                  onClick={handleClearHistory}
+                  className="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                >
+                  {t('history.clear')}
+                </button>
+              )}
             </div>
           </div>
           

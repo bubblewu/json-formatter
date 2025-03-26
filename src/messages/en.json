@@ -49,6 +49,7 @@
     "input": "Input",
     "output": "Output",
     "copy": "Copy",
+    "clear": "Clear History",
     "operations": {
       "format": "Format",
       "compress": "Compress",
@@ -65,5 +66,20 @@
       "week": "Last Week",
       "month": "Last Month"
     }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "Chinese"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Unexpected token",
+    "expected": "Expected",
+    "inPosition": "in position",
+    "clearMarkError": "Error clearing markers",
+    "setMarkError": "Error setting error markers",
+    "fullscreenError": "Error entering fullscreen mode",
+    "saveHistoryError": "Error saving history record",
+    "getHistoryError": "Error retrieving history records",
+    "clearHistoryError": "Error clearing history records"
   }
 } 
