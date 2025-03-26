@@ -166,7 +166,13 @@ export default function JsonFormatter() {
         .replace('Expected', t('jsonErrors.expected'))
         .replace('in JSON at position', t('jsonErrors.inPosition'));
       
-      setError(`${t('errors.invalid')}: ${formattedError}`);
+      // 提供修复建议
+      const fixSuggestion = getFixSuggestion(errorMessage, inputValue, errorPosition);
+      const errorWithSuggestion = typeof fixSuggestion === 'string' 
+        ? `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion}`
+        : `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion.fixDescription}`;
+      
+      setError(errorWithSuggestion);
       
       // 如果编辑器已初始化，添加错误标记
       if (inputEditorRef.current && monacoRef.current) {
@@ -197,7 +203,7 @@ export default function JsonFormatter() {
               startColumn: column,
               endLineNumber: lineNumber,
               endColumn: column + 1,
-              message: formattedError
+              message: errorWithSuggestion
             };
             
             // 设置标记到编辑器
@@ -208,6 +214,67 @@ export default function JsonFormatter() {
             
             // 光标定位到错误位置
             editor.setPosition({ lineNumber, column });
+            
+            // 如果有修复建议且具有autoFix方法，提供辅助标记
+            if (typeof fixSuggestion !== 'string' && fixSuggestion.autoFix) {
+              // 创建信息标记，显示在错误下方
+              const infoMarker = {
+                severity: monacoRef.current.MarkerSeverity.Info,
+                startLineNumber: lineNumber,
+                startColumn: column,
+                endLineNumber: lineNumber,
+                endColumn: column + 1,
+                message: t('errors.autoFixAvailable')
+              };
+              
+              // 添加建议标记
+              const markers = [marker, infoMarker];
+              monacoRef.current.editor.setModelMarkers(model, 'owner', markers);
+              
+              // 添加自动修复按钮
+              setTimeout(() => {
+                setSuccess(`${t('errors.clickToFix')}: ${typeof fixSuggestion !== 'string' ? fixSuggestion.fixDescription : ''}`);
+                
+                // 添加点击修复按钮
+                const fixButton = document.createElement('button');
+                fixButton.textContent = t('errors.applyFix');
+                fixButton.className = 'px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded ml-2';
+                
+                // 获取成功消息DOM
+                const successMsg = document.querySelector('.bg-green-50.dark\\:bg-green-900\\/20');
+                if (successMsg) {
+                  const msgContent = successMsg.querySelector('.flex.items-center');
+                  if (msgContent) {
+                    msgContent.appendChild(fixButton);
+                    
+                    // 点击修复
+                    fixButton.addEventListener('click', () => {
+                      if (inputEditorRef.current && typeof fixSuggestion !== 'string' && fixSuggestion.autoFix) {
+                        const editor = inputEditorRef.current;
+                        const fixedValue = fixSuggestion.autoFix(inputValue);
+                        editor.setValue(fixedValue);
+                        setJsonInput(fixedValue);
+                        setSuccess(t('success.fixApplied'));
+                        setError(null);
+                        
+                        // 清除标记
+                        if (monacoRef.current) {
+                          const model = editor.getModel();
+                          if (model) {
+                            monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+                          }
+                        }
+                        
+                        // 2秒后清除成功消息
+                        setTimeout(() => {
+                          setSuccess(null);
+                        }, 2000);
+                      }
+                    });
+                  }
+                }
+              }, 100);
+            }
           }
         } catch (err) {
           console.error(t('jsonErrors.clearMarkError'), err);
@@ -219,6 +286,163 @@ export default function JsonFormatter() {
         setError(null);
       }, 5000);
     }
+  };
+
+  // JSON错误修复建议类型
+  interface FixSuggestion {
+    fixDescription: string;
+    autoFix?: (input: string) => string;
+  }
+
+  // JSON错误修复建议生成函数
+  const getFixSuggestion = (errorMessage: string, inputValue: string, errorPosition: number): FixSuggestion | string => {
+    // 检查常见的错误类型并提供修复建议
+    
+    // 1. 缺少括号或大括号
+    if (errorMessage.includes('Unexpected end of JSON input')) {
+      const lastChar = inputValue.trim().slice(-1);
+      if (lastChar === '{' || lastChar === '[') {
+        return {
+          fixDescription: t('suggestions.missingClosingBracket'),
+          autoFix: (input: string) => {
+            const trimmed = input.trim();
+            return lastChar === '{' ? trimmed + '}' : trimmed + ']';
+          }
+        };
+      }
+      
+      // 检查是否缺少结束引号
+      const quoteMatch = /\"([^\"]*)\s*$/.exec(inputValue);
+      if (quoteMatch) {
+        return {
+          fixDescription: t('suggestions.missingClosingQuote'),
+          autoFix: (input: string) => input + '"'
+        };
+      }
+      
+      return t('suggestions.incompleteJson');
+    }
+    
+    // 2. 属性名没有引号
+    if (errorMessage.includes('Unexpected token') && errorPosition > 0) {
+      // 查找错误位置前的字符
+      const textBeforeError = inputValue.substring(0, errorPosition);
+      const lastOpenBrace = textBeforeError.lastIndexOf('{');
+      const lastColon = textBeforeError.lastIndexOf(':');
+      
+      // 如果在大括号和冒号之间有非引号包裹的内容
+      if (lastOpenBrace > -1 && (lastColon === -1 || lastColon < lastOpenBrace)) {
+        const potentialKey = textBeforeError.substring(lastOpenBrace + 1).trim();
+        if (potentialKey && !potentialKey.startsWith('"') && !potentialKey.endsWith('"')) {
+          return {
+            fixDescription: t('suggestions.missingQuotesAroundKey'),
+            autoFix: (input: string) => {
+              const before = input.substring(0, lastOpenBrace + 1);
+              const after = input.substring(errorPosition);
+              return before + ' "' + potentialKey + '"' + after;
+            }
+          };
+        }
+      }
+    }
+    
+    // 3. 多余的逗号
+    if (errorMessage.includes('Unexpected token') && inputValue.charAt(errorPosition - 1) === ',') {
+      const nextChar = inputValue.charAt(errorPosition);
+      if (nextChar === '}' || nextChar === ']') {
+        return {
+          fixDescription: t('suggestions.trailingComma'),
+          autoFix: (input: string) => {
+            return input.substring(0, errorPosition - 1) + input.substring(errorPosition);
+          }
+        };
+      }
+    }
+    
+    // 4. 缺少逗号
+    if (errorMessage.includes('Unexpected token') && errorPosition > 0) {
+      const prevChar = inputValue.charAt(errorPosition - 1);
+      const errorChar = inputValue.charAt(errorPosition);
+      
+      // 检查是否在两个值之间缺少逗号
+      if ((prevChar === '"' || prevChar === '}' || prevChar === ']' || /\d/.test(prevChar)) && 
+          (errorChar === '"' || errorChar === '{' || errorChar === '[' || /\d/.test(errorChar))) {
+        return {
+          fixDescription: t('suggestions.missingComma'),
+          autoFix: (input: string) => {
+            return input.substring(0, errorPosition) + ',' + input.substring(errorPosition);
+          }
+        };
+      }
+    }
+    
+    // 5. 使用了单引号而不是双引号
+    if (errorMessage.includes('Unexpected token') && errorPosition > 0) {
+      const textAround = inputValue.substring(Math.max(0, errorPosition - 20), Math.min(inputValue.length, errorPosition + 20));
+      if (textAround.includes("'")) {
+        return {
+          fixDescription: t('suggestions.singleQuotes'),
+          autoFix: (input: string) => {
+            // 替换所有单引号为双引号（这是一个简化的实现，可能需要更复杂的逻辑处理嵌套引号）
+            return input.replace(/'/g, '"');
+          }
+        };
+      }
+    }
+    
+    // 6. 错误的布尔值或null值（例如首字母大写或拼写错误）
+    if (errorMessage.includes('Unexpected token') && errorPosition > 0) {
+      const textAround = inputValue.substring(Math.max(0, errorPosition - 20), Math.min(inputValue.length, errorPosition + 20));
+      const trueMatch = /\b(True|TRUE|true)\b/.exec(textAround);
+      const falseMatch = /\b(False|FALSE|false)\b/.exec(textAround);
+      const nullMatch = /\b(Null|NULL|null)\b/.exec(textAround);
+      
+      if (trueMatch && trueMatch[1] !== 'true') {
+        return {
+          fixDescription: t('suggestions.booleanCase', { value: 'true' }),
+          autoFix: (input: string) => input.replace(new RegExp(`\\b${trueMatch[1]}\\b`, 'g'), 'true')
+        };
+      }
+      
+      if (falseMatch && falseMatch[1] !== 'false') {
+        return {
+          fixDescription: t('suggestions.booleanCase', { value: 'false' }),
+          autoFix: (input: string) => input.replace(new RegExp(`\\b${falseMatch[1]}\\b`, 'g'), 'false')
+        };
+      }
+      
+      if (nullMatch && nullMatch[1] !== 'null') {
+        return {
+          fixDescription: t('suggestions.nullCase'),
+          autoFix: (input: string) => input.replace(new RegExp(`\\b${nullMatch[1]}\\b`, 'g'), 'null')
+        };
+      }
+    }
+    
+    // 7. 字符串中未转义的引号
+    if (errorMessage.includes('Unexpected token') && errorPosition > 0) {
+      const textBeforeError = inputValue.substring(0, errorPosition);
+      const lastQuoteIndex = textBeforeError.lastIndexOf('"');
+      
+      if (lastQuoteIndex > -1) {
+        const textBetweenQuotes = textBeforeError.substring(lastQuoteIndex + 1);
+        if (textBetweenQuotes.includes('"')) {
+          return {
+            fixDescription: t('suggestions.unescapedQuote'),
+            autoFix: (input: string) => {
+              // 替换未转义的引号
+              let result = input.substring(0, lastQuoteIndex + 1);
+              result += textBetweenQuotes.replace(/"/g, '\\"');
+              result += input.substring(errorPosition);
+              return result;
+            }
+          };
+        }
+      }
+    }
+    
+    // 如果没有识别出特定错误类型，返回通用建议
+    return t('suggestions.checkSyntax');
   };
 
   const compressJson = () => {
@@ -355,7 +579,7 @@ export default function JsonFormatter() {
             editor.setPosition({ lineNumber, column });
           }
         } catch (err) {
-          console.error(t('jsonErrors.setMarkError'), err);
+          console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
       
@@ -889,7 +1113,7 @@ export default function JsonFormatter() {
                   <label className="inline-flex items-center px-2 py-1 text-xs bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 cursor-pointer whitespace-nowrap"
                   >
                     <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                     <span className="truncate max-w-[60px] sm:max-w-none">{t('uploadBtn')}</span>
                     <input
