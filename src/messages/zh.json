@@ -22,11 +22,21 @@
   },
   "errors": {
     "invalid": "无效的JSON",
-    "empty": "JSON为空"
+    "empty": "JSON为空",
+    "invalidEscape": "无法去除转义，不是有效的JSON字符串",
+    "notString": "输入不是JSON字符串，无法去除转义"
   },
   "success": {
     "copied": "已复制到剪贴板",
     "formatted": "JSON格式化成功",
-    "compressed": "JSON压缩成功"
+    "compressed": "JSON压缩成功",
+    "unescaped": "成功去除转义字符",
+    "noEscapeNeeded": "字符串不需要转义"
+  },
+  "removeEscapeBtn": "去除转义",
+  "fullscreenBtn": "全屏",
+  "exitFullscreenBtn": "退出全屏",
+  "footer": {
+    "copyright": "© 2025 JSON格式化工具 | 您的效率好帮手"
   }
 } 

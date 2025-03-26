@@ -22,11 +22,21 @@
   },
   "errors": {
     "invalid": "Invalid JSON",
-    "empty": "JSON is empty"
+    "empty": "JSON is empty",
+    "invalidEscape": "Cannot remove escape characters, not a valid JSON string",
+    "notString": "Input is not a JSON string, cannot remove escape characters"
   },
   "success": {
     "copied": "Copied to clipboard",
     "formatted": "JSON formatted successfully",
-    "compressed": "JSON compressed successfully"
+    "compressed": "JSON compressed successfully",
+    "unescaped": "Successfully removed escape characters",
+    "noEscapeNeeded": "String does not need unescaping"
+  },
+  "removeEscapeBtn": "Remove Escape",
+  "fullscreenBtn": "Full",
+  "exitFullscreenBtn": "Exit Fullscreen",
+  "footer": {
+    "copyright": "© 2025 JSON Formatter | Your Efficiency Helper"
   }
 } 

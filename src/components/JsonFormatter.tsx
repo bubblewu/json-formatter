@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/i18n/request';
-import Editor from '@monaco-editor/react';
+import Editor, { Monaco, OnMount } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
 
 export default function JsonFormatter() {
   const t = useTranslations();
@@ -17,11 +18,15 @@ export default function JsonFormatter() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showLineNumbers, setShowLineNumbers] = useState(true);
+  const [isCompressed, setIsCompressed] = useState(false);
   const outputEditorRef = useRef<any>(null);
   const inputEditorRef = useRef<any>(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const outputContainerRef = useRef<HTMLDivElement>(null);
-  const [editorHeight, setEditorHeight] = useState("500px");
+  const [editorHeight, setEditorHeight] = useState("600px");
+  const inputEditorHeight = useRef("600px");
+  const outputEditorHeight = useRef("600px");
+  const monacoRef = useRef<Monaco | null>(null);
 
   const handleLanguageChange = (locale: string) => {
     const currentLocale = pathname.split('/')[1];
@@ -30,8 +35,9 @@ export default function JsonFormatter() {
     router.push(newPath);
   };
 
-  const handleInputEditorDidMount = (editor: any) => {
+  const handleInputEditorDidMount: OnMount = (editor, monaco) => {
     inputEditorRef.current = editor;
+    monacoRef.current = monaco;
     // 设置输入编辑器的默认值
     editor.setValue(jsonInput);
     // 监听输入变化
@@ -40,7 +46,7 @@ export default function JsonFormatter() {
     });
   };
 
-  const handleOutputEditorDidMount = (editor: any) => {
+  const handleOutputEditorDidMount: OnMount = (editor, monaco) => {
     outputEditorRef.current = editor;
     // 设置输出编辑器为只读
     editor.updateOptions({ readOnly: true });
@@ -62,12 +68,90 @@ export default function JsonFormatter() {
       setError(null);
       setSuccess(t('success.formatted'));
       
+      // 清除编辑器中的错误标记
+      if (inputEditorRef.current && monacoRef.current) {
+        try {
+          const editor = inputEditorRef.current;
+          const model = editor.getModel();
+          if (model) {
+            monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+          }
+        } catch (err) {
+          console.error('清除标记时出错:', err);
+        }
+      }
+      
       setTimeout(() => {
         setSuccess(null);
       }, 3000);
-    } catch {
-      setError(t('errors.invalid'));
+    } catch (e: any) {
+      // 获取错误信息和位置
+      const errorMessage = e.message || t('errors.invalid');
       setJsonOutput('');
+      
+      // 尝试从错误消息中提取位置信息
+      const positionMatch = errorMessage.match(/at position (\d+)/);
+      const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
+      
+      let errorPosition = 0;
+      if (positionMatch && positionMatch[1]) {
+        errorPosition = parseInt(positionMatch[1], 10);
+      }
+      
+      // 设置精确的错误消息
+      const formattedError = errorMessage
+        .replace('JSON.parse:', '')
+        .replace('Unexpected token', '意外的字符')
+        .replace('Expected', '应该是')
+        .replace('in JSON at position', '在位置');
+      
+      setError(`${t('errors.invalid')}: ${formattedError}`);
+      
+      // 如果编辑器已初始化，添加错误标记
+      if (inputEditorRef.current && monacoRef.current) {
+        try {
+          const editor = inputEditorRef.current;
+          const model = editor.getModel();
+          
+          if (model) {
+            // 计算出错位置的行和列
+            let lineNumber = 1;
+            let column = 1;
+            
+            if (lineColumnMatch) {
+              lineNumber = parseInt(lineColumnMatch[1], 10);
+              column = parseInt(lineColumnMatch[2], 10);
+            } else if (errorPosition > 0) {
+              // 手动计算行号和列号
+              const textUntilPosition = inputValue.substring(0, errorPosition);
+              const lines = textUntilPosition.split('\n');
+              lineNumber = lines.length;
+              column = lines[lines.length - 1].length + 1;
+            }
+            
+            // 创建错误标记
+            const marker = {
+              severity: monacoRef.current.MarkerSeverity.Error,
+              startLineNumber: lineNumber,
+              startColumn: column,
+              endLineNumber: lineNumber,
+              endColumn: column + 1,
+              message: formattedError
+            };
+            
+            // 设置标记到编辑器
+            monacoRef.current.editor.setModelMarkers(model, 'owner', [marker]);
+            
+            // 将视图滚动到错误位置
+            editor.revealPositionInCenter({ lineNumber, column });
+            
+            // 光标定位到错误位置
+            editor.setPosition({ lineNumber, column });
+          }
+        } catch (err) {
+          console.error('设置错误标记时出错:', err);
+        }
+      }
     }
   };
 
@@ -82,17 +166,107 @@ export default function JsonFormatter() {
 
     try {
       const parsedJson = JSON.parse(inputValue);
-      const compressedJson = JSON.stringify(parsedJson);
-      setJsonOutput(compressedJson);
-      setError(null);
-      setSuccess(t('success.compressed'));
+      
+      if (isCompressed) {
+        // 如果当前是压缩状态，则恢复格式化
+        const formattedJson = JSON.stringify(parsedJson, null, 2);
+        setJsonOutput(formattedJson);
+        setError(null);
+        setSuccess(t('success.formatted'));
+      } else {
+        // 如果当前是格式化状态，则进行压缩
+        const compressedJson = JSON.stringify(parsedJson);
+        setJsonOutput(compressedJson);
+        setError(null);
+        setSuccess(t('success.compressed'));
+      }
+      
+      setIsCompressed(!isCompressed);
+      
+      // 清除编辑器中的错误标记
+      if (inputEditorRef.current && monacoRef.current) {
+        try {
+          const editor = inputEditorRef.current;
+          const model = editor.getModel();
+          if (model) {
+            monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+          }
+        } catch (err) {
+          console.error('清除标记时出错:', err);
+        }
+      }
       
       setTimeout(() => {
         setSuccess(null);
       }, 3000);
-    } catch {
-      setError(t('errors.invalid'));
+    } catch (e: any) {
+      // 获取错误信息和位置
+      const errorMessage = e.message || t('errors.invalid');
       setJsonOutput('');
+      
+      // 尝试从错误消息中提取位置信息
+      const positionMatch = errorMessage.match(/at position (\d+)/);
+      const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
+      
+      let errorPosition = 0;
+      if (positionMatch && positionMatch[1]) {
+        errorPosition = parseInt(positionMatch[1], 10);
+      }
+      
+      // 设置精确的错误消息
+      const formattedError = errorMessage
+        .replace('JSON.parse:', '')
+        .replace('Unexpected token', '意外的字符')
+        .replace('Expected', '应该是')
+        .replace('in JSON at position', '在位置');
+      
+      setError(`${t('errors.invalid')}: ${formattedError}`);
+      
+      // 如果编辑器已初始化，添加错误标记
+      if (inputEditorRef.current && monacoRef.current) {
+        try {
+          const editor = inputEditorRef.current;
+          const model = editor.getModel();
+          
+          if (model) {
+            // 计算出错位置的行和列
+            let lineNumber = 1;
+            let column = 1;
+            
+            if (lineColumnMatch) {
+              lineNumber = parseInt(lineColumnMatch[1], 10);
+              column = parseInt(lineColumnMatch[2], 10);
+            } else if (errorPosition > 0) {
+              // 手动计算行号和列号
+              const textUntilPosition = inputValue.substring(0, errorPosition);
+              const lines = textUntilPosition.split('\n');
+              lineNumber = lines.length;
+              column = lines[lines.length - 1].length + 1;
+            }
+            
+            // 创建错误标记
+            const marker = {
+              severity: monacoRef.current.MarkerSeverity.Error,
+              startLineNumber: lineNumber,
+              startColumn: column,
+              endLineNumber: lineNumber,
+              endColumn: column + 1,
+              message: formattedError
+            };
+            
+            // 设置标记到编辑器
+            monacoRef.current.editor.setModelMarkers(model, 'owner', [marker]);
+            
+            // 将视图滚动到错误位置
+            editor.revealPositionInCenter({ lineNumber, column });
+            
+            // 光标定位到错误位置
+            editor.setPosition({ lineNumber, column });
+          }
+        } catch (err) {
+          console.error('设置错误标记时出错:', err);
+        }
+      }
     }
   };
 
@@ -104,6 +278,77 @@ export default function JsonFormatter() {
     setJsonOutput('');
     setError(null);
     setSuccess(null);
+  };
+
+  const removeEscapeChars = () => {
+    const inputValue = inputEditorRef.current ? inputEditorRef.current.getValue() : jsonInput;
+    
+    if (!inputValue.trim()) {
+      setError(t('errors.empty'));
+      return;
+    }
+
+    try {
+      // 首先尝试解析为JSON
+      let parsedJson = JSON.parse(inputValue);
+      
+      // 如果是字符串，则尝试去除转义字符
+      if (typeof parsedJson === 'string') {
+        try {
+          // 尝试再次解析字符串，去除转义
+          const unescapedJson = JSON.parse(parsedJson);
+          
+          // 检查是否实际需要转义
+          const reStringifiedOriginal = JSON.stringify(parsedJson);
+          const needsUnescaping = reStringifiedOriginal !== `"${parsedJson}"` || 
+                                  parsedJson.includes('\\\"') || 
+                                  parsedJson.includes('\\\\') ||
+                                  parsedJson.includes('\\n') ||
+                                  parsedJson.includes('\\t') ||
+                                  parsedJson.includes('\\r');
+          
+          if (!needsUnescaping) {
+            setError(null);
+            setSuccess(t('success.noEscapeNeeded') || '字符串不需要转义');
+            setTimeout(() => {
+              setSuccess(null);
+            }, 3000);
+            return;
+          }
+          
+          // 如果解析成功，将其重新格式化为字符串
+          if (typeof unescapedJson === 'object' && unescapedJson !== null) {
+            const formattedJson = JSON.stringify(unescapedJson, null, 2);
+            if (inputEditorRef.current) {
+              inputEditorRef.current.setValue(formattedJson);
+            }
+            setJsonInput(formattedJson);
+            setError(null);
+            setSuccess(t('success.unescaped') || '成功去除转义字符');
+          } else {
+            // 如果不是对象，直接显示
+            if (inputEditorRef.current) {
+              inputEditorRef.current.setValue(String(unescapedJson));
+            }
+            setJsonInput(String(unescapedJson));
+            setError(null);
+            setSuccess(t('success.unescaped') || '成功去除转义字符');
+          }
+        } catch (e) {
+          // 如果再次解析失败，保持原始字符串
+          setError(t('errors.invalidEscape') || '无法去除转义，不是有效的JSON字符串');
+        }
+      } else {
+        // 如果不是字符串，提示用户
+        setError(t('errors.notString') || '输入不是JSON字符串，无法去除转义');
+      }
+    } catch (e) {
+      setError(t('errors.invalid'));
+    }
+    
+    setTimeout(() => {
+      setSuccess(null);
+    }, 3000);
   };
 
   const copyToClipboard = () => {
@@ -178,13 +423,20 @@ export default function JsonFormatter() {
   }, []);
   
   // 监听调整大小
-  const handleResize = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleResize = (e: React.MouseEvent<HTMLDivElement>, isInput: boolean) => {
     const startY = e.clientY;
-    const startHeight = outputContainerRef.current?.offsetHeight || 500;
+    const startHeight = isInput ? 
+      (inputEditorRef.current?.getDomNode()?.offsetHeight || 500) :
+      (outputContainerRef.current?.offsetHeight || 500);
     
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const newHeight = startHeight + moveEvent.clientY - startY;
       if (newHeight > 200) { // 设置最小高度
+        if (isInput) {
+          inputEditorHeight.current = `${newHeight}px`;
+        } else {
+          outputEditorHeight.current = `${newHeight}px`;
+        }
         setEditorHeight(`${newHeight}px`);
       }
     };
@@ -298,38 +550,48 @@ export default function JsonFormatter() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="flex flex-col">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
-              <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800 flex items-center justify-between">
+              <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="flex items-center">
                   <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
                   <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
                     {t('inputLabel')}
                   </h3>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 flex-wrap gap-y-1 justify-end">
                   <button
                     onClick={formatJson}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17l6-6" />
                     </svg>
-                    {t('formatBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('formatBtn')}</span>
+                  </button>
+                  <button
+                    onClick={removeEscapeChars}
+                    className="inline-flex items-center px-2 py-1 text-xs bg-orange-600 hover:bg-orange-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 whitespace-nowrap"
+                  >
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('removeEscapeBtn')}</span>
                   </button>
                   <button
                     onClick={clearJson}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-gray-600 hover:bg-gray-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-gray-600 hover:bg-gray-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
-                    {t('clearBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('clearBtn')}</span>
                   </button>
-                  <label className="inline-flex items-center px-3 py-1 text-xs bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 cursor-pointer">
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <label className="inline-flex items-center px-2 py-1 text-xs bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 cursor-pointer whitespace-nowrap"
+                  >
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                     </svg>
-                    {t('uploadBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('uploadBtn')}</span>
                     <input
                       type="file"
                       accept=".json"
@@ -339,7 +601,7 @@ export default function JsonFormatter() {
                   </label>
                 </div>
               </div>
-              <div className="h-[500px]">
+              <div style={{ height: inputEditorHeight.current, minHeight: '600px' }}>
                 <Editor
                   height="100%"
                   defaultLanguage="json"
@@ -361,6 +623,10 @@ export default function JsonFormatter() {
                   }}
                 />
               </div>
+              <div 
+                className="h-1 bg-gray-200 dark:bg-gray-700 cursor-ns-resize hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                onMouseDown={(e) => handleResize(e, true)}
+              />
             </div>
           </div>
           <div className="flex flex-col">
@@ -368,68 +634,68 @@ export default function JsonFormatter() {
               ref={outputContainerRef}
               className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 ${isFullScreen ? 'fixed inset-0 z-50' : 'relative'}`}
             >
-              <div className="px-4 py-3 bg-green-50 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800 flex items-center justify-between">
+              <div className="px-4 py-3 bg-green-50 dark:bg-green-900/30 border-b border-green-200 dark:border-green-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="flex items-center">
                   <div className="w-1 h-5 bg-green-600 rounded-r mr-3"></div>
                   <h3 className="text-sm font-medium text-green-800 dark:text-green-200">
                     {t('outputLabel')}
                   </h3>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 flex-wrap gap-y-1 justify-end">
                   <button
                     onClick={compressJson}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                     </svg>
-                    {t('compressBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{isCompressed ? t('formatBtn') : t('compressBtn')}</span>
                   </button>
                   <button
                     onClick={toggleLineNumbers}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-teal-600 hover:bg-teal-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-teal-600 hover:bg-teal-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
-                    {showLineNumbers ? t('lineNumbers.hide') : t('lineNumbers.show')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{showLineNumbers ? t('lineNumbers.hide') : t('lineNumbers.show')}</span>
                   </button>
                   <button
                     onClick={copyToClipboard}
                     disabled={!jsonOutput}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded transition-colors disabled:bg-green-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded transition-colors disabled:bg-green-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                     </svg>
-                    {t('copyBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('copyBtn')}</span>
                   </button>
                   <button
                     onClick={downloadJson}
                     disabled={!jsonOutput}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors disabled:bg-purple-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors disabled:bg-purple-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    {t('downloadBtn')}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{t('downloadBtn')}</span>
                   </button>
                   <button
                     onClick={toggleFullScreen}
-                    className="inline-flex items-center px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    className="inline-flex items-center px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       {isFullScreen ? (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4H4v5m10-5h5v5M4 14h5v5H4m10 0h5v-5" />
                       ) : (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
                       )}
                     </svg>
-                    {isFullScreen ? '退出全屏' : '全屏'}
+                    <span className="truncate max-w-[60px] sm:max-w-none">{isFullScreen ? t('exitFullscreenBtn') : t('fullscreenBtn')}</span>
                   </button>
                 </div>
               </div>
-              <div style={{ height: isFullScreen ? 'calc(100% - 55px)' : editorHeight }}>
+              <div style={{ height: isFullScreen ? 'calc(100% - 55px)' : outputEditorHeight.current, minHeight: '600px' }}>
                 <Editor
                   height="100%"
                   language="json"
@@ -459,7 +725,7 @@ export default function JsonFormatter() {
               {!isFullScreen && (
                 <div 
                   className="h-1 bg-gray-200 dark:bg-gray-700 cursor-ns-resize hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                  onMouseDown={handleResize}
+                  onMouseDown={(e) => handleResize(e, false)}
                 />
               )}
             </div>
@@ -470,7 +736,7 @@ export default function JsonFormatter() {
       {/* 页脚 */}
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-4">
         <div className="container mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
-          © 2023 JSON格式化工具 | 使用Monaco编辑器构建
+          {t('footer.copyright')}
         </div>
       </footer>
     </div>
