@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/i18n/request';
 import Editor, { Monaco, OnMount } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
+import Feedback from './Feedback';
 
 export default function JsonFormatter() {
   const t = useTranslations();
@@ -28,6 +29,7 @@ export default function JsonFormatter() {
   const inputEditorHeight = useRef("600px");
   const outputEditorHeight = useRef("600px");
   const monacoRef = useRef<Monaco | null>(null);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   // 生成或获取用户ID
   useEffect(() => {
@@ -1124,6 +1126,17 @@ export default function JsonFormatter() {
                 <span className="text-gray-700 dark:text-gray-300">{t('historyBtn')}</span>
               </button>
               
+              {/* 反馈按钮 */}
+              <button
+                onClick={() => setIsFeedbackOpen(true)}
+                className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                <svg className="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+                <span className="text-gray-700 dark:text-gray-300">{t('feedbackBtn')}</span>
+              </button>
+              
               {/* 主题切换按钮 */}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -1428,6 +1441,13 @@ export default function JsonFormatter() {
           {t('footer.copyright')}
         </div>
       </footer>
+
+      {/* 反馈组件 */}
+      <Feedback
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
+        userId={userId}
+      />
     </div>
   );
 } 

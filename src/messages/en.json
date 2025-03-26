@@ -89,5 +89,22 @@
       "yesterday": "Yesterday {time}",
       "daysAgo": "{days} days ago {time}"
     }
+  },
+  "feedbackBtn": "Feedback",
+  "feedback": {
+    "title": "Feedback",
+    "content": "Feedback Content",
+    "contentPlaceholder": "Please enter your feedback...",
+    "contact": "Contact (Optional)",
+    "contactPlaceholder": "Please enter your email or other contact information",
+    "submit": "Submit Feedback",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "success": "Thank you for your feedback!",
+    "error": "Submission failed, please try again later",
+    "validation": {
+      "required": "Please fill out this field",
+      "invalidEmail": "Please enter a valid email address"
+    }
   }
 } 

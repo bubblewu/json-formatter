@@ -1,91 +1,109 @@
 {
   "title": "Formateador JSON",
-  "subtitle": "Formatear, Validar y Embellecer Datos JSON",
-  "description": "Una herramienta gratuita en línea para formatear, validar y embellecer sus datos JSON",
+  "subtitle": "Formateador, Validador y Embellecedor JSON en Línea",
+  "description": "Una herramienta gratuita en línea para formatear, validar, comprimir y escapar tus datos JSON.",
   "formatBtn": "Formatear",
+  "compressBtn": "Comprimir",
   "clearBtn": "Limpiar",
+  "uploadBtn": "Subir",
   "copyBtn": "Copiar",
   "downloadBtn": "Descargar",
-  "uploadBtn": "Subir",
-  "compressBtn": "Comprimir",
-  "placeholder": "Pegue su JSON aquí...",
-  "language": "Idioma",
-  "inputLabel": "JSON de entrada",
+  "historyBtn": "Historial",
+  "backToFormatter": "Volver al Formateador",
+  "removeEscapeBtn": "Quitar Escape",
+  "fullscreenBtn": "Pantalla Completa",
+  "exitFullscreenBtn": "Salir de Pantalla Completa",
+  "inputLabel": "Entrada JSON",
   "outputLabel": "Resultado",
-  "theme": {
-    "light": "Claro",
-    "dark": "Oscuro"
-  },
   "lineNumbers": {
-    "show": "Mostrar números de línea",
-    "hide": "Ocultar números de línea"
+    "show": "Mostrar Números de Línea",
+    "hide": "Ocultar Números de Línea"
   },
   "errors": {
+    "empty": "El JSON no puede estar vacío",
     "invalid": "JSON inválido",
-    "empty": "JSON está vacío",
-    "invalidEscape": "No se pueden eliminar caracteres de escape, no es una cadena JSON válida",
-    "notString": "La entrada no es una cadena JSON, no se pueden eliminar caracteres de escape"
+    "invalidEscape": "No se pueden quitar los caracteres de escape, no es una cadena JSON válida",
+    "notString": "La entrada no es una cadena JSON, no se pueden quitar los caracteres de escape",
+    "suggestion": "Sugerencia de corrección",
+    "autoFixAvailable": "Este error se puede corregir automáticamente",
+    "clickToFix": "Haz clic para aplicar esta corrección",
+    "applyFix": "Aplicar Corrección"
   },
   "success": {
-    "copied": "Copiado al portapapeles",
     "formatted": "JSON formateado con éxito",
     "compressed": "JSON comprimido con éxito",
+    "copied": "Copiado al portapapeles",
     "unescaped": "Caracteres de escape eliminados con éxito",
-    "noEscapeNeeded": "La cadena no necesita eliminar escape"
-  },
-  "removeEscapeBtn": "Eliminar escape",
-  "fullscreenBtn": "Pantalla completa",
-  "exitFullscreenBtn": "Salir de pantalla completa",
-  "footer": {
-    "copyright": "© 2025 Formateador JSON | Su Ayudante de Eficiencia"
-  },
-  "historyBtn": "Historial",
-  "backToFormatter": "Volver al formateador",
-  "history": {
-    "title": "Historial",
-    "searchPlaceholder": "Buscar historial...",
-    "empty": "No hay registros históricos",
-    "noResults": "No se encontraron registros coincidentes",
-    "input": "Entrada",
-    "output": "Salida",
-    "copy": "Copiar",
-    "clear": "Borrar historial",
-    "operations": {
-      "format": "Formatear",
-      "compress": "Comprimir",
-      "unescape": "Eliminar escape"
-    },
-    "time": {
-      "today": "Hoy a las {time}",
-      "yesterday": "Ayer a las {time}",
-      "daysAgo": "Hace {days} días a las {time}"
-    },
-    "timeFilter": {
-      "all": "Todos",
-      "today": "Hoy",
-      "week": "Última semana",
-      "month": "Último mes"
-    }
-  },
-  "languages": {
-    "en": "English",
-    "zh": "中文",
-    "es": "Español",
-    "fr": "Français",
-    "de": "Deutsch",
-    "ja": "日本語",
-    "ko": "한국어",
-    "ru": "Русский"
+    "noEscapeNeeded": "La cadena no necesita quitar escape",
+    "fixApplied": "Se ha aplicado la corrección"
   },
   "jsonErrors": {
     "unexpectedToken": "Token inesperado",
-    "expected": "Esperado",
-    "inPosition": "en posición",
-    "clearMarkError": "Error al borrar marcadores",
-    "setMarkError": "Error al establecer marcadores de error",
-    "fullscreenError": "Error al entrar en modo de pantalla completa",
-    "saveHistoryError": "Error al guardar registro histórico",
-    "getHistoryError": "Error al recuperar registros históricos",
-    "clearHistoryError": "Error al borrar registros históricos"
+    "expected": "Se esperaba",
+    "inPosition": "en JSON en la posición",
+    "clearMarkError": "Error al limpiar marcadores",
+    "setMarkError": "Error al establecer marcadores",
+    "fullscreenError": "Error en modo pantalla completa",
+    "saveHistoryError": "Error al guardar el historial",
+    "getHistoryError": "Error al obtener el historial",
+    "clearHistoryError": "Error al limpiar el historial"
+  },
+  "suggestions": {
+    "checkSyntax": "Verifica la sintaxis de tu JSON, especialmente los corchetes, llaves y comillas coincidentes",
+    "missingClosingBracket": "Falta corchete o llave de cierre",
+    "missingClosingQuote": "Falta comilla de cierre",
+    "incompleteJson": "El JSON está incompleto, verifica las partes faltantes",
+    "missingQuotesAroundKey": "Los nombres de propiedades deben estar entre comillas dobles",
+    "trailingComma": "No se permiten comas finales en JSON",
+    "missingComma": "Falta coma entre valores",
+    "singleQuotes": "JSON requiere comillas dobles en lugar de comillas simples",
+    "booleanCase": "Los valores booleanos deben estar en minúsculas: {value}",
+    "nullCase": "El valor null debe estar en minúsculas",
+    "unescapedQuote": "Las comillas dentro de las cadenas necesitan ser escapadas"
+  },
+  "footer": {
+    "copyright": "© 2025 Formateador JSON | Tu Asistente de Eficiencia"
+  },
+  "languages": {
+    "en": "Inglés",
+    "zh": "Chino",
+    "ja": "Japonés",
+    "ko": "Coreano",
+    "es": "Español"
+  },
+  "history": {
+    "title": "Registros",
+    "empty": "No hay registros",
+    "noResults": "No se encontraron registros coincidentes",
+    "clear": "Limpiar Historial",
+    "copy": "Copiar",
+    "searchPlaceholder": "Buscar en el historial...",
+    "timeFilter": {
+      "all": "Todo",
+      "today": "Hoy",
+      "week": "Esta Semana",
+      "month": "Este Mes"
+    },
+    "format": "Formatear",
+    "compress": "Comprimir",
+    "unescape": "Quitar Escape",
+    "time": {
+      "today": "Hoy {time}",
+      "yesterday": "Ayer {time}",
+      "daysAgo": "Hace {days} días {time}"
+    }
+  },
+  "feedbackBtn": "Comentarios",
+  "feedback": {
+    "title": "Comentarios",
+    "content": "Contenido del Comentario",
+    "contentPlaceholder": "Por favor, ingresa tus comentarios...",
+    "contact": "Contacto (Opcional)",
+    "contactPlaceholder": "Por favor, ingresa tu correo electrónico u otra información de contacto",
+    "submit": "Enviar Comentarios",
+    "submitting": "Enviando...",
+    "cancel": "Cancelar",
+    "success": "¡Gracias por tus comentarios!",
+    "error": "Error al enviar, por favor intenta de nuevo más tarde"
   }
 } 

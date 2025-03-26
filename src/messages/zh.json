@@ -89,5 +89,22 @@
       "yesterday": "昨天 {time}",
       "daysAgo": "{days}天前 {time}"
     }
+  },
+  "feedbackBtn": "意见反馈",
+  "feedback": {
+    "title": "意见反馈",
+    "content": "反馈内容",
+    "contentPlaceholder": "请输入您的反馈内容...",
+    "contact": "联系方式（选填）",
+    "contactPlaceholder": "请输入您的邮箱或其他联系方式",
+    "submit": "提交反馈",
+    "submitting": "提交中...",
+    "cancel": "取消",
+    "success": "感谢您的反馈！",
+    "error": "提交失败，请稍后重试",
+    "validation": {
+      "required": "请填写此字段",
+      "invalidEmail": "请输入有效的邮箱地址"
+    }
   }
 } 
