@@ -1,36 +1,75 @@
-export const runtime = 'edge';
-
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import fs from 'fs';
+import path from 'path';
 
 export async function POST(request: Request) {
   try {
-    const { content } = await request.json();
-    
-    if (!content) {
-      return NextResponse.json({ error: 'Content is required' }, { status: 400 });
-    }
+    const data = await request.json();
+    const { feedback, contact, userId, timestamp } = data;
 
-    const feedback = {
-      content,
-      createdAt: new Date().toISOString(),
+    // 创建反馈对象
+    const feedbackData = {
+      id: Date.now().toString(),
+      feedback,
+      contact,
+      userId,
+      timestamp,
     };
 
-    await kv.lpush('feedbacks', feedback);
+    // 确保data/feedback目录存在
+    const feedbackDir = path.join(process.cwd(), 'data', 'feedback');
+    if (!fs.existsSync(feedbackDir)) {
+      fs.mkdirSync(feedbackDir, { recursive: true });
+    }
 
-    return NextResponse.json({ message: 'Feedback submitted successfully' });
+    // 生成文件名（使用时间戳）
+    const fileName = `${Date.now()}.json`;
+    const filePath = path.join(feedbackDir, fileName);
+
+    // 将反馈数据写入文件
+    fs.writeFileSync(filePath, JSON.stringify(feedbackData, null, 2), 'utf8');
+
+    return NextResponse.json({ 
+      success: true, 
+      message: '反馈已保存',
+      filePath 
+    });
   } catch (error) {
-    console.error('Error submitting feedback:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('保存反馈时出错:', error);
+    return NextResponse.json(
+      { success: false, message: '保存反馈失败' },
+      { status: 500 }
+    );
   }
 }
 
+// 获取所有反馈
 export async function GET() {
   try {
-    const feedbacks = await kv.lrange('feedbacks', 0, -1);
-    return NextResponse.json(feedbacks);
+    const feedbackDir = path.join(process.cwd(), 'data', 'feedback');
+    
+    // 确保目录存在
+    if (!fs.existsSync(feedbackDir)) {
+      return NextResponse.json({ feedbacks: [] });
+    }
+
+    // 读取所有反馈文件
+    const files = fs.readdirSync(feedbackDir);
+    const feedbacks = files
+      .filter(file => file.endsWith('.json'))
+      .map(file => {
+        const filePath = path.join(feedbackDir, file);
+        const content = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(content);
+      })
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+    return NextResponse.json({ feedbacks });
   } catch (error) {
-    console.error('Error getting feedbacks:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('获取反馈时出错:', error);
+    return NextResponse.json(
+      { success: false, message: '获取反馈失败' },
+      { status: 500 }
+    );
   }
 } 

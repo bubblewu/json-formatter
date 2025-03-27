@@ -5,7 +5,6 @@ import FeedbackList from './FeedbackList';
 // 添加动态路由配置
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-export const runtime = 'edge';
 
 export default function FeedbackAdmin() {
   const t = useTranslations();
