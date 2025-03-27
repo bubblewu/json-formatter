@@ -253,7 +253,7 @@ export default function JsonFormatter() {
         setJsonOutput('');
         setError(null);
       }
-    }, 500);
+    }, 5000); // 点击显示DEMO按钮时，5秒后自动清除错误提示
     
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
@@ -280,9 +280,6 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
       setJsonOutput('');
       return;
     }
@@ -392,77 +389,11 @@ export default function JsonFormatter() {
             
             // 光标定位到错误位置
             editor.setPosition({ lineNumber, column });
-            
-            // 如果有修复建议且具有autoFix方法，提供辅助标记
-            if (typeof fixSuggestion !== 'string' && fixSuggestion.autoFix) {
-              // 创建信息标记，显示在错误下方
-              const infoMarker = {
-                severity: monacoRef.current.MarkerSeverity.Info,
-                startLineNumber: lineNumber,
-                startColumn: column,
-                endLineNumber: lineNumber,
-                endColumn: column + 1,
-                message: t('errors.autoFixAvailable')
-              };
-              
-              // 添加建议标记
-              const markers = [marker, infoMarker];
-              monacoRef.current.editor.setModelMarkers(model, 'owner', markers);
-              
-              // 添加自动修复按钮
-              setTimeout(() => {
-                setSuccess(`${t('errors.clickToFix')}: ${typeof fixSuggestion !== 'string' ? fixSuggestion.fixDescription : ''}`);
-                
-                // 添加点击修复按钮
-                const fixButton = document.createElement('button');
-                fixButton.textContent = t('errors.applyFix');
-                fixButton.className = 'px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded ml-2';
-                
-                // 获取成功消息DOM
-                const successMsg = document.querySelector('.bg-green-50.dark\\:bg-green-900\\/20');
-                if (successMsg) {
-                  const msgContent = successMsg.querySelector('.flex.items-center');
-                  if (msgContent) {
-                    msgContent.appendChild(fixButton);
-                    
-                    // 点击修复
-                    fixButton.addEventListener('click', () => {
-                      if (inputEditorRef.current && typeof fixSuggestion !== 'string' && fixSuggestion.autoFix) {
-                        const editor = inputEditorRef.current;
-                        const fixedValue = fixSuggestion.autoFix(inputValue);
-                        editor.setValue(fixedValue);
-                        setJsonInput(fixedValue);
-                        setSuccess(t('success.fixApplied'));
-                        setError(null);
-                        
-                        // 清除标记
-                        if (monacoRef.current) {
-                          const model = editor.getModel();
-                          if (model) {
-                            monacoRef.current.editor.setModelMarkers(model, 'owner', []);
-                          }
-                        }
-                        
-                        // 2秒后清除成功消息
-                        setTimeout(() => {
-                          setSuccess(null);
-                        }, 2000);
-                      }
-                    });
-                  }
-                }
-              }, 100);
-            }
           }
         } catch (err) {
           console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
-      
-      // 5秒后自动清除错误提示
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
     }
   };
 
@@ -628,9 +559,6 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
       setJsonOutput('');
       return;
     }
@@ -761,11 +689,6 @@ export default function JsonFormatter() {
           console.error(t('jsonErrors.clearMarkError'), err);
         }
       }
-      
-      // 5秒后自动清除错误提示
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
     }
   };
 
@@ -784,9 +707,7 @@ export default function JsonFormatter() {
     
     if (!inputValue.trim()) {
       setError(t('errors.empty'));
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
+      setJsonOutput('');
       return;
     }
 
@@ -812,6 +733,7 @@ export default function JsonFormatter() {
           if (!needsUnescaping) {
             setError(null);
             setSuccess(t('success.noEscapeNeeded'));
+            // 2秒后自动清除成功提示
             setTimeout(() => {
               setSuccess(null);
             }, 2000);
@@ -856,28 +778,21 @@ export default function JsonFormatter() {
             };
             saveToHistory(historyItem);
           }
+          
+          // 2秒后自动清除成功提示
+          setTimeout(() => {
+            setSuccess(null);
+          }, 2000);
         } catch (e) {
           // 如果再次解析失败，保持原始字符串
           setError(t('errors.invalidEscape'));
-          // 5秒后自动清除错误提示
-          setTimeout(() => {
-            setError(null);
-          }, 5000);
         }
       } else {
         // 如果不是字符串，提示用户
         setError(t('errors.notString'));
-        // 5秒后自动清除错误提示
-        setTimeout(() => {
-          setError(null);
-        }, 5000);
       }
     } catch (e) {
       setError(t('errors.invalid'));
-      // 5秒后自动清除错误提示
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
     }
   };
 
@@ -886,7 +801,6 @@ export default function JsonFormatter() {
     
     navigator.clipboard.writeText(jsonOutput).then(() => {
       setSuccess(t('success.copied'));
-      
       // 2秒后自动清除成功提示
       setTimeout(() => {
         setSuccess(null);
@@ -1178,8 +1092,10 @@ export default function JsonFormatter() {
         inputEditorRef.current.setValue('');
         setJsonInput('');
       } else {
+        // 移除注释后再设置示例内容
+        const jsonWithoutComments = exampleJsonc.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
         inputEditorRef.current.setValue(exampleJsonc);
-        setJsonInput(exampleJsonc);
+        setJsonInput(jsonWithoutComments);
       }
       setShowDemo(!showDemo);
     }
