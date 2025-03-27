@@ -69,7 +69,10 @@
     "zh": "Chino",
     "ja": "Japonés",
     "ko": "Coreano",
-    "es": "Español"
+    "es": "Español",
+    "de": "Alemán",
+    "fr": "Francés",
+    "ru": "Ruso"
   },
   "history": {
     "title": "Registros",
