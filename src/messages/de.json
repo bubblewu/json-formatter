@@ -1,91 +1,118 @@
 {
-  "title": "JSON-Formatierer",
-  "subtitle": "JSON-Daten formatieren, validieren und verschönern",
-  "description": "Ein kostenloses Online-Tool zum Formatieren, Validieren und Verschönern Ihrer JSON-Daten",
+  "title": "JSON Formatter",
+  "subtitle": "Online JSON Formatter, Validator und Beautifier",
+  "description": "Ein kostenloses Online-Tool zum Formatieren, Validieren, Komprimieren und Escapen Ihrer JSON-Daten.",
   "formatBtn": "Formatieren",
+  "compressBtn": "Komprimieren",
   "clearBtn": "Löschen",
+  "uploadBtn": "Hochladen",
   "copyBtn": "Kopieren",
   "downloadBtn": "Herunterladen",
-  "uploadBtn": "Hochladen",
-  "compressBtn": "Komprimieren",
-  "placeholder": "Fügen Sie Ihr JSON hier ein...",
-  "language": "Sprache",
-  "inputLabel": "JSON-Eingabe",
+  "historyBtn": "Verlauf",
+  "backToFormatter": "Zurück zum Formatter",
+  "removeEscapeBtn": "Escape entfernen",
+  "fullscreenBtn": "Vollbild",
+  "exitFullscreenBtn": "Vollbild beenden",
+  "inputLabel": "JSON Eingabe",
   "outputLabel": "Ergebnis",
-  "theme": {
-    "light": "Hell",
-    "dark": "Dunkel"
-  },
   "lineNumbers": {
     "show": "Zeilennummern anzeigen",
     "hide": "Zeilennummern ausblenden"
   },
   "errors": {
+    "empty": "JSON darf nicht leer sein",
     "invalid": "Ungültiges JSON",
-    "empty": "JSON ist leer",
-    "invalidEscape": "Kann Escape-Zeichen nicht entfernen, keine gültige JSON-Zeichenkette",
-    "notString": "Eingabe ist keine JSON-Zeichenkette, Escape-Zeichen können nicht entfernt werden"
+    "invalidEscape": "Escape-Zeichen können nicht entfernt werden, keine gültige JSON-Zeichenkette",
+    "notString": "Eingabe ist keine JSON-Zeichenkette, Escape-Zeichen können nicht entfernt werden",
+    "suggestion": "Korrekturvorschlag",
+    "autoFixAvailable": "Dieser Fehler kann automatisch behoben werden",
+    "clickToFix": "Klicken Sie, um diese Korrektur anzuwenden",
+    "applyFix": "Korrektur anwenden"
   },
   "success": {
-    "copied": "In die Zwischenablage kopiert",
     "formatted": "JSON erfolgreich formatiert",
     "compressed": "JSON erfolgreich komprimiert",
+    "copied": "In die Zwischenablage kopiert",
     "unescaped": "Escape-Zeichen erfolgreich entfernt",
-    "noEscapeNeeded": "Zeichenkette benötigt keine Escape-Entfernung"
-  },
-  "removeEscapeBtn": "Escape entfernen",
-  "fullscreenBtn": "Vollbild",
-  "exitFullscreenBtn": "Vollbild beenden",
-  "footer": {
-    "copyright": "© 2025 JSON-Formatierer | Ihr Effizienzhelfer"
-  },
-  "historyBtn": "Verlauf",
-  "backToFormatter": "Zurück zum Formatierer",
-  "history": {
-    "title": "Verlauf",
-    "searchPlaceholder": "Verlauf durchsuchen...",
-    "empty": "Keine Verlaufseinträge",
-    "noResults": "Keine passenden Einträge gefunden",
-    "input": "Eingabe",
-    "output": "Ausgabe",
-    "copy": "Kopieren",
-    "clear": "Verlauf löschen",
-    "operations": {
-      "format": "Formatieren",
-      "compress": "Komprimieren",
-      "unescape": "Escape entfernen"
-    },
-    "time": {
-      "today": "Heute um {time}",
-      "yesterday": "Gestern um {time}",
-      "daysAgo": "Vor {days} Tagen um {time}"
-    },
-    "timeFilter": {
-      "all": "Alle",
-      "today": "Heute",
-      "week": "Letzte Woche",
-      "month": "Letzter Monat"
-    }
-  },
-  "languages": {
-    "en": "English",
-    "zh": "中文",
-    "es": "Español",
-    "fr": "Français",
-    "de": "Deutsch",
-    "ja": "日本語",
-    "ko": "한국어",
-    "ru": "Русский"
+    "noEscapeNeeded": "Zeichenkette muss nicht unescaped werden",
+    "fixApplied": "Korrektur wurde angewendet"
   },
   "jsonErrors": {
     "unexpectedToken": "Unerwartetes Token",
     "expected": "Erwartet",
-    "inPosition": "an Position",
-    "clearMarkError": "Fehler beim Löschen von Markierungen",
-    "setMarkError": "Fehler beim Setzen von Fehlermarkierungen",
-    "fullscreenError": "Fehler beim Betreten des Vollbildmodus",
-    "saveHistoryError": "Fehler beim Speichern des Verlaufseintrags",
-    "getHistoryError": "Fehler beim Abrufen der Verlaufseinträge",
-    "clearHistoryError": "Fehler beim Löschen der Verlaufseinträge"
-  }
+    "inPosition": "in JSON an Position",
+    "clearMarkError": "Fehler beim Löschen der Marker",
+    "setMarkError": "Fehler beim Setzen der Marker",
+    "fullscreenError": "Fehler im Vollbildmodus",
+    "saveHistoryError": "Fehler beim Speichern des Verlaufs",
+    "getHistoryError": "Fehler beim Abrufen des Verlaufs",
+    "clearHistoryError": "Fehler beim Löschen des Verlaufs"
+  },
+  "suggestions": {
+    "checkSyntax": "Überprüfen Sie Ihre JSON-Syntax, besonders die übereinstimmenden Klammern, geschweiften Klammern und Anführungszeichen",
+    "missingClosingBracket": "Fehlende schließende Klammer oder geschweifte Klammer",
+    "missingClosingQuote": "Fehlendes schließendes Anführungszeichen",
+    "incompleteJson": "JSON ist unvollständig, überprüfen Sie die fehlenden Teile",
+    "missingQuotesAroundKey": "Eigenschaftsnamen müssen in doppelten Anführungszeichen stehen",
+    "trailingComma": "Nachgestellte Kommas sind in JSON nicht erlaubt",
+    "missingComma": "Fehlendes Komma zwischen Werten",
+    "singleQuotes": "JSON erfordert doppelte Anführungszeichen statt einfacher Anführungszeichen",
+    "booleanCase": "Boolesche Werte müssen in Kleinbuchstaben sein: {value}",
+    "nullCase": "null-Wert muss in Kleinbuchstaben sein",
+    "unescapedQuote": "Anführungszeichen innerhalb von Zeichenketten müssen escaped werden"
+  },
+  "footer": {
+    "copyright": "© 2025 JSON Formatter | Ihr Effizienzhelfer"
+  },
+  "languages": {
+    "en": "Englisch",
+    "zh": "Chinesisch",
+    "ja": "Japanisch",
+    "ko": "Koreanisch",
+    "es": "Spanisch",
+    "de": "Deutsch",
+    "fr": "Französisch",
+    "ru": "Russisch"
+  },
+  "history": {
+    "title": "Verlauf",
+    "empty": "Keine Verlaufsdaten",
+    "noResults": "Keine übereinstimmenden Einträge gefunden",
+    "clear": "Verlauf löschen",
+    "copy": "Kopieren",
+    "searchPlaceholder": "Verlauf durchsuchen...",
+    "timeFilter": {
+      "all": "Alle",
+      "today": "Heute",
+      "week": "Diese Woche",
+      "month": "Dieser Monat"
+    },
+    "format": "Formatieren",
+    "compress": "Komprimieren",
+    "unescape": "Escape entfernen",
+    "time": {
+      "today": "Heute {time}",
+      "yesterday": "Gestern {time}",
+      "daysAgo": "Vor {days} Tagen {time}"
+    }
+  },
+  "feedbackBtn": "Feedback",
+  "feedback": {
+    "title": "Feedback",
+    "content": "Feedback-Inhalt",
+    "contentPlaceholder": "Bitte geben Sie Ihr Feedback ein...",
+    "contact": "Kontakt (Optional)",
+    "contactPlaceholder": "Bitte geben Sie Ihre E-Mail oder andere Kontaktinformationen ein",
+    "submit": "Feedback senden",
+    "submitting": "Wird gesendet...",
+    "cancel": "Abbrechen",
+    "success": "Vielen Dank für Ihr Feedback!",
+    "error": "Senden fehlgeschlagen, bitte versuchen Sie es später erneut",
+    "validation": {
+      "required": "Bitte füllen Sie dieses Feld aus",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+    }
+  },
+  "showDemoBtn": "Demo anzeigen",
+  "hideDemoBtn": "Demo ausblenden"
 } 

@@ -106,5 +106,7 @@
       "required": "Please fill out this field",
       "invalidEmail": "Please enter a valid email address"
     }
-  }
+  },
+  "showDemoBtn": "Show Demo",
+  "hideDemoBtn": "Hide Demo"
 } 

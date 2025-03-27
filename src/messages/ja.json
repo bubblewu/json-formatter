@@ -109,5 +109,7 @@
       "required": "この項目を入力してください",
       "invalidEmail": "有効なメールアドレスを入力してください"
     }
-  }
+  },
+  "showDemoBtn": "サンプルを表示",
+  "hideDemoBtn": "サンプルを非表示"
 } 

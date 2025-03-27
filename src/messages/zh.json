@@ -106,5 +106,7 @@
       "required": "请填写此字段",
       "invalidEmail": "请输入有效的邮箱地址"
     }
-  }
+  },
+  "showDemoBtn": "显示示例",
+  "hideDemoBtn": "隐藏示例"
 } 

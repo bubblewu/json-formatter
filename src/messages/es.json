@@ -105,5 +105,7 @@
     "cancel": "Cancelar",
     "success": "¡Gracias por tus comentarios!",
     "error": "Error al enviar, por favor intenta de nuevo más tarde"
-  }
+  },
+  "showDemoBtn": "Mostrar Demo",
+  "hideDemoBtn": "Ocultar Demo"
 } 

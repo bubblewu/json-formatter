@@ -109,5 +109,7 @@
       "required": "이 필드를 입력하세요",
       "invalidEmail": "유효한 이메일 주소를 입력하세요"
     }
-  }
+  },
+  "showDemoBtn": "예제 표시",
+  "hideDemoBtn": "예제 숨기기"
 } 
