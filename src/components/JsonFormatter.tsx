@@ -253,7 +253,7 @@ export default function JsonFormatter() {
         setJsonOutput('');
         setError(null);
       }
-    }, 5000); // 点击显示DEMO按钮时，5秒后自动清除错误提示
+    }, 10000); // 点击显示DEMO按钮时，10秒后自动清除错误提示
     
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
@@ -1329,7 +1329,9 @@ export default function JsonFormatter() {
                   onChange={(value) => {
                     if (value) {
                       try {
-                        const parsedJson = JSON.parse(value);
+                        // 移除注释后再解析JSON
+                        const jsonWithoutComments = value.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+                        const parsedJson = JSON.parse(jsonWithoutComments);
                         const formattedJson = JSON.stringify(parsedJson, null, 2);
                         setJsonOutput(formattedJson);
                         setError(null);
