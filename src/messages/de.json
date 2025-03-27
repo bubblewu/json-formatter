@@ -65,14 +65,14 @@
     "copyright": "© 2025 JSON Formatter | Ihr Effizienzhelfer"
   },
   "languages": {
-    "en": "Englisch",
-    "zh": "Chinesisch",
-    "ja": "Japanisch",
-    "ko": "Koreanisch",
-    "es": "Spanisch",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語",
+    "ko": "한국어",
+    "es": "Español",
     "de": "Deutsch",
-    "fr": "Französisch",
-    "ru": "Russisch"
+    "fr": "Français",
+    "ru": "Русский"
   },
   "history": {
     "title": "Verlauf",

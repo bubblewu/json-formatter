@@ -65,11 +65,14 @@
     "copyright": "© 2025 Formateador JSON | Tu Asistente de Eficiencia"
   },
   "languages": {
-    "en": "Inglés",
-    "zh": "Chino",
-    "ja": "Japonés",
-    "ko": "Coreano",
-    "es": "Español"
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語",
+    "ko": "한국어",
+    "es": "Español",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский"
   },
   "history": {
     "title": "Registros",

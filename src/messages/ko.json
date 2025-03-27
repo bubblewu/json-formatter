@@ -65,11 +65,14 @@
     "copyright": "© 2025 JSON 포맷터 | 당신의 효율성 도우미"
   },
   "languages": {
-    "en": "영어",
-    "zh": "중국어",
-    "ja": "일본어",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語",
     "ko": "한국어",
-    "es": "스페인어"
+    "es": "Español",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский"
   },
   "history": {
     "title": "기록",
