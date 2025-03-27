@@ -26,11 +26,19 @@ const nextConfig = {
         os: false,
       };
     }
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 250000, // 限制 chunk 最大 250KB
+      },
+    };
+
 
     return config;
   },
   env: {
-    _next_intl_trailing_slash: 'true',
+    _next_intl_trailing_slash: '',
   },
 };
 
