@@ -8,24 +8,30 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // 添加Monaco编辑器的webpack配置
+  experimental: {
+    optimizePackageImports: ['@monaco-editor/react', 'react-syntax-highlighter'],
+  },
   webpack: (config, { isServer }) => {
+    // 减少构建时的递归深度
+    config.watchOptions = {
+      ignored: ['**/node_modules', '**/.next'],
+    };
+
+    // 优化 Monaco Editor 构建
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         path: false,
+        os: false,
       };
     }
+
     return config;
   },
-  // 配置页面生成选项
-  experimental: {
-    // 禁用特定路径的静态预渲染
-    workerThreads: false,
-    cpus: 1,
-    serverActions: true,
-  }
+  env: {
+    _next_intl_trailing_slash: 'true',
+  },
 };
 
 export default withNextIntl(nextConfig); 
