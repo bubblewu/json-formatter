@@ -66,13 +66,7 @@
   },
   "languages": {
     "en": "English",
-    "zh": "Chinese",
-    "ja": "Japanese",
-    "ko": "Korean",
-    "es": "Spanish",
-    "de": "German",
-    "fr": "French",
-    "ru": "Russian"
+    "zh": "Chinese"
   },
   "history": {
     "title": "History Records",

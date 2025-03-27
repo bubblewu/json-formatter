@@ -66,13 +66,7 @@
   },
   "languages": {
     "en": "English",
-    "zh": "中文",
-    "ja": "日本語",
-    "ko": "한국어",
-    "es": "Español",
-    "de": "Deutsch",
-    "fr": "Français",
-    "ru": "Русский"
+    "zh": "中文"
   },
   "history": {
     "title": "历史记录",

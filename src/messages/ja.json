@@ -65,14 +65,11 @@
     "copyright": "© 2025 JSONフォーマッター | あなたの効率化ヘルパー"
   },
   "languages": {
-    "en": "English",
+    "en": "英語",
     "zh": "中国語",
     "ja": "日本語",
-    "ko": "한국어",
-    "es": "Español",
-    "de": "Deutsch",
-    "fr": "Français",
-    "ru": "Русский"
+    "ko": "韓国語",
+    "es": "スペイン語"
   },
   "history": {
     "title": "履歴記録",
