@@ -20,6 +20,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
           locales.map(loc => [loc, `https://json-formatter.vercel.app/${loc}`])
         ),
       },
+      icons: {
+        icon: [
+          { url: '/logo.png', type: 'image/png' },
+        ],
+        apple: [
+          { url: '/logo.png', type: 'image/png' },
+        ],
+      },
     };
   }
 
@@ -33,6 +41,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: Object.fromEntries(
         locales.map(loc => [loc, `https://json-formatter.vercel.app/${loc}`])
       ),
+    },
+    icons: {
+      icon: [
+        { url: '/logo.png', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/logo.png', type: 'image/png' },
+      ],
     },
   };
 }
@@ -62,6 +78,8 @@ export default async function LocaleLayout({
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="robots" content="index, follow" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" type="image/png" href="/logo.png" />
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
