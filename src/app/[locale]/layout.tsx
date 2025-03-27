@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       },
       icons: {
         icon: [
-          { url: '/logo.png', type: 'image/png' },
+          { url: '/logo-json.png', type: 'image/png' },
         ],
         apple: [
-          { url: '/logo.png', type: 'image/png' },
+          { url: '/logo-json.png', type: 'image/png' },
         ],
       },
     };
@@ -44,10 +44,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     icons: {
       icon: [
-        { url: '/logo.png', type: 'image/png' },
+        { url: '/logo-json.png', type: 'image/png' },
       ],
       apple: [
-        { url: '/logo.png', type: 'image/png' },
+        { url: '/logo-json.png', type: 'image/png' },
       ],
     },
   };
@@ -78,8 +78,8 @@ export default async function LocaleLayout({
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="robots" content="index, follow" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        <link rel="icon" type="image/png" href="/logo.png" />
-        <link rel="apple-touch-icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/png" href="/logo-json.png" />
+        <link rel="apple-touch-icon" type="image/png" href="/logo-json.png" />
       </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
