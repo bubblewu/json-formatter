@@ -1,0 +1,20 @@
+{
+  "inputLabel": "JSON Input",
+  "outputLabel": "Formatted JSON",
+  "formatBtn": "Format",
+  "compressBtn": "Compress",
+  "copyBtn": "Copy",
+  "clearBtn": "Clear",
+  "errorMessage": "Invalid JSON",
+  "successMessage": "Copied to clipboard",
+  "feedbackBtn": "Feedback",
+  "feedbackTitle": "Feedback",
+  "feedbackDescription": "Your feedback helps us improve",
+  "feedbackPlaceholder": "Tell us what you think...",
+  "feedbackSubmit": "Submit",
+  "feedbackCancel": "Cancel",
+  "feedbackSuccess": "Thank you for your feedback!",
+  "feedbackError": "Failed to submit feedback",
+  "showDemoBtn": "Show Demo",
+  "hideDemoBtn": "Hide Demo"
+} 

@@ -1,0 +1,6 @@
+name = "json-formatter"
+compatibility_date = "2024-03-26"
+
+kv_namespaces = [
+  { binding = "FEEDBACK_KV", id = "your_kv_namespace_id", preview_id = "your_preview_kv_namespace_id" }
+] 

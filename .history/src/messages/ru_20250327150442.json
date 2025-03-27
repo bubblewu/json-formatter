@@ -1,0 +1,91 @@
+{
+  "title": "JSON форматировщик",
+  "subtitle": "Форматирование, проверка и улучшение JSON данных",
+  "description": "Бесплатный онлайн-инструмент для форматирования, проверки и улучшения ваших JSON данных",
+  "formatBtn": "Форматировать",
+  "clearBtn": "Очистить",
+  "copyBtn": "Копировать",
+  "downloadBtn": "Скачать",
+  "uploadBtn": "Загрузить",
+  "compressBtn": "Сжать",
+  "placeholder": "Вставьте ваш JSON сюда...",
+  "language": "Язык",
+  "inputLabel": "Входной JSON",
+  "outputLabel": "Результат",
+  "theme": {
+    "light": "Светлая",
+    "dark": "Тёмная"
+  },
+  "lineNumbers": {
+    "show": "Показать номера строк",
+    "hide": "Скрыть номера строк"
+  },
+  "errors": {
+    "invalid": "Недействительный JSON",
+    "empty": "JSON пуст",
+    "invalidEscape": "Невозможно удалить escape-символы, не является допустимой JSON строкой",
+    "notString": "Ввод не является JSON строкой, невозможно удалить escape-символы"
+  },
+  "success": {
+    "copied": "Скопировано в буфер обмена",
+    "formatted": "JSON успешно отформатирован",
+    "compressed": "JSON успешно сжат",
+    "unescaped": "Escape-символы успешно удалены",
+    "noEscapeNeeded": "Строка не нуждается в удалении escape-символов"
+  },
+  "removeEscapeBtn": "Удалить escape",
+  "fullscreenBtn": "Полный экран",
+  "exitFullscreenBtn": "Выйти из полного экрана",
+  "footer": {
+    "copyright": "© 2025 JSON форматировщик | Ваш помощник в повышении эффективности"
+  },
+  "historyBtn": "История",
+  "backToFormatter": "Вернуться к форматировщику",
+  "history": {
+    "title": "История",
+    "searchPlaceholder": "Поиск по истории...",
+    "empty": "Нет записей истории",
+    "noResults": "Соответствующих записей не найдено",
+    "input": "Ввод",
+    "output": "Вывод",
+    "copy": "Копировать",
+    "clear": "Очистить историю",
+    "operations": {
+      "format": "Форматировать",
+      "compress": "Сжать",
+      "unescape": "Удалить escape"
+    },
+    "time": {
+      "today": "Сегодня в {time}",
+      "yesterday": "Вчера в {time}",
+      "daysAgo": "{days} дней назад в {time}"
+    },
+    "timeFilter": {
+      "all": "Все",
+      "today": "Сегодня",
+      "week": "Последняя неделя",
+      "month": "Последний месяц"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "ru": "Русский"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Неожиданный токен",
+    "expected": "Ожидается",
+    "inPosition": "в позиции",
+    "clearMarkError": "Ошибка при очистке маркеров",
+    "setMarkError": "Ошибка при установке маркеров ошибок",
+    "fullscreenError": "Ошибка при входе в полноэкранный режим",
+    "saveHistoryError": "Ошибка при сохранении записи истории",
+    "getHistoryError": "Ошибка при получении записей истории",
+    "clearHistoryError": "Ошибка при очистке записей истории"
+  }
+} 

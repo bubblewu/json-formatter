@@ -1,0 +1,34 @@
+name = "json-formatter"
+compatibility_date = "2024-03-26"
+pages_build_output_dir = "out"
+
+[build]
+command = "npm run build"
+output_directory = ".next"
+build_directory = "dist"
+
+[site]
+bucket = ".next"
+
+[env.production]
+kv_namespaces = [
+  { binding = "FEEDBACK_KV", id = "800b294a9c6845878b890ca7381b7da3" }
+]
+
+[env.preview]
+kv_namespaces = [
+  { binding = "FEEDBACK_KV", id = "800b294a9c6845878b890ca7381b7da3" }
+]
+
+# 优化构建配置
+[build.upload]
+format = "service-worker"
+
+[build.environment]
+NODE_VERSION = "18"
+NPM_VERSION = "10"
+
+[kv_namespaces]
+binding = "FEEDBACK_KV"
+id = "800b294a9c6845878b890ca7381b7da3"
+preview_id = "800b294a9c6845878b890ca7381b7da3" 

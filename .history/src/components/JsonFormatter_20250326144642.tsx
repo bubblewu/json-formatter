@@ -1,0 +1,268 @@
+'use client';
+
+import { useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
+import { usePathname, useRouter } from 'next/navigation';
+import { locales } from '@/i18n/request';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { 
+  vscDarkPlus, 
+  vs
+} from 'react-syntax-highlighter/dist/cjs/styles/prism';
+
+export default function JsonFormatter() {
+  const t = useTranslations();
+  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const router = useRouter();
+  const [jsonInput, setJsonInput] = useState('');
+  const [jsonOutput, setJsonOutput] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [showLineNumbers, setShowLineNumbers] = useState(true);
+  const outputRef = useRef<HTMLDivElement>(null);
+
+  const handleLanguageChange = (locale: string) => {
+    const currentLocale = pathname.split('/')[1];
+    // 替换当前语言为新选择的语言
+    const newPath = pathname.replace(`/${currentLocale}`, `/${locale}`);
+    router.push(newPath);
+  };
+
+  const formatJson = () => {
+    if (!jsonInput.trim()) {
+      setError(t('errors.empty'));
+      setJsonOutput('');
+      return;
+    }
+
+    try {
+      const parsedJson = JSON.parse(jsonInput);
+      const formattedJson = JSON.stringify(parsedJson, null, 2);
+      setJsonOutput(formattedJson);
+      setError(null);
+      setSuccess(t('success.formatted'));
+      
+      setTimeout(() => {
+        setSuccess(null);
+      }, 3000);
+    } catch {
+      setError(t('errors.invalid'));
+      setJsonOutput('');
+    }
+  };
+
+  const clearJson = () => {
+    setJsonInput('');
+    setJsonOutput('');
+    setError(null);
+    setSuccess(null);
+  };
+
+  const copyToClipboard = () => {
+    if (!jsonOutput) return;
+    
+    navigator.clipboard.writeText(jsonOutput).then(() => {
+      setSuccess(t('success.copied'));
+      
+      setTimeout(() => {
+        setSuccess(null);
+      }, 3000);
+    });
+  };
+
+  const downloadJson = () => {
+    if (!jsonOutput) return;
+    
+    const blob = new Blob([jsonOutput], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'formatted-json.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      setJsonInput(content);
+    };
+    reader.readAsText(file);
+  };
+
+  // 自定义语法高亮的主题，增强括号的颜色区分
+  const customStyle = theme === 'dark' ? {
+    ...vscDarkPlus,
+    'punctuation.bracket-curly': { color: '#ff79c6' },
+    'punctuation.bracket-square': { color: '#f1fa8c' },
+    'punctuation.bracket-round': { color: '#8be9fd' }
+  } : {
+    ...vs,
+    'punctuation.bracket-curly': { color: '#d73a49' },
+    'punctuation.bracket-square': { color: '#0550ae' },
+    'punctuation.bracket-round': { color: '#6f42c1' }
+  };
+
+  const toggleLineNumbers = () => {
+    setShowLineNumbers(!showLineNumbers);
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          {t('title')}
+        </h1>
+        <p className="text-lg text-gray-600 dark:text-gray-300">
+          {t('subtitle')}
+        </p>
+      </div>
+
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          >
+            {theme === 'dark' ? t('theme.light') : t('theme.dark')}
+          </button>
+          <button
+            onClick={toggleLineNumbers}
+            className="px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          >
+            {showLineNumbers ? '隐藏行号' : '显示行号'}
+          </button>
+          <div className="relative">
+            <select
+              onChange={(e) => handleLanguageChange(e.target.value)}
+              className="px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors appearance-none pr-8"
+              value={pathname.split('/')[1]}
+            >
+              {locales.map((locale) => (
+                <option key={locale} value={locale}>
+                  {locale === 'en' ? 'English' : '中文'}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <svg 
+                className="w-4 h-4 text-gray-800 dark:text-white" 
+                fill="none" 
+                stroke="currentColor"
+                viewBox="0 0 24 24" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M19 9l-7 7-7-7" 
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div>
+          <textarea
+            value={jsonInput}
+            onChange={(e) => setJsonInput(e.target.value)}
+            placeholder={t('placeholder')}
+            className="w-full h-[400px] p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+        <div className="relative">
+          <div 
+            ref={outputRef}
+            className="w-full h-[400px] overflow-auto bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white font-mono"
+          >
+            {jsonOutput && (
+              <SyntaxHighlighter
+                language="json"
+                style={customStyle}
+                customStyle={{
+                  margin: 0,
+                  padding: '1rem',
+                  height: '100%',
+                  backgroundColor: 'transparent'
+                }}
+                showLineNumbers={showLineNumbers}
+                lineNumberStyle={{
+                  minWidth: '2.5em',
+                  textAlign: 'right',
+                  marginRight: '1em',
+                  color: theme === 'dark' ? '#666' : '#999',
+                  paddingRight: '1em',
+                  borderRight: '1px solid #ddd',
+                }}
+                wrapLongLines={true}
+              >
+                {jsonOutput}
+              </SyntaxHighlighter>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {error && (
+        <div className="p-3 mb-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md">
+          {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="p-3 mb-4 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-md">
+          {success}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={formatJson}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+        >
+          {t('formatBtn')}
+        </button>
+        <button
+          onClick={clearJson}
+          className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors"
+        >
+          {t('clearBtn')}
+        </button>
+        <button
+          onClick={copyToClipboard}
+          disabled={!jsonOutput}
+          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors disabled:bg-green-400 disabled:cursor-not-allowed"
+        >
+          {t('copyBtn')}
+        </button>
+        <button
+          onClick={downloadJson}
+          disabled={!jsonOutput}
+          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors disabled:bg-purple-400 disabled:cursor-not-allowed"
+        >
+          {t('downloadBtn')}
+        </button>
+        <label className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md transition-colors cursor-pointer">
+          {t('uploadBtn')}
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+        </label>
+      </div>
+    </div>
+  );
+} 

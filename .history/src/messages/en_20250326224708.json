@@ -1,0 +1,118 @@
+{
+  "title": "JSON Formatter",
+  "subtitle": "Online JSON Formatter, Validator, and Beautifier",
+  "description": "A free online tool to format, validate, compress, and escape your JSON data.",
+  "formatBtn": "Format",
+  "compressBtn": "Compress",
+  "clearBtn": "Clear",
+  "uploadBtn": "Upload",
+  "copyBtn": "Copy",
+  "downloadBtn": "Download",
+  "historyBtn": "History",
+  "backToFormatter": "Back to Formatter",
+  "removeEscapeBtn": "Remove Escape",
+  "fullscreenBtn": "Full",
+  "exitFullscreenBtn": "Exit Full",
+  "inputLabel": "JSON Input",
+  "outputLabel": "Result",
+  "lineNumbers": {
+    "show": "Show Line Number",
+    "hide": "Hide Line Number"
+  },
+  "errors": {
+    "empty": "JSON cannot be empty",
+    "invalid": "Invalid JSON",
+    "invalidEscape": "Cannot remove escape characters, not a valid JSON string",
+    "notString": "Input is not a JSON string, cannot remove escape characters",
+    "suggestion": "Fix suggestion",
+    "autoFixAvailable": "This error can be automatically fixed",
+    "clickToFix": "Click to apply this fix",
+    "applyFix": "Apply Fix"
+  },
+  "success": {
+    "formatted": "JSON formatted successfully",
+    "compressed": "JSON compressed successfully",
+    "copied": "Copied to clipboard",
+    "unescaped": "Successfully removed escape characters",
+    "noEscapeNeeded": "String does not need unescaping",
+    "fixApplied": "Fix has been applied"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Unexpected token",
+    "expected": "Expected",
+    "inPosition": "in JSON at position",
+    "clearMarkError": "Error clearing markers",
+    "setMarkError": "Error setting markers",
+    "fullscreenError": "Error in fullscreen mode",
+    "saveHistoryError": "Error saving history",
+    "getHistoryError": "Error getting history",
+    "clearHistoryError": "Error clearing history"
+  },
+  "suggestions": {
+    "checkSyntax": "Check your JSON syntax, especially matching brackets, braces, and quotes",
+    "missingClosingBracket": "Missing closing bracket or brace",
+    "missingClosingQuote": "Missing closing quote",
+    "incompleteJson": "JSON is incomplete, check for missing parts",
+    "missingQuotesAroundKey": "Property names need to be surrounded by double quotes",
+    "trailingComma": "Trailing commas are not allowed in JSON",
+    "missingComma": "Missing comma between values",
+    "singleQuotes": "JSON requires double quotes instead of single quotes",
+    "booleanCase": "Boolean values must be lowercase: {value}",
+    "nullCase": "null value must be lowercase",
+    "unescapedQuote": "Quotes inside strings need to be escaped"
+  },
+  "footer": {
+    "copyright": "© 2025 JSON Formatter | Your Efficiency Helper"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "Chinese"
+  },
+  "history": {
+    "title": "History Records",
+    "empty": "No history records",
+    "noResults": "No matching records found",
+    "clear": "Clear History",
+    "copy": "Copy",
+    "searchPlaceholder": "Search history...",
+    "timeFilter": {
+      "all": "All",
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month"
+    },
+    "format": "Format",
+    "compress": "Compress",
+    "unescape": "Unescape",
+    "time": {
+      "today": "Today {time}",
+      "yesterday": "Yesterday {time}",
+      "daysAgo": "{days} days ago {time}"
+    }
+  },
+  "feedbackBtn": "Feedback",
+  "feedback": {
+    "title": "Feedback",
+    "content": "Feedback Content",
+    "contentPlaceholder": "Please enter your feedback...",
+    "contact": "Contact (Optional)",
+    "contactPlaceholder": "Please enter your email or other contact information",
+    "submit": "Submit Feedback",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "success": "Thank you for your feedback!",
+    "error": "Submission failed, please try again later",
+    "validation": {
+      "required": "Please fill out this field",
+      "invalidEmail": "Please enter a valid email address"
+    }
+  },
+  "pathSearch": {
+    "placeholder": "Enter JSON path or key to search",
+    "search": "Search",
+    "currentPath": "Current Path",
+    "resultCount": "Result {current}/{total}",
+    "noPathFound": "No matching paths found",
+    "currentResult": "Current result: {path}"
+  }
+} 

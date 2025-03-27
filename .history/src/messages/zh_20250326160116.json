@@ -1,0 +1,69 @@
+{
+  "title": "JSON格式化工具",
+  "subtitle": "格式化、验证和美化JSON数据",
+  "description": "一个免费的在线工具，用于格式化、验证和美化您的JSON数据",
+  "formatBtn": "格式化",
+  "clearBtn": "清空",
+  "copyBtn": "复制",
+  "downloadBtn": "下载",
+  "uploadBtn": "上传",
+  "compressBtn": "压缩",
+  "placeholder": "在此粘贴您的JSON...",
+  "language": "语言",
+  "inputLabel": "输入JSON",
+  "outputLabel": "输出结果",
+  "theme": {
+    "light": "浅色",
+    "dark": "深色"
+  },
+  "lineNumbers": {
+    "show": "显示行号",
+    "hide": "隐藏行号"
+  },
+  "errors": {
+    "invalid": "无效的JSON",
+    "empty": "JSON为空",
+    "invalidEscape": "无法去除转义，不是有效的JSON字符串",
+    "notString": "输入不是JSON字符串，无法去除转义"
+  },
+  "success": {
+    "copied": "已复制到剪贴板",
+    "formatted": "JSON格式化成功",
+    "compressed": "JSON压缩成功",
+    "unescaped": "成功去除转义字符",
+    "noEscapeNeeded": "字符串不需要转义"
+  },
+  "removeEscapeBtn": "去除转义",
+  "fullscreenBtn": "全屏",
+  "exitFullscreenBtn": "退出全屏",
+  "footer": {
+    "copyright": "© 2025 JSON格式化工具 | 您的效率好帮手"
+  },
+  "historyBtn": "历史记录",
+  "backToFormatter": "返回格式化器",
+  "history": {
+    "title": "历史记录",
+    "searchPlaceholder": "搜索历史记录...",
+    "empty": "暂无历史记录",
+    "noResults": "没有找到匹配的记录",
+    "input": "输入",
+    "output": "输出",
+    "copy": "复制",
+    "operations": {
+      "format": "格式化",
+      "compress": "压缩",
+      "unescape": "去除转义"
+    },
+    "time": {
+      "today": "今天 {time}",
+      "yesterday": "昨天 {time}",
+      "daysAgo": "{days}天前 {time}"
+    },
+    "timeFilter": {
+      "all": "全部",
+      "today": "今天",
+      "week": "最近一周",
+      "month": "最近一月"
+    }
+  }
+} 

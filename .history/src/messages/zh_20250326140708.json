@@ -1,0 +1,24 @@
+{
+  "title": "JSON格式化工具",
+  "subtitle": "格式化、验证和美化JSON数据",
+  "description": "一个免费的在线工具，用于格式化、验证和美化您的JSON数据",
+  "formatBtn": "格式化",
+  "clearBtn": "清空",
+  "copyBtn": "复制",
+  "downloadBtn": "下载",
+  "uploadBtn": "上传",
+  "placeholder": "在此粘贴您的JSON...",
+  "language": "语言",
+  "theme": {
+    "light": "浅色",
+    "dark": "深色"
+  },
+  "errors": {
+    "invalid": "无效的JSON",
+    "empty": "JSON为空"
+  },
+  "success": {
+    "copied": "已复制到剪贴板",
+    "formatted": "JSON格式化成功"
+  }
+} 

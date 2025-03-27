@@ -1,0 +1,121 @@
+{
+  "title": "JSONフォーマッター",
+  "subtitle": "オンラインJSONフォーマッター、バリデーター、ビューティファイアー",
+  "description": "JSONデータを無料でフォーマット、検証、圧縮、エスケープできるオンラインツール。",
+  "formatBtn": "フォーマット",
+  "compressBtn": "圧縮",
+  "clearBtn": "クリア",
+  "uploadBtn": "アップロード",
+  "copyBtn": "コピー",
+  "downloadBtn": "ダウンロード",
+  "historyBtn": "履歴",
+  "backToFormatter": "フォーマッターに戻る",
+  "removeEscapeBtn": "エスケープ解除",
+  "fullscreenBtn": "全画面",
+  "exitFullscreenBtn": "全画面解除",
+  "inputLabel": "JSON入力",
+  "outputLabel": "結果",
+  "lineNumbers": {
+    "show": "行番号を表示",
+    "hide": "行番号を非表示"
+  },
+  "errors": {
+    "empty": "JSONは空にできません",
+    "invalid": "無効なJSON",
+    "invalidEscape": "エスケープ文字を削除できません。有効なJSON文字列ではありません",
+    "notString": "入力はJSON文字列ではありません。エスケープ文字を削除できません",
+    "suggestion": "修正提案",
+    "autoFixAvailable": "このエラーは自動修正できます",
+    "clickToFix": "クリックして修正を適用",
+    "applyFix": "修正を適用"
+  },
+  "success": {
+    "formatted": "JSONのフォーマットが完了しました",
+    "compressed": "JSONの圧縮が完了しました",
+    "copied": "クリップボードにコピーしました",
+    "unescaped": "エスケープ文字の削除が完了しました",
+    "noEscapeNeeded": "文字列にエスケープ解除は不要です",
+    "fixApplied": "修正が適用されました"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "予期しないトークン",
+    "expected": "期待される",
+    "inPosition": "JSONの位置",
+    "clearMarkError": "マーカーのクリア中にエラーが発生しました",
+    "setMarkError": "マーカーの設定中にエラーが発生しました",
+    "fullscreenError": "全画面モードでエラーが発生しました",
+    "saveHistoryError": "履歴の保存中にエラーが発生しました",
+    "getHistoryError": "履歴の取得中にエラーが発生しました",
+    "clearHistoryError": "履歴のクリア中にエラーが発生しました"
+  },
+  "suggestions": {
+    "checkSyntax": "JSONの構文を確認してください。特に括弧、中括弧、引用符の対応を確認",
+    "missingClosingBracket": "閉じ括弧または中括弧が不足しています",
+    "missingClosingQuote": "閉じ引用符が不足しています",
+    "incompleteJson": "JSONが不完全です。不足している部分を確認してください",
+    "missingQuotesAroundKey": "プロパティ名は二重引用符で囲む必要があります",
+    "trailingComma": "JSONでは末尾のカンマは使用できません",
+    "missingComma": "値の間にカンマが不足しています",
+    "singleQuotes": "JSONでは単一引用符の代わりに二重引用符を使用する必要があります",
+    "booleanCase": "ブール値は小文字である必要があります：{value}",
+    "nullCase": "null値は小文字である必要があります",
+    "unescapedQuote": "文字列内の引用符はエスケープする必要があります"
+  },
+  "footer": {
+    "copyright": "© 2025 JSONフォーマッター | あなたの効率化ヘルパー"
+  },
+  "languages": {
+    "en": "英語",
+    "zh": "中国語",
+    "ja": "日本語",
+    "ko": "韓国語",
+    "es": "スペイン語"
+  },
+  "history": {
+    "title": "履歴記録",
+    "empty": "履歴記録がありません",
+    "noResults": "一致する記録が見つかりません",
+    "clear": "履歴をクリア",
+    "copy": "コピー",
+    "searchPlaceholder": "履歴を検索...",
+    "timeFilter": {
+      "all": "すべて",
+      "today": "今日",
+      "week": "今週",
+      "month": "今月"
+    },
+    "format": "フォーマット",
+    "compress": "圧縮",
+    "unescape": "エスケープ解除",
+    "time": {
+      "today": "今日 {time}",
+      "yesterday": "昨日 {time}",
+      "daysAgo": "{days}日前 {time}"
+    }
+  },
+  "feedbackBtn": "フィードバック",
+  "feedback": {
+    "title": "フィードバック",
+    "content": "フィードバック内容",
+    "contentPlaceholder": "フィードバック内容を入力してください...",
+    "contact": "連絡先（任意）",
+    "contactPlaceholder": "メールアドレスまたはその他の連絡先情報を入力してください",
+    "submit": "フィードバックを送信",
+    "submitting": "送信中...",
+    "cancel": "キャンセル",
+    "success": "フィードバックありがとうございます！",
+    "error": "送信に失敗しました。後でもう一度お試しください",
+    "validation": {
+      "required": "この項目を入力してください",
+      "invalidEmail": "有効なメールアドレスを入力してください"
+    }
+  },
+  "pathSearch": {
+    "placeholder": "JSONパスまたはキーを入力して検索",
+    "search": "検索",
+    "currentPath": "現在のパス",
+    "resultCount": "結果 {current}/{total}",
+    "noPathFound": "一致するパスが見つかりません",
+    "currentResult": "現在の結果: {path}"
+  }
+} 

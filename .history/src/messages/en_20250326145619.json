@@ -1,0 +1,32 @@
+{
+  "title": "JSON Formatter",
+  "subtitle": "Format, Validate, and Beautify JSON Data",
+  "description": "A free online tool to format, validate, and beautify your JSON data",
+  "formatBtn": "Format",
+  "clearBtn": "Clear",
+  "copyBtn": "Copy",
+  "downloadBtn": "Download",
+  "uploadBtn": "Upload",
+  "compressBtn": "Compress",
+  "placeholder": "Paste your JSON here...",
+  "language": "Language",
+  "inputLabel": "Input JSON",
+  "outputLabel": "Result",
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "lineNumbers": {
+    "show": "Show Line Numbers",
+    "hide": "Hide Line Numbers"
+  },
+  "errors": {
+    "invalid": "Invalid JSON",
+    "empty": "JSON is empty"
+  },
+  "success": {
+    "copied": "Copied to clipboard",
+    "formatted": "JSON formatted successfully",
+    "compressed": "JSON compressed successfully"
+  }
+} 

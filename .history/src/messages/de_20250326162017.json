@@ -1,0 +1,91 @@
+{
+  "title": "JSON-Formatierer",
+  "subtitle": "JSON-Daten formatieren, validieren und verschönern",
+  "description": "Ein kostenloses Online-Tool zum Formatieren, Validieren und Verschönern Ihrer JSON-Daten",
+  "formatBtn": "Formatieren",
+  "clearBtn": "Löschen",
+  "copyBtn": "Kopieren",
+  "downloadBtn": "Herunterladen",
+  "uploadBtn": "Hochladen",
+  "compressBtn": "Komprimieren",
+  "placeholder": "Fügen Sie Ihr JSON hier ein...",
+  "language": "Sprache",
+  "inputLabel": "JSON-Eingabe",
+  "outputLabel": "Ergebnis",
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel"
+  },
+  "lineNumbers": {
+    "show": "Zeilennummern anzeigen",
+    "hide": "Zeilennummern ausblenden"
+  },
+  "errors": {
+    "invalid": "Ungültiges JSON",
+    "empty": "JSON ist leer",
+    "invalidEscape": "Kann Escape-Zeichen nicht entfernen, keine gültige JSON-Zeichenkette",
+    "notString": "Eingabe ist keine JSON-Zeichenkette, Escape-Zeichen können nicht entfernt werden"
+  },
+  "success": {
+    "copied": "In die Zwischenablage kopiert",
+    "formatted": "JSON erfolgreich formatiert",
+    "compressed": "JSON erfolgreich komprimiert",
+    "unescaped": "Escape-Zeichen erfolgreich entfernt",
+    "noEscapeNeeded": "Zeichenkette benötigt keine Escape-Entfernung"
+  },
+  "removeEscapeBtn": "Escape entfernen",
+  "fullscreenBtn": "Vollbild",
+  "exitFullscreenBtn": "Vollbild beenden",
+  "footer": {
+    "copyright": "© 2025 JSON-Formatierer | Ihr Effizienzhelfer"
+  },
+  "historyBtn": "Verlauf",
+  "backToFormatter": "Zurück zum Formatierer",
+  "history": {
+    "title": "Verlauf",
+    "searchPlaceholder": "Verlauf durchsuchen...",
+    "empty": "Keine Verlaufseinträge",
+    "noResults": "Keine passenden Einträge gefunden",
+    "input": "Eingabe",
+    "output": "Ausgabe",
+    "copy": "Kopieren",
+    "clear": "Verlauf löschen",
+    "operations": {
+      "format": "Formatieren",
+      "compress": "Komprimieren",
+      "unescape": "Escape entfernen"
+    },
+    "time": {
+      "today": "Heute um {time}",
+      "yesterday": "Gestern um {time}",
+      "daysAgo": "Vor {days} Tagen um {time}"
+    },
+    "timeFilter": {
+      "all": "Alle",
+      "today": "Heute",
+      "week": "Letzte Woche",
+      "month": "Letzter Monat"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "ru": "Русский"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Unerwartetes Token",
+    "expected": "Erwartet",
+    "inPosition": "an Position",
+    "clearMarkError": "Fehler beim Löschen von Markierungen",
+    "setMarkError": "Fehler beim Setzen von Fehlermarkierungen",
+    "fullscreenError": "Fehler beim Betreten des Vollbildmodus",
+    "saveHistoryError": "Fehler beim Speichern des Verlaufseintrags",
+    "getHistoryError": "Fehler beim Abrufen der Verlaufseinträge",
+    "clearHistoryError": "Fehler beim Löschen der Verlaufseinträge"
+  }
+} 

@@ -1,0 +1,69 @@
+{
+  "title": "JSON Formatter",
+  "subtitle": "Format, Validate, and Beautify JSON Data",
+  "description": "A free online tool to format, validate, and beautify your JSON data",
+  "formatBtn": "Format",
+  "clearBtn": "Clear",
+  "copyBtn": "Copy",
+  "downloadBtn": "Download",
+  "uploadBtn": "Upload",
+  "compressBtn": "Compress",
+  "placeholder": "Paste your JSON here...",
+  "language": "Language",
+  "inputLabel": "Input JSON",
+  "outputLabel": "Result",
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "lineNumbers": {
+    "show": "Show Line Numbers",
+    "hide": "Hide Line Numbers"
+  },
+  "errors": {
+    "invalid": "Invalid JSON",
+    "empty": "JSON is empty",
+    "invalidEscape": "Cannot remove escape characters, not a valid JSON string",
+    "notString": "Input is not a JSON string, cannot remove escape characters"
+  },
+  "success": {
+    "copied": "Copied to clipboard",
+    "formatted": "JSON formatted successfully",
+    "compressed": "JSON compressed successfully",
+    "unescaped": "Successfully removed escape characters",
+    "noEscapeNeeded": "String does not need unescaping"
+  },
+  "removeEscapeBtn": "Remove Escape",
+  "fullscreenBtn": "Full",
+  "exitFullscreenBtn": "Exit Fullscreen",
+  "footer": {
+    "copyright": "© 2025 JSON Formatter | Your Efficiency Helper"
+  },
+  "historyBtn": "History",
+  "backToFormatter": "Back to Formatter",
+  "history": {
+    "title": "History",
+    "searchPlaceholder": "Search history...",
+    "empty": "No history records",
+    "noResults": "No matching records found",
+    "input": "Input",
+    "output": "Output",
+    "copy": "Copy",
+    "operations": {
+      "format": "Format",
+      "compress": "Compress",
+      "unescape": "Unescape"
+    },
+    "time": {
+      "today": "Today at {time}",
+      "yesterday": "Yesterday at {time}",
+      "daysAgo": "{days} days ago at {time}"
+    },
+    "timeFilter": {
+      "all": "All",
+      "today": "Today",
+      "week": "Last Week",
+      "month": "Last Month"
+    }
+  }
+} 

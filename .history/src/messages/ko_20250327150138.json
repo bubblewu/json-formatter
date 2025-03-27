@@ -1,0 +1,115 @@
+{
+  "title": "JSON 포맷터",
+  "subtitle": "온라인 JSON 포맷터, 검증기 및 미화기",
+  "description": "JSON 데이터를 무료로 포맷팅, 검증, 압축 및 이스케이프할 수 있는 온라인 도구입니다.",
+  "formatBtn": "포맷팅",
+  "compressBtn": "압축",
+  "clearBtn": "지우기",
+  "uploadBtn": "업로드",
+  "copyBtn": "복사",
+  "downloadBtn": "다운로드",
+  "historyBtn": "기록",
+  "backToFormatter": "포맷터로 돌아가기",
+  "removeEscapeBtn": "이스케이프 제거",
+  "fullscreenBtn": "전체화면",
+  "exitFullscreenBtn": "전체화면 종료",
+  "inputLabel": "JSON 입력",
+  "outputLabel": "결과",
+  "lineNumbers": {
+    "show": "줄 번호 표시",
+    "hide": "줄 번호 숨기기"
+  },
+  "errors": {
+    "empty": "JSON은 비어있을 수 없습니다",
+    "invalid": "잘못된 JSON",
+    "invalidEscape": "이스케이프 문자를 제거할 수 없습니다. 유효한 JSON 문자열이 아닙니다",
+    "notString": "입력이 JSON 문자열이 아닙니다. 이스케이프 문자를 제거할 수 없습니다",
+    "suggestion": "수정 제안",
+    "autoFixAvailable": "이 오류는 자동으로 수정할 수 있습니다",
+    "clickToFix": "클릭하여 수정사항 적용",
+    "applyFix": "수정사항 적용"
+  },
+  "success": {
+    "formatted": "JSON 포맷팅이 완료되었습니다",
+    "compressed": "JSON 압축이 완료되었습니다",
+    "copied": "클립보드에 복사되었습니다",
+    "unescaped": "이스케이프 문자 제거가 완료되었습니다",
+    "noEscapeNeeded": "문자열에 이스케이프 해제가 필요하지 않습니다",
+    "fixApplied": "수정사항이 적용되었습니다"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "예상치 못한 토큰",
+    "expected": "예상된",
+    "inPosition": "JSON 위치",
+    "clearMarkError": "마커를 지우는 중 오류가 발생했습니다",
+    "setMarkError": "마커를 설정하는 중 오류가 발생했습니다",
+    "fullscreenError": "전체화면 모드에서 오류가 발생했습니다",
+    "saveHistoryError": "기록을 저장하는 중 오류가 발생했습니다",
+    "getHistoryError": "기록을 가져오는 중 오류가 발생했습니다",
+    "clearHistoryError": "기록을 지우는 중 오류가 발생했습니다"
+  },
+  "suggestions": {
+    "checkSyntax": "JSON 구문을 확인하세요. 특히 괄호, 중괄호, 따옴표의 짝을 확인하세요",
+    "missingClosingBracket": "닫는 괄호 또는 중괄호가 누락되었습니다",
+    "missingClosingQuote": "닫는 따옴표가 누락되었습니다",
+    "incompleteJson": "JSON이 불완전합니다. 누락된 부분을 확인하세요",
+    "missingQuotesAroundKey": "속성 이름은 큰따옴표로 둘러싸야 합니다",
+    "trailingComma": "JSON에서는 끝에 쉼표를 사용할 수 없습니다",
+    "missingComma": "값 사이에 쉼표가 누락되었습니다",
+    "singleQuotes": "JSON에서는 작은따옴표 대신 큰따옴표를 사용해야 합니다",
+    "booleanCase": "불리언 값은 소문자여야 합니다: {value}",
+    "nullCase": "null 값은 소문자여야 합니다",
+    "unescapedQuote": "문자열 내의 따옴표는 이스케이프해야 합니다"
+  },
+  "footer": {
+    "copyright": "© 2025 JSON 포맷터 | 당신의 효율성 도우미"
+  },
+  "languages": {
+    "en": "영어",
+    "zh": "중국어",
+    "ja": "일본어",
+    "ko": "한국어",
+    "es": "스페인어"
+  },
+  "history": {
+    "title": "기록",
+    "empty": "기록이 없습니다",
+    "noResults": "일치하는 기록을 찾을 수 없습니다",
+    "clear": "기록 지우기",
+    "copy": "복사",
+    "searchPlaceholder": "기록 검색...",
+    "timeFilter": {
+      "all": "전체",
+      "today": "오늘",
+      "week": "이번 주",
+      "month": "이번 달"
+    },
+    "format": "포맷팅",
+    "compress": "압축",
+    "unescape": "이스케이프 해제",
+    "time": {
+      "today": "오늘 {time}",
+      "yesterday": "어제 {time}",
+      "daysAgo": "{days}일 전 {time}"
+    }
+  },
+  "feedbackBtn": "피드백",
+  "feedback": {
+    "title": "피드백",
+    "content": "피드백 내용",
+    "contentPlaceholder": "피드백 내용을 입력하세요...",
+    "contact": "연락처 (선택사항)",
+    "contactPlaceholder": "이메일 또는 기타 연락처 정보를 입력하세요",
+    "submit": "피드백 제출",
+    "submitting": "제출 중...",
+    "cancel": "취소",
+    "success": "피드백을 보내주셔서 감사합니다!",
+    "error": "제출에 실패했습니다. 나중에 다시 시도해 주세요",
+    "validation": {
+      "required": "이 필드를 입력하세요",
+      "invalidEmail": "유효한 이메일 주소를 입력하세요"
+    }
+  },
+  "showDemoBtn": "예제 표시",
+  "hideDemoBtn": "예제 숨기기"
+} 

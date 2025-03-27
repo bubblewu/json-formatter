@@ -1,0 +1,118 @@
+{
+  "title": "Formateur JSON",
+  "subtitle": "Formateur, Validateur et Beautificateur JSON en Ligne",
+  "description": "Un outil gratuit en ligne pour formater, valider, compresser et échapper vos données JSON.",
+  "formatBtn": "Formatter",
+  "compressBtn": "Compresser",
+  "clearBtn": "Effacer",
+  "uploadBtn": "Télécharger",
+  "copyBtn": "Copier",
+  "downloadBtn": "Télécharger",
+  "historyBtn": "Historique",
+  "backToFormatter": "Retour au Formateur",
+  "removeEscapeBtn": "Supprimer l'Échappement",
+  "fullscreenBtn": "Plein Écran",
+  "exitFullscreenBtn": "Quitter le Plein Écran",
+  "inputLabel": "Entrée JSON",
+  "outputLabel": "Résultat",
+  "lineNumbers": {
+    "show": "Afficher les Numéros de Ligne",
+    "hide": "Masquer les Numéros de Ligne"
+  },
+  "errors": {
+    "empty": "Le JSON ne peut pas être vide",
+    "invalid": "JSON invalide",
+    "invalidEscape": "Impossible de supprimer les caractères d'échappement, ce n'est pas une chaîne JSON valide",
+    "notString": "L'entrée n'est pas une chaîne JSON, impossible de supprimer les caractères d'échappement",
+    "suggestion": "Suggestion de correction",
+    "autoFixAvailable": "Cette erreur peut être corrigée automatiquement",
+    "clickToFix": "Cliquez pour appliquer cette correction",
+    "applyFix": "Appliquer la Correction"
+  },
+  "success": {
+    "formatted": "JSON formaté avec succès",
+    "compressed": "JSON compressé avec succès",
+    "copied": "Copié dans le presse-papiers",
+    "unescaped": "Caractères d'échappement supprimés avec succès",
+    "noEscapeNeeded": "La chaîne n'a pas besoin d'échappement",
+    "fixApplied": "La correction a été appliquée"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Jeton inattendu",
+    "expected": "Attendu",
+    "inPosition": "dans le JSON à la position",
+    "clearMarkError": "Erreur lors de la suppression des marqueurs",
+    "setMarkError": "Erreur lors de la définition des marqueurs",
+    "fullscreenError": "Erreur en mode plein écran",
+    "saveHistoryError": "Erreur lors de la sauvegarde de l'historique",
+    "getHistoryError": "Erreur lors de la récupération de l'historique",
+    "clearHistoryError": "Erreur lors de la suppression de l'historique"
+  },
+  "suggestions": {
+    "checkSyntax": "Vérifiez votre syntaxe JSON, en particulier les crochets, accolades et guillemets correspondants",
+    "missingClosingBracket": "Crochet ou accolade fermante manquant",
+    "missingClosingQuote": "Guillemet fermant manquant",
+    "incompleteJson": "Le JSON est incomplet, vérifiez les parties manquantes",
+    "missingQuotesAroundKey": "Les noms de propriétés doivent être entre guillemets doubles",
+    "trailingComma": "Les virgules finales ne sont pas autorisées dans le JSON",
+    "missingComma": "Virgule manquante entre les valeurs",
+    "singleQuotes": "Le JSON nécessite des guillemets doubles au lieu des guillemets simples",
+    "booleanCase": "Les valeurs booléennes doivent être en minuscules : {value}",
+    "nullCase": "La valeur null doit être en minuscules",
+    "unescapedQuote": "Les guillemets à l'intérieur des chaînes doivent être échappés"
+  },
+  "footer": {
+    "copyright": "© 2025 Formateur JSON | Votre Assistant d'Efficacité"
+  },
+  "languages": {
+    "en": "Anglais",
+    "zh": "Chinois",
+    "ja": "Japonais",
+    "ko": "Coréen",
+    "es": "Espagnol",
+    "de": "Allemand",
+    "fr": "Français",
+    "ru": "Russe"
+  },
+  "history": {
+    "title": "Historique",
+    "empty": "Aucun historique",
+    "noResults": "Aucun enregistrement correspondant trouvé",
+    "clear": "Effacer l'Historique",
+    "copy": "Copier",
+    "searchPlaceholder": "Rechercher dans l'historique...",
+    "timeFilter": {
+      "all": "Tout",
+      "today": "Aujourd'hui",
+      "week": "Cette Semaine",
+      "month": "Ce Mois"
+    },
+    "format": "Formatter",
+    "compress": "Compresser",
+    "unescape": "Supprimer l'Échappement",
+    "time": {
+      "today": "Aujourd'hui {time}",
+      "yesterday": "Hier {time}",
+      "daysAgo": "Il y a {days} jours {time}"
+    }
+  },
+  "feedbackBtn": "Retour",
+  "feedback": {
+    "title": "Retour",
+    "content": "Contenu du Retour",
+    "contentPlaceholder": "Veuillez entrer votre retour...",
+    "contact": "Contact (Optionnel)",
+    "contactPlaceholder": "Veuillez entrer votre email ou autres informations de contact",
+    "submit": "Envoyer le Retour",
+    "submitting": "Envoi en cours...",
+    "cancel": "Annuler",
+    "success": "Merci pour votre retour !",
+    "error": "Échec de l'envoi, veuillez réessayer plus tard",
+    "validation": {
+      "required": "Veuillez remplir ce champ",
+      "invalidEmail": "Veuillez entrer une adresse email valide"
+    }
+  },
+  "showDemoBtn": "Afficher la Démo",
+  "hideDemoBtn": "Masquer la Démo"
+} 

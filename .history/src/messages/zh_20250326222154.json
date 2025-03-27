@@ -1,0 +1,106 @@
+{
+  "title": "JSON格式化工具",
+  "subtitle": "在线JSON格式化、验证、压缩工具",
+  "description": "免费在线JSON格式化工具，能够对JSON进行格式化、验证、压缩和转义处理，帮助开发者更高效地处理JSON数据。",
+  "formatBtn": "格式化",
+  "compressBtn": "压缩",
+  "clearBtn": "清空",
+  "uploadBtn": "上传",
+  "copyBtn": "复制",
+  "downloadBtn": "下载",
+  "historyBtn": "历史记录",
+  "backToFormatter": "返回格式化工具",
+  "removeEscapeBtn": "去除转义",
+  "fullscreenBtn": "全屏",
+  "exitFullscreenBtn": "退出全屏",
+  "inputLabel": "JSON输入",
+  "outputLabel": "格式化结果",
+  "lineNumbers": {
+    "show": "显示行号",
+    "hide": "隐藏行号"
+  },
+  "errors": {
+    "empty": "JSON不能为空",
+    "invalid": "无效的JSON",
+    "invalidEscape": "无法移除转义字符，不是有效的JSON字符串",
+    "notString": "输入不是JSON字符串，无法移除转义字符",
+    "suggestion": "修复建议",
+    "autoFixAvailable": "可自动修复此错误",
+    "clickToFix": "点击应用这个修复",
+    "applyFix": "应用修复"
+  },
+  "success": {
+    "formatted": "JSON格式化成功",
+    "compressed": "JSON压缩成功",
+    "copied": "复制成功",
+    "unescaped": "成功移除转义字符",
+    "noEscapeNeeded": "字符串不需要去除转义",
+    "fixApplied": "修复已应用"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "意外的符号",
+    "expected": "预期",
+    "inPosition": "在位置",
+    "clearMarkError": "清除标记时出错",
+    "setMarkError": "设置标记时出错",
+    "fullscreenError": "全屏模式发生错误",
+    "saveHistoryError": "保存历史记录时出错",
+    "getHistoryError": "获取历史记录时出错",
+    "clearHistoryError": "清除历史记录时出错"
+  },
+  "suggestions": {
+    "checkSyntax": "请检查JSON语法，特别注意大括号、方括号和引号的匹配",
+    "missingClosingBracket": "缺少闭合的括号或大括号",
+    "missingClosingQuote": "缺少闭合的引号",
+    "incompleteJson": "JSON不完整，请检查是否缺少关键部分",
+    "missingQuotesAroundKey": "属性名称需要用双引号包围",
+    "trailingComma": "JSON中不允许末尾多余的逗号",
+    "missingComma": "两个值之间缺少逗号",
+    "singleQuotes": "JSON中必须使用双引号而不是单引号",
+    "booleanCase": "布尔值必须使用小写: {value}",
+    "nullCase": "null值必须使用小写",
+    "unescapedQuote": "字符串中的引号需要转义"
+  },
+  "footer": {
+    "copyright": "© 2025 JSON格式化工具 | 提高您的效率"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "history": {
+    "title": "历史记录",
+    "empty": "暂无历史记录",
+    "noResults": "没有找到相关记录",
+    "clear": "清空历史",
+    "copy": "复制",
+    "searchPlaceholder": "搜索历史记录...",
+    "timeFilter": {
+      "all": "全部",
+      "today": "今天",
+      "week": "最近一周",
+      "month": "最近一月"
+    },
+    "format": "格式化",
+    "compress": "压缩",
+    "unescape": "去除转义",
+    "time": {
+      "today": "今天 {time}",
+      "yesterday": "昨天 {time}",
+      "daysAgo": "{days}天前 {time}"
+    }
+  },
+  "feedbackBtn": "意见反馈",
+  "feedback": {
+    "title": "意见反馈",
+    "content": "反馈内容",
+    "contentPlaceholder": "请输入您的反馈内容...",
+    "contact": "联系方式（选填）",
+    "contactPlaceholder": "请输入您的邮箱或其他联系方式",
+    "submit": "提交反馈",
+    "submitting": "提交中...",
+    "cancel": "取消",
+    "success": "感谢您的反馈！",
+    "error": "提交失败，请稍后重试"
+  }
+} 

@@ -1,0 +1,6 @@
+name = "json-formatter"
+compatibility_date = "2024-03-26"
+
+kv_namespaces = [
+  { binding = "800b294a9c6845878b890ca7381b7da3", id = "800b294a9c6845878b890ca7381b7da3", preview_id = "1a4ec17528a4481a9111f5b8dbd4189e" }
+] 

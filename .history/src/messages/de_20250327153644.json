@@ -1,0 +1,118 @@
+{
+  "title": "JSON Formatter",
+  "subtitle": "Online JSON Formatter, Validator und Beautifier",
+  "description": "Ein kostenloses Online-Tool zum Formatieren, Validieren, Komprimieren und Escapen Ihrer JSON-Daten.",
+  "formatBtn": "Formatieren",
+  "compressBtn": "Komprimieren",
+  "clearBtn": "Löschen",
+  "uploadBtn": "Hochladen",
+  "copyBtn": "Kopieren",
+  "downloadBtn": "Herunterladen",
+  "historyBtn": "Verlauf",
+  "backToFormatter": "Zurück zum Formatter",
+  "removeEscapeBtn": "Escape entfernen",
+  "fullscreenBtn": "Vollbild",
+  "exitFullscreenBtn": "Vollbild beenden",
+  "inputLabel": "JSON Eingabe",
+  "outputLabel": "Ergebnis",
+  "lineNumbers": {
+    "show": "Zeilennummern anzeigen",
+    "hide": "Zeilennummern ausblenden"
+  },
+  "errors": {
+    "empty": "JSON darf nicht leer sein",
+    "invalid": "Ungültiges JSON",
+    "invalidEscape": "Escape-Zeichen können nicht entfernt werden, keine gültige JSON-Zeichenkette",
+    "notString": "Eingabe ist keine JSON-Zeichenkette, Escape-Zeichen können nicht entfernt werden",
+    "suggestion": "Korrekturvorschlag",
+    "autoFixAvailable": "Dieser Fehler kann automatisch behoben werden",
+    "clickToFix": "Klicken Sie, um diese Korrektur anzuwenden",
+    "applyFix": "Korrektur anwenden"
+  },
+  "success": {
+    "formatted": "JSON erfolgreich formatiert",
+    "compressed": "JSON erfolgreich komprimiert",
+    "copied": "In die Zwischenablage kopiert",
+    "unescaped": "Escape-Zeichen erfolgreich entfernt",
+    "noEscapeNeeded": "Zeichenkette muss nicht unescaped werden",
+    "fixApplied": "Korrektur wurde angewendet"
+  },
+  "jsonErrors": {
+    "unexpectedToken": "Unerwartetes Token",
+    "expected": "Erwartet",
+    "inPosition": "in JSON an Position",
+    "clearMarkError": "Fehler beim Löschen der Marker",
+    "setMarkError": "Fehler beim Setzen der Marker",
+    "fullscreenError": "Fehler im Vollbildmodus",
+    "saveHistoryError": "Fehler beim Speichern des Verlaufs",
+    "getHistoryError": "Fehler beim Abrufen des Verlaufs",
+    "clearHistoryError": "Fehler beim Löschen des Verlaufs"
+  },
+  "suggestions": {
+    "checkSyntax": "Überprüfen Sie Ihre JSON-Syntax, besonders die übereinstimmenden Klammern, geschweiften Klammern und Anführungszeichen",
+    "missingClosingBracket": "Fehlende schließende Klammer oder geschweifte Klammer",
+    "missingClosingQuote": "Fehlendes schließendes Anführungszeichen",
+    "incompleteJson": "JSON ist unvollständig, überprüfen Sie die fehlenden Teile",
+    "missingQuotesAroundKey": "Eigenschaftsnamen müssen in doppelten Anführungszeichen stehen",
+    "trailingComma": "Nachgestellte Kommas sind in JSON nicht erlaubt",
+    "missingComma": "Fehlendes Komma zwischen Werten",
+    "singleQuotes": "JSON erfordert doppelte Anführungszeichen statt einfacher Anführungszeichen",
+    "booleanCase": "Boolesche Werte müssen in Kleinbuchstaben sein: {value}",
+    "nullCase": "null-Wert muss in Kleinbuchstaben sein",
+    "unescapedQuote": "Anführungszeichen innerhalb von Zeichenketten müssen escaped werden"
+  },
+  "footer": {
+    "copyright": "© 2025 JSON Formatter | Ihr Effizienzhelfer"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語",
+    "ko": "한국어",
+    "es": "Español",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский"
+  },
+  "history": {
+    "title": "Verlauf",
+    "empty": "Keine Verlaufsdaten",
+    "noResults": "Keine übereinstimmenden Einträge gefunden",
+    "clear": "Verlauf löschen",
+    "copy": "Kopieren",
+    "searchPlaceholder": "Verlauf durchsuchen...",
+    "timeFilter": {
+      "all": "Alle",
+      "today": "Heute",
+      "week": "Diese Woche",
+      "month": "Dieser Monat"
+    },
+    "format": "Formatieren",
+    "compress": "Komprimieren",
+    "unescape": "Escape entfernen",
+    "time": {
+      "today": "Heute {time}",
+      "yesterday": "Gestern {time}",
+      "daysAgo": "Vor {days} Tagen {time}"
+    }
+  },
+  "feedbackBtn": "Feedback",
+  "feedback": {
+    "title": "Feedback",
+    "content": "Feedback-Inhalt",
+    "contentPlaceholder": "Bitte geben Sie Ihr Feedback ein...",
+    "contact": "Kontakt (Optional)",
+    "contactPlaceholder": "Bitte geben Sie Ihre E-Mail oder andere Kontaktinformationen ein",
+    "submit": "Feedback senden",
+    "submitting": "Wird gesendet...",
+    "cancel": "Abbrechen",
+    "success": "Vielen Dank für Ihr Feedback!",
+    "error": "Senden fehlgeschlagen, bitte versuchen Sie es später erneut",
+    "validation": {
+      "required": "Bitte füllen Sie dieses Feld aus",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+    }
+  },
+  "showDemoBtn": "Demo anzeigen",
+  "hideDemoBtn": "Demo ausblenden"
+} 
