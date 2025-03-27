@@ -1,75 +1,80 @@
+export const runtime = 'edge';
+
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import type { KVNamespace } from '@cloudflare/workers-types';
+
+// 定义反馈数据类型
+interface Feedback {
+  id: string;
+  content: string;
+  createdAt: string;
+}
+
+// 本地存储
+let localFeedbacks: Feedback[] = [];
+
+// 获取KV绑定
+declare global {
+  const FEEDBACK_KV: KVNamespace;
+}
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
-    const { feedback, contact, userId, timestamp } = data;
-
-    // 创建反馈对象
-    const feedbackData = {
-      id: Date.now().toString(),
-      feedback,
-      contact,
-      userId,
-      timestamp,
-    };
-
-    // 确保data/feedback目录存在
-    const feedbackDir = path.join(process.cwd(), 'data', 'feedback');
-    if (!fs.existsSync(feedbackDir)) {
-      fs.mkdirSync(feedbackDir, { recursive: true });
+    const { content } = await request.json();
+    
+    if (!content) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 });
     }
 
-    // 生成文件名（使用时间戳）
-    const fileName = `${Date.now()}.json`;
-    const filePath = path.join(feedbackDir, fileName);
+    const feedback: Feedback = {
+      id: Date.now().toString(),
+      content,
+      createdAt: new Date().toISOString(),
+    };
 
-    // 将反馈数据写入文件
-    fs.writeFileSync(filePath, JSON.stringify(feedbackData, null, 2), 'utf8');
+    // 在本地开发环境中使用内存存储
+    if (process.env.NODE_ENV === 'development') {
+      localFeedbacks.unshift(feedback);
+      return NextResponse.json({ success: true, feedback });
+    }
 
-    return NextResponse.json({ 
-      success: true, 
-      message: '反馈已保存',
-      filePath 
-    });
+    // 生产环境使用 KV 存储
+    await FEEDBACK_KV.put(`feedback:${feedback.id}`, JSON.stringify(feedback));
+    const existingIds: string[] = await FEEDBACK_KV.get('feedback_ids', 'json') || [];
+    await FEEDBACK_KV.put('feedback_ids', JSON.stringify([feedback.id, ...existingIds]));
+
+    return NextResponse.json({ success: true, feedback });
   } catch (error) {
-    console.error('保存反馈时出错:', error);
-    return NextResponse.json(
-      { success: false, message: '保存反馈失败' },
-      { status: 500 }
-    );
+    console.error('Error submitting feedback:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-// 获取所有反馈
 export async function GET() {
   try {
-    const feedbackDir = path.join(process.cwd(), 'data', 'feedback');
-    
-    // 确保目录存在
-    if (!fs.existsSync(feedbackDir)) {
-      return NextResponse.json({ feedbacks: [] });
+    // 在本地开发环境中使用内存存储
+    if (process.env.NODE_ENV === 'development') {
+      return NextResponse.json(localFeedbacks);
     }
 
-    // 读取所有反馈文件
-    const files = fs.readdirSync(feedbackDir);
-    const feedbacks = files
-      .filter(file => file.endsWith('.json'))
-      .map(file => {
-        const filePath = path.join(feedbackDir, file);
-        const content = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(content);
+    // 生产环境使用 KV 存储
+    const feedbackIds: string[] = await FEEDBACK_KV.get('feedback_ids', 'json') || [];
+    const feedbacks = await Promise.all(
+      feedbackIds.map(async (id: string) => {
+        const feedback = await FEEDBACK_KV.get(`feedback:${id}`, 'json') as Feedback | null;
+        return feedback;
       })
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-
-    return NextResponse.json({ feedbacks });
-  } catch (error) {
-    console.error('获取反馈时出错:', error);
-    return NextResponse.json(
-      { success: false, message: '获取反馈失败' },
-      { status: 500 }
     );
+
+    const validFeedbacks = feedbacks
+      .filter((feedback): feedback is Feedback => feedback !== null)
+      .sort((a: Feedback, b: Feedback) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+    return NextResponse.json(validFeedbacks);
+  } catch (error) {
+    console.error('Error getting feedbacks:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

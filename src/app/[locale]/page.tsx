@@ -14,6 +14,8 @@ const JsonFormatter = dynamic(() => import('@/components/JsonFormatter'), {
   ssr: false // 禁用SSR，因为Monaco编辑器依赖浏览器API
 });
 
+export const runtime = 'edge';
+
 export default function Home() {
   const t = useTranslations();
   

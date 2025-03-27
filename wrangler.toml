@@ -1,0 +1,19 @@
+name = "json-formatter"
+compatibility_date = "2024-03-27"
+
+[build]
+command = "npm run build"
+output_directory = ".next"
+
+[site]
+bucket = ".next"
+
+[env.production]
+kv_namespaces = [
+  { binding = "FEEDBACK_KV", id = "800b294a9c6845878b890ca7381b7da3" }
+]
+
+[env.preview]
+kv_namespaces = [
+  { binding = "FEEDBACK_KV", id = "1a4ec17528a4481a9111f5b8dbd4189e" }
+] 

@@ -5,6 +5,9 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  images: {
+    unoptimized: true,
+  },
   // 添加Monaco编辑器的webpack配置
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -20,7 +23,8 @@ const nextConfig = {
   experimental: {
     // 禁用特定路径的静态预渲染
     workerThreads: false,
-    cpus: 1
+    cpus: 1,
+    serverActions: true,
   }
 };
 
