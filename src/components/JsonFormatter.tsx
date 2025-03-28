@@ -1187,11 +1187,47 @@ export default function JsonFormatter() {
     }
 
     try {
-      // 首先尝试解析为JSON
-      let parsedJson = JSON.parse(inputValue);
+      // 处理URL中的双斜杠和方括号，避免被误处理
+      const urlRegex = /"(https?:)\/\/([^"]+)"/g;
+      const urlPlaceholders: {original: string, placeholder: string}[] = [];
+      let tempValue = inputValue;
       
-      // 如果是字符串，则尝试去除转义字符
-      if (typeof parsedJson === 'string') {
+      // 替换所有URL中的双斜杠为占位符
+      tempValue = tempValue.replace(urlRegex, (match: string, protocol: string, rest: string) => {
+        const placeholder = `"${protocol}__URL_DOUBLE_SLASH__${rest}"`;
+        urlPlaceholders.push({original: match, placeholder});
+        return placeholder;
+      });
+      
+      // 移除注释和非法控制字符
+      let cleanJson = tempValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+      
+      // 还原所有URL占位符
+      for (const {original, placeholder} of urlPlaceholders) {
+        cleanJson = cleanJson.replace(
+          new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+          original
+        );
+      }
+      
+      // 清除ASCII控制字符
+      cleanJson = cleanJson.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      
+      // 首先尝试解析为JSON
+      let parsedJson = JSON.parse(cleanJson);
+      
+      // 检查是否需要去除转义
+      const isJsonString = typeof parsedJson === 'string';
+      const containsEscapes = 
+        cleanJson.includes('\\"') || 
+        cleanJson.includes('\\\\') ||
+        cleanJson.includes('\\n') || 
+        cleanJson.includes('\\t') || 
+        cleanJson.includes('\\r') || 
+        cleanJson.includes('\\u');
+      
+      // 如果是字符串或包含转义字符的JSON，尝试去除转义字符
+      if (isJsonString) {
         try {
           // 尝试再次解析字符串，去除转义
           const unescapedJson = JSON.parse(parsedJson);
@@ -1199,11 +1235,11 @@ export default function JsonFormatter() {
           // 检查是否实际需要转义
           const reStringifiedOriginal = JSON.stringify(parsedJson);
           const needsUnescaping = reStringifiedOriginal !== `"${parsedJson}"` || 
-                                  parsedJson.includes('\\\"') || 
-                                  parsedJson.includes('\\\\') ||
-                                  parsedJson.includes('\\n') ||
-                                  parsedJson.includes('\\t') ||
-                                  parsedJson.includes('\\r');
+                                parsedJson.includes('\\\"') || 
+                                parsedJson.includes('\\\\') ||
+                                parsedJson.includes('\\n') ||
+                                parsedJson.includes('\\t') ||
+                                parsedJson.includes('\\r');
           
           if (!needsUnescaping) {
             setError(null);
@@ -1253,21 +1289,117 @@ export default function JsonFormatter() {
             };
             saveToHistory(historyItem);
           }
+        } catch (e) {
+          // 如果再次解析失败，保持原始字符串
+          setError(t('errors.invalidEscape'));
+        }
+      } else if (containsEscapes) {
+        // 如果包含转义字符但不是字符串，可能是JSON对象中包含转义字符
+        try {
+          // 尝试将JSON字符串化后去除转义字符
+          const jsonString = JSON.stringify(parsedJson);
+          const unescapedString = jsonString
+            .replace(/\\\\"/g, '\\"') // 处理双重转义的引号
+            .replace(/\\\\/g, '\\')   // 处理双重转义的反斜杠
+            .replace(/\\n/g, '\n')    // 处理换行符
+            .replace(/\\t/g, '\t')    // 处理制表符
+            .replace(/\\r/g, '\r');   // 处理回车符
+          
+          // 尝试解析去除转义后的字符串
+          const finalJson = JSON.parse(unescapedString);
+          const formattedJson = JSON.stringify(finalJson, null, 2);
+          
+          if (inputEditorRef.current) {
+            inputEditorRef.current.setValue(formattedJson);
+          }
+          setJsonInput(formattedJson);
+          setJsonOutput(formattedJson);
+          setError(null);
+          setSuccess(t('success.unescaped'));
+          
+          // 保存到历史记录
+          const historyItem = {
+            id: Date.now().toString(),
+            timestamp: Date.now(),
+            input: inputValue,
+            output: formattedJson,
+            operation: 'unescape' as const
+          };
+          saveToHistory(historyItem);
           
           // 2秒后自动清除成功提示
           setTimeout(() => {
             setSuccess(null);
           }, 2000);
-        } catch (e) {
-          // 如果再次解析失败，保持原始字符串
-          setError(t('errors.invalidEscape'));
+          return;
+        } catch (complexError) {
+          // 无法处理的复杂转义情况
+          setError(t('errors.complexEscape') || '无法处理复杂的转义字符');
+          return;
         }
       } else {
-        // 如果不是字符串，提示用户
+        // 如果不是字符串且不包含转义字符，提示用户
         setError(t('errors.notString'));
       }
+      
+      // 2秒后自动清除成功提示
+      setTimeout(() => {
+        setSuccess(null);
+      }, 2000);
     } catch (e) {
-      setError(t('errors.invalid'));
+      // 使用我们已经实现的URL保护机制尝试解析
+      try {
+        // 识别并保护所有URL
+        const urlProtectionRegex = /"(https?:\/\/[^"]+)"/g;
+        let matches: string[] = [];
+        let match;
+        let modifiedValue = inputValue;
+        
+        // 先收集所有匹配到的URL
+        while ((match = urlProtectionRegex.exec(inputValue)) !== null) {
+          matches.push(match[0]);
+        }
+        
+        // 替换所有URL为安全占位符
+        for (let i = 0; i < matches.length; i++) {
+          const safeUrl = matches[i].replace(/\/\//g, '__URL_SLASH__').replace(/\[/g, '__LEFT_BRACKET__').replace(/\]/g, '__RIGHT_BRACKET__');
+          modifiedValue = modifiedValue.replace(matches[i], safeUrl);
+        }
+        
+        // 移除注释和控制字符
+        modifiedValue = modifiedValue
+          .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '')
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+        
+        // 还原所有URL
+        for (let i = 0; i < matches.length; i++) {
+          const safeUrl = matches[i]
+            .replace(/\/\//g, '__URL_SLASH__')
+            .replace(/\[/g, '__LEFT_BRACKET__')
+            .replace(/\]/g, '__RIGHT_BRACKET__');
+          
+          modifiedValue = modifiedValue.replace(
+            safeUrl, 
+            matches[i]
+          );
+        }
+        
+        // 尝试解析修复后的JSON
+        const parsedJson = JSON.parse(modifiedValue);
+        // 检查是否实际是一个字符串
+        if (typeof parsedJson === 'string') {
+          // 此时处理字符串...
+          // 与上面的逻辑相同
+        } else {
+          // 格式化并显示JSON，提示用户这不是转义的字符串
+          const formattedJson = JSON.stringify(parsedJson, null, 2);
+          setJsonOutput(formattedJson);
+          setError(t('errors.validJsonNotString') || "输入是有效的JSON，但不是需要去除转义的字符串");
+        }
+      } catch (finalError) {
+        // 最终失败，显示通用错误
+        setError(t('errors.invalid'));
+      }
     }
   };
 
@@ -2072,7 +2204,7 @@ export default function JsonFormatter() {
                     className="inline-flex items-center px-2 py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors disabled:bg-purple-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
                     <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                     <span className="truncate max-w-[60px] sm:max-w-none">{t('downloadBtn')}</span>
                   </button>
