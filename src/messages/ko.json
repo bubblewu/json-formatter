@@ -125,5 +125,9 @@
     "title": "공유하기",
     "open": "공유 메뉴 열기",
     "close": "공유 메뉴 닫기"
+  },
+  "stats": {
+    "totalVisits": "총 방문수",
+    "onlineUsers": "온라인 사용자"
   }
 } 

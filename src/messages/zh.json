@@ -126,5 +126,9 @@
     "title": "分享到",
     "open": "打开分享菜单",
     "close": "关闭分享菜单"
+  },
+  "stats": {
+    "totalVisits": "总访问量",
+    "onlineUsers": "在线用户"
   }
 } 

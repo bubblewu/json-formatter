@@ -125,5 +125,9 @@
     "title": "Teilen auf",
     "open": "Teilen-Menü öffnen",
     "close": "Teilen-Menü schließen"
+  },
+  "stats": {
+    "totalVisits": "Gesamtbesuche",
+    "onlineUsers": "Online-Benutzer"
   }
 } 

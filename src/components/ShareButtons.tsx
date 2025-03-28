@@ -57,6 +57,11 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
     setIsOpen(!isOpen);
   };
   
+  // 关闭分享菜单
+  const closeShareMenu = () => {
+    setIsOpen(false);
+  };
+  
   // 编码分享内容
   const encodedUrl = encodeURIComponent(currentUrl);
   const encodedTitle = encodeURIComponent(title);
@@ -123,7 +128,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   // 动态调整位置，根据设备类型
   const getPositionClasses = () => {
     if (isMobile) {
-      return 'bottom-0 right-0 translate-y-0 mb-16 mr-2'; // 移动端底部
+      return 'bottom-16 right-4'; // 移动端右下角，避免顶部导航栏遮挡
     } else if (isTablet) {
       return 'top-1/2 -translate-y-1/2 right-0'; // 平板右侧中间
     } else {
@@ -134,7 +139,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   // 获取按钮尺寸类
   const getButtonSizeClasses = () => {
     if (isMobile) {
-      return 'p-2.5 w-10 h-10'; // 移动端小按钮
+      return 'p-2.5 w-12 h-12'; // 移动端稍大按钮，提高可点击性
     } else {
       return 'p-3'; // 桌面端正常尺寸按钮
     }
@@ -143,7 +148,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   // 获取分享项目的尺寸
   const getShareItemClasses = () => {
     if (isMobile) {
-      return 'w-9 h-9'; // 移动端更小的分享按钮
+      return 'w-9 h-9'; // 移动端分享按钮，提高可点击性
     } else {
       return 'w-10 h-10'; // 桌面端标准尺寸
     }
@@ -152,7 +157,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   // 分享菜单的布局
   const getShareMenuLayout = () => {
     if (isMobile) {
-      return 'flex-row space-y-0 space-x-2 rounded-t-lg rounded-l-none rounded-r-none'; // 移动端水平布局
+      return 'flex-row flex-wrap gap-2 rounded-lg px-3 py-3 max-w-[250px]'; // 移动端水平布局，支持换行
     } else {
       return 'flex-col space-y-2 rounded-l-lg'; // 桌面端垂直布局
     }
@@ -161,7 +166,7 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   // 主按钮位置和显示逻辑
   const getTransformClasses = () => {
     if (isMobile) {
-      return isOpen ? 'translate-y-0' : 'translate-y-16'; // 移动端上下移动
+      return ''; // 移动端不需要变换
     } else {
       return isOpen ? 'translate-x-0' : 'translate-x-12'; // 桌面端左右移动
     }
@@ -170,27 +175,51 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({
   return (
     <div 
       ref={shareButtonRef}
-      className={`fixed z-30 transition-all duration-300 ${getPositionClasses()} ${getTransformClasses()}`}
+      className={`fixed z-50 transition-all duration-300 ${getPositionClasses()} ${getTransformClasses()}`}
+      style={{ pointerEvents: 'auto' }} // 确保可点击
     >
-      <div className={`flex ${isMobile ? 'flex-col items-center' : 'flex-col items-end'}`}>
+      <div className={`flex ${isMobile ? 'flex-col items-end' : 'flex-col items-end'}`}>
         {/* 主分享按钮 */}
         <button
           onClick={toggleOpen}
-          className={`${getButtonSizeClasses()} bg-blue-600 hover:bg-blue-700 text-white ${isMobile ? 'rounded-full' : 'rounded-l-lg'} shadow-lg flex items-center ${isMobile ? 'mb-2' : 'mb-2'}`}
+          className={`${getButtonSizeClasses()} bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center ${isMobile ? 'mb-3' : 'mb-2'}`}
           aria-label={isOpen ? t('shareMenu.close') : t('shareMenu.open')}
         >
           <svg className={`w-5 h-5 transition-transform duration-300 ${isOpen && !isMobile ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
           </svg>
           {!isOpen && !isMobile && !isTablet && (
-            <span className="ml-2 hidden lg:block">
+            <span className="ml-2 hidden lg:inline-block whitespace-nowrap">
               {t('share')}
             </span>
           )}
         </button>
         
         {/* 社交媒体分享按钮 */}
-        <div className={`flex ${getShareMenuLayout()} bg-white dark:bg-gray-800 p-2 shadow-lg transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+        <div 
+          className={`relative flex ${getShareMenuLayout()} bg-white dark:bg-gray-800 p-2 shadow-lg rounded-lg transition-all duration-300 ${isOpen ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}`}
+          style={{ transformOrigin: isMobile ? 'bottom right' : 'center right' }}
+        >
+          {/* 关闭按钮 - 移动端显示 */}
+          {isMobile && (
+            <button
+              onClick={closeShareMenu}
+              className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white shadow-md z-10"
+              aria-label={t('shareMenu.close')}
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+          
+          {/* 分享标题 - 移动端显示 */}
+          {isMobile && (
+            <div className="w-full mb-2 text-center font-medium text-gray-700 dark:text-gray-200">
+              {t('shareMenu.title')}
+            </div>
+          )}
+          
           {shareLinks.map((link) => (
             <a
               key={link.name}

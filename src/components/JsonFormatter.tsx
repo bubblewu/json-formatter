@@ -189,9 +189,75 @@ export default function JsonFormatter() {
       // 自动触发格式化
       if (value.trim()) {
         try {
-          // 移除注释后再解析JSON
-          const jsonWithoutComments = value.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
-          const parsedJson = JSON.parse(jsonWithoutComments);
+          // 首先识别并临时替换URL中的双斜杠，避免被误认为是注释
+          const urlRegex = /"(https?:)\/\/([^"]+)"/g;
+          const urlPlaceholders: {original: string, placeholder: string}[] = [];
+          let tempValue = value;
+          
+          // 替换所有URL中的双斜杠为占位符
+          tempValue = tempValue.replace(urlRegex, (match: string, protocol: string, rest: string) => {
+            const placeholder = `"${protocol}__URL_DOUBLE_SLASH__${rest}"`;
+            urlPlaceholders.push({original: match, placeholder});
+            return placeholder;
+          });
+          
+          // 移除注释和非法控制字符
+          let jsonWithoutComments = tempValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+          
+          // 还原所有URL占位符
+          for (const {original, placeholder} of urlPlaceholders) {
+            jsonWithoutComments = jsonWithoutComments.replace(
+              new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+              original
+            );
+          }
+          
+          // 清除ASCII控制字符(0-31)，除了常见的 \t \n \r
+          const cleanJson = jsonWithoutComments.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+          
+          // 检查是否包含可能有问题的URL参数 (如page[offset]=2)
+          const containsUrlBrackets = /https?:\/\/[^"]*\?[^"]*\[[^\]]*\]/i.test(cleanJson);
+          
+          if (containsUrlBrackets) {
+            // 创建一个临时字符串，替换URL中的方括号为编码字符
+            let tempJson = cleanJson;
+            // 正则表达式匹配URL中的方括号部分
+            const urlWithBracketsRegex = /(https?:\/\/[^"]*\?[^"]*)\[([^\]]*)\]/g;
+            tempJson = tempJson.replace(urlWithBracketsRegex, (match: string, prefix: string, content: string) => {
+              return `${prefix}__LEFT_BRACKET__${content}__RIGHT_BRACKET__`;
+            });
+            
+            try {
+              // 尝试解析修改后的JSON
+              const parsedTemp = JSON.parse(tempJson);
+              // 成功后，将解析结果格式化，同时恢复原始格式
+              const formattedJson = JSON.stringify(parsedTemp, null, 2)
+                .replace(/__LEFT_BRACKET__/g, '[')
+                .replace(/__RIGHT_BRACKET__/g, ']');
+              
+              setJsonOutput(formattedJson);
+              setError(null);
+              
+              // 清除编辑器中的错误标记
+              if (monacoRef.current) {
+                try {
+                  const model = editor.getModel();
+                  if (model) {
+                    monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+                  }
+                } catch (err) {
+                  console.error(t('jsonErrors.clearMarkError'), err);
+                }
+              }
+              return; // 提前返回，不执行下面的标准解析
+            } catch (tempError) {
+              // 如果编码后仍然解析失败，继续尝试标准解析
+              console.log("临时替换处理后仍解析失败:", tempError);
+            }
+          }
+          
+          // 标准解析逻辑
+          const parsedJson = JSON.parse(cleanJson);
           const formattedJson = JSON.stringify(parsedJson, null, 2);
           setJsonOutput(formattedJson);
           setError(null);
@@ -212,6 +278,102 @@ export default function JsonFormatter() {
           const errorMessage = e.message || t('errors.invalid');
           setJsonOutput('');
           
+          // 检查是否为控制字符错误
+          if (errorMessage.includes('Bad control character') || errorMessage.includes('control character')) {
+            try {
+              // 尝试再次处理，移除所有控制字符
+              const extraCleanJson = value
+                .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '') // 移除注释
+                .replace(/[\x00-\x1F\x7F]/g, ''); // 移除所有控制字符，包括制表符、换行符等
+                
+              try {
+                const parsedJson = JSON.parse(extraCleanJson);
+                const formattedJson = JSON.stringify(parsedJson, null, 2);
+                setJsonOutput(formattedJson);
+                setError(null);
+                
+                // 清除编辑器中的错误标记
+                if (monacoRef.current) {
+                  try {
+                    const model = editor.getModel();
+                    if (model) {
+                      monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+                    }
+                  } catch (err) {
+                    console.error(t('jsonErrors.clearMarkError'), err);
+                  }
+                }
+                
+                // 显示温和的警告
+                setSuccess(t('success.controlCharsRemoved') || "已自动移除非法控制字符");
+                setTimeout(() => {
+                  setSuccess(null);
+                }, 2000);
+                
+                return;
+              } catch (innerError) {
+                // 控制字符移除后仍然解析失败，继续处理其他类型错误
+              }
+            } catch (cleanError) {
+              // 清理过程发生错误，继续常规错误处理
+            }
+          }
+          
+          // 再次尝试处理含有URL方括号的特殊情况
+          if (errorMessage.includes('Unterminated string') || errorMessage.includes('Unexpected token')) {
+            // 尝试手动修复URL中的方括号问题
+            try {
+              // 更复杂的方法：替换所有URL参数中的方括号
+              const regex = /"(https?:\/\/[^"]+)(\?[^"]*)\[([^\]]+)\]([^"]*)"/g;
+              let modifiedJson = value;
+              let match;
+              let modified = false;
+              
+              // 查找所有匹配并替换
+              while ((match = regex.exec(value)) !== null) {
+                const fullUrl = match[0];
+                const protocol = match[1];
+                const beforeBracket = match[2];
+                const bracketContent = match[3];
+                const afterBracket = match[4];
+                
+                // 创建编码版本的URL
+                const encodedUrl = `"${protocol}${beforeBracket}%5B${bracketContent}%5D${afterBracket}"`;
+                modifiedJson = modifiedJson.replace(fullUrl, encodedUrl);
+                modified = true;
+              }
+              
+              if (modified) {
+                // 尝试解析修改后的JSON
+                const parsedJson = JSON.parse(modifiedJson);
+                // 解码回原始URL格式
+                const formattedJson = JSON.stringify(parsedJson, null, 2)
+                  .replace(/%5B/g, '[')
+                  .replace(/%5D/g, ']');
+                
+                setJsonOutput(formattedJson);
+                setError(null);
+                
+                // 清除编辑器中的错误标记
+                if (monacoRef.current) {
+                  try {
+                    const model = editor.getModel();
+                    if (model) {
+                      monacoRef.current.editor.setModelMarkers(model, 'owner', []);
+                    }
+                  } catch (err) {
+                    console.error(t('jsonErrors.clearMarkError'), err);
+                  }
+                }
+                return;
+              }
+            } catch (specialError) {
+              // 特殊处理失败，继续使用标准错误处理
+              console.log("特殊URL处理失败:", specialError);
+            }
+          }
+          
+          // 标准错误处理逻辑
           // 尝试从错误消息中提取位置信息
           const positionMatch = errorMessage.match(/at position (\d+)/);
           const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
@@ -305,6 +467,53 @@ export default function JsonFormatter() {
       scrollBeyondLastLine: false,
       largeFileOptimizations: true,
     });
+    
+    // 监听输出编辑器中的选择变化
+    editor.onDidChangeCursorSelection((e) => {
+      if (inputEditorRef.current) {
+        const inputEditor = inputEditorRef.current;
+        const outputModel = editor.getModel();
+        const inputModel = inputEditor.getModel();
+        
+        if (inputModel && outputModel) {
+          const outputText = outputModel.getValue();
+          const inputText = inputModel.getValue();
+          
+          // 获取选中的文本
+          const selection = editor.getSelection();
+          if (selection) {
+            const selectedText = outputModel.getValueInRange(selection);
+            if (selectedText && selectedText.length > 0) {
+              // 在输入文本中查找对应的位置
+              const inputIndex = inputText.indexOf(selectedText);
+              if (inputIndex !== -1) {
+                // 计算输入文本中的行和列
+                const inputLines = inputText.substring(0, inputIndex).split('\n');
+                const lineNumber = inputLines.length;
+                const column = inputLines[inputLines.length - 1].length + 1;
+                
+                // 创建选中范围
+                const inputSelection = new monaco.Selection(
+                  lineNumber,
+                  column,
+                  lineNumber,
+                  column + selectedText.length
+                );
+                
+                // 设置输入编辑器的选中范围
+                inputEditor.setSelection(inputSelection);
+                
+                // 确保选中区域在视图中可见
+                inputEditor.revealPositionInCenter({
+                  lineNumber,
+                  column
+                });
+              }
+            }
+          }
+        }
+      }
+    });
   };
 
   const formatJson = () => {
@@ -356,6 +565,57 @@ export default function JsonFormatter() {
       // 获取错误信息和位置
       const errorMessage = e.message || t('errors.invalid');
       setJsonOutput('');
+      
+      // 检查是否是URL中双斜杠导致的问题
+      if (errorMessage.includes('Unexpected token') || errorMessage.includes('Unterminated string')) {
+        try {
+          // 尝试不移除注释，直接解析（避免URL中的//被误识别为注释）
+          const directParsedJson = JSON.parse(inputValue);
+          const formattedJson = JSON.stringify(directParsedJson, null, 2);
+          setJsonOutput(formattedJson);
+          setError(null);
+          return;
+        } catch (directError) {
+          // 直接解析失败，尝试使用更智能的URL处理
+          try {
+            // 识别并保护所有URL
+            const urlProtectionRegex = /"(https?:\/\/[^"]+)"/g;
+            let matches: string[] = [];
+            let match;
+            let modifiedValue = inputValue;
+            
+            // 先收集所有匹配到的URL
+            while ((match = urlProtectionRegex.exec(inputValue)) !== null) {
+              matches.push(match[0]);
+            }
+            
+            // 替换所有URL为安全占位符
+            for (let i = 0; i < matches.length; i++) {
+              const safeUrl = matches[i].replace(/\/\//g, '__URL_SLASH__');
+              modifiedValue = modifiedValue.replace(matches[i], safeUrl);
+            }
+            
+            // 移除注释
+            modifiedValue = modifiedValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+            
+            // 还原所有URL
+            for (let i = 0; i < matches.length; i++) {
+              const safeUrl = matches[i].replace(/\/\//g, '__URL_SLASH__');
+              modifiedValue = modifiedValue.replace(safeUrl, matches[i]);
+            }
+            
+            // 尝试解析修复后的JSON
+            const parsedJson = JSON.parse(modifiedValue);
+            const formattedJson = JSON.stringify(parsedJson, null, 2);
+            setJsonOutput(formattedJson);
+            setError(null);
+            
+            return;
+          } catch (urlError) {
+            // URL特殊处理失败，继续尝试其他方法
+          }
+        }
+      }
       
       // 尝试从错误消息中提取位置信息
       const positionMatch = errorMessage.match(/at position (\d+)/);
@@ -437,6 +697,59 @@ export default function JsonFormatter() {
 
   // JSON错误修复建议生成函数
   const getFixSuggestion = (errorMessage: string, inputValue: string, errorPosition: number): FixSuggestion | string => {
+    // 检查是否为控制字符导致的错误
+    if (errorMessage.includes('Bad control character') || errorMessage.includes('control character')) {
+      return {
+        fixDescription: "JSON包含不可见的控制字符，需要移除这些字符",
+        autoFix: (input: string) => {
+          return input.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+        }
+      };
+    }
+    
+    // 检查是否为URL中的双斜杠导致的错误
+    if ((errorMessage.includes('Unexpected token') || errorMessage.includes('Unterminated string')) && 
+        errorPosition > 0) {
+      
+      const textAroundError = inputValue.substring(
+        Math.max(0, errorPosition - 40),
+        Math.min(inputValue.length, errorPosition + 40)
+      );
+      
+      if (textAroundError.includes('http://') || textAroundError.includes('https://')) {
+        return {
+          fixDescription: "注意: JSON中的URL双斜杠(//)可能被误认为是注释开始标记",
+          autoFix: (input: string) => {
+            // 自动修复逻辑由debouncedInputChange中的代码处理
+            return input;
+          }
+        };
+      }
+    }
+    
+    // 检查是否为URL中的方括号导致的错误
+    if ((errorMessage.includes('Unterminated string') || errorMessage.includes('Unexpected token')) && errorPosition > 0) {
+      // 获取错误位置前后的文本
+      const textAroundError = inputValue.substring(
+        Math.max(0, errorPosition - 40),
+        Math.min(inputValue.length, errorPosition + 40)
+      );
+      
+      // 检查是否包含URL参数格式
+      if (textAroundError.includes('http') && 
+          (textAroundError.includes('?page[') || 
+           textAroundError.includes('[offset]') || 
+           textAroundError.includes('[') && textAroundError.includes(']') && textAroundError.includes('?'))) {
+        return {
+          fixDescription: "JSON字符串中含有带方括号的URL参数（如 ?page[offset]=2），这在JSON中需要特殊处理",
+          autoFix: (input: string) => {
+            // 自动修复逻辑由debouncedInputChange中的代码处理
+            return input;
+          }
+        };
+      }
+    }
+    
     // 检查常见的错误类型并提供修复建议
     
     // 1. 缺少括号或大括号
@@ -596,13 +909,58 @@ export default function JsonFormatter() {
     }
 
     try {
-      // 移除注释后再解析JSON
-      const jsonWithoutComments = inputValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
-      const parsedJson = JSON.parse(jsonWithoutComments);
+      // 首先识别并临时替换URL中的双斜杠，避免被误认为是注释
+      const urlRegex = /"(https?:)\/\/([^"]+)"/g;
+      const urlPlaceholders: {original: string, placeholder: string}[] = [];
+      let tempValue = inputValue;
+      
+      // 替换所有URL中的双斜杠为占位符
+      tempValue = tempValue.replace(urlRegex, (match: string, protocol: string, rest: string) => {
+        const placeholder = `"${protocol}__URL_DOUBLE_SLASH__${rest}"`;
+        urlPlaceholders.push({original: match, placeholder});
+        return placeholder;
+      });
+      
+      // 移除注释和非法控制字符
+      let jsonWithoutComments = tempValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+      
+      // 还原所有URL占位符
+      for (const {original, placeholder} of urlPlaceholders) {
+        jsonWithoutComments = jsonWithoutComments.replace(
+          new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+          original
+        );
+      }
+      
+      // 清除ASCII控制字符(0-31)，除了常见的 \t \n \r
+      const cleanJson = jsonWithoutComments.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      
+      // 处理URL中的方括号问题
+      const containsUrlBrackets = /https?:\/\/[^"]*\?[^"]*\[[^\]]*\]/i.test(cleanJson);
+      let jsonToProcess = cleanJson;
+      
+      if (containsUrlBrackets) {
+        // 创建一个临时字符串，替换URL中的方括号为编码字符
+        const urlWithBracketsRegex = /(https?:\/\/[^"]*\?[^"]*)\[([^\]]*)\]/g;
+        jsonToProcess = cleanJson.replace(urlWithBracketsRegex, (match: string, prefix: string, content: string) => {
+          return `${prefix}__LEFT_BRACKET__${content}__RIGHT_BRACKET__`;
+        });
+      }
+      
+      // 解析JSON
+      const parsedJson = JSON.parse(jsonToProcess);
       
       if (isCompressed) {
         // 如果当前是压缩状态，则恢复格式化
-        const formattedJson = JSON.stringify(parsedJson, null, 2);
+        let formattedJson = JSON.stringify(parsedJson, null, 2);
+        
+        // 如果有URL方括号，恢复原始格式
+        if (containsUrlBrackets) {
+          formattedJson = formattedJson
+            .replace(/__LEFT_BRACKET__/g, '[')
+            .replace(/__RIGHT_BRACKET__/g, ']');
+        }
+        
         setJsonOutput(formattedJson);
         setError(null);
         setSuccess(t('success.formatted'));
@@ -618,7 +976,15 @@ export default function JsonFormatter() {
         saveToHistory(historyItem);
       } else {
         // 如果当前是格式化状态，则进行压缩
-        const compressedJson = JSON.stringify(parsedJson);
+        let compressedJson = JSON.stringify(parsedJson);
+        
+        // 如果有URL方括号，恢复原始格式
+        if (containsUrlBrackets) {
+          compressedJson = compressedJson
+            .replace(/__LEFT_BRACKET__/g, '[')
+            .replace(/__RIGHT_BRACKET__/g, ']');
+        }
+        
         setJsonOutput(compressedJson);
         setError(null);
         setSuccess(t('success.compressed'));
@@ -658,6 +1024,77 @@ export default function JsonFormatter() {
       const errorMessage = e.message || t('errors.invalid');
       setJsonOutput('');
       
+      // 检查是否是URL中双斜杠导致的问题
+      if (errorMessage.includes('Unexpected token') || errorMessage.includes('Unterminated string') || errorMessage.includes('Bad control character')) {
+        try {
+          // 识别并保护所有URL
+          const urlProtectionRegex = /"(https?:\/\/[^"]+)"/g;
+          let matches: string[] = [];
+          let match;
+          let modifiedValue = inputValue;
+          
+          // 先收集所有匹配到的URL
+          while ((match = urlProtectionRegex.exec(inputValue)) !== null) {
+            matches.push(match[0]);
+          }
+          
+          // 替换所有URL为安全占位符
+          for (let i = 0; i < matches.length; i++) {
+            const safeUrl = matches[i].replace(/\/\//g, '__URL_SLASH__').replace(/\[/g, '__LEFT_BRACKET__').replace(/\]/g, '__RIGHT_BRACKET__');
+            modifiedValue = modifiedValue.replace(matches[i], safeUrl);
+          }
+          
+          // 移除注释和控制字符
+          modifiedValue = modifiedValue
+            .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '')
+            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+          
+          // 还原所有URL
+          for (let i = 0; i < matches.length; i++) {
+            const safeUrl = matches[i]
+              .replace(/\/\//g, '__URL_SLASH__')
+              .replace(/\[/g, '__LEFT_BRACKET__')
+              .replace(/\]/g, '__RIGHT_BRACKET__');
+            
+            modifiedValue = modifiedValue.replace(
+              safeUrl, 
+              matches[i]
+            );
+          }
+          
+          // 尝试解析修复后的JSON
+          const parsedJson = JSON.parse(modifiedValue);
+          const formattedJson = isCompressed 
+            ? JSON.stringify(parsedJson, null, 2) 
+            : JSON.stringify(parsedJson);
+            
+          setJsonOutput(formattedJson);
+          setError(null);
+          setSuccess(isCompressed ? t('success.formatted') : t('success.compressed'));
+          setIsCompressed(!isCompressed);
+          
+          // 保存到历史记录
+          const historyItem = {
+            id: Date.now().toString(),
+            timestamp: Date.now(),
+            input: inputValue,
+            output: formattedJson,
+            operation: isCompressed ? 'format' as const : 'compress' as const
+          };
+          saveToHistory(historyItem);
+          
+          // 2秒后自动清除成功提示
+          setTimeout(() => {
+            setSuccess(null);
+          }, 2000);
+          
+          return;
+        } catch (urlError) {
+          // URL特殊处理失败，继续常规错误处理
+          console.log("特殊URL处理失败:", urlError);
+        }
+      }
+      
       // 尝试从错误消息中提取位置信息
       const positionMatch = errorMessage.match(/at position (\d+)/);
       const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
@@ -674,7 +1111,13 @@ export default function JsonFormatter() {
         .replace('Expected', t('jsonErrors.expected'))
         .replace('in JSON at position', t('jsonErrors.inPosition'));
       
-      setError(`${t('errors.invalid')}: ${formattedError}`);
+      // 提供修复建议
+      const fixSuggestion = getFixSuggestion(errorMessage, inputValue, errorPosition);
+      const errorWithSuggestion = typeof fixSuggestion === 'string' 
+        ? `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion}`
+        : `${t('errors.invalid')}: ${formattedError} - ${t('errors.suggestion')}: ${fixSuggestion.fixDescription}`;
+      
+      setError(errorWithSuggestion);
       
       // 如果编辑器已初始化，添加错误标记
       if (inputEditorRef.current && monacoRef.current) {
@@ -705,7 +1148,7 @@ export default function JsonFormatter() {
               startColumn: column,
               endLineNumber: lineNumber,
               endColumn: column + 1,
-              message: formattedError
+              message: errorWithSuggestion
             };
             
             // 设置标记到编辑器
@@ -718,7 +1161,7 @@ export default function JsonFormatter() {
             editor.setPosition({ lineNumber, column });
           }
         } catch (err) {
-          console.error(t('jsonErrors.clearMarkError'), err);
+          console.error(t('jsonErrors.setMarkError'), err);
         }
       }
     }
@@ -744,11 +1187,47 @@ export default function JsonFormatter() {
     }
 
     try {
-      // 首先尝试解析为JSON
-      let parsedJson = JSON.parse(inputValue);
+      // 处理URL中的双斜杠和方括号，避免被误处理
+      const urlRegex = /"(https?:)\/\/([^"]+)"/g;
+      const urlPlaceholders: {original: string, placeholder: string}[] = [];
+      let tempValue = inputValue;
       
-      // 如果是字符串，则尝试去除转义字符
-      if (typeof parsedJson === 'string') {
+      // 替换所有URL中的双斜杠为占位符
+      tempValue = tempValue.replace(urlRegex, (match: string, protocol: string, rest: string) => {
+        const placeholder = `"${protocol}__URL_DOUBLE_SLASH__${rest}"`;
+        urlPlaceholders.push({original: match, placeholder});
+        return placeholder;
+      });
+      
+      // 移除注释和非法控制字符
+      let cleanJson = tempValue.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+      
+      // 还原所有URL占位符
+      for (const {original, placeholder} of urlPlaceholders) {
+        cleanJson = cleanJson.replace(
+          new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), 
+          original
+        );
+      }
+      
+      // 清除ASCII控制字符
+      cleanJson = cleanJson.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      
+      // 首先尝试解析为JSON
+      let parsedJson = JSON.parse(cleanJson);
+      
+      // 检查是否需要去除转义
+      const isJsonString = typeof parsedJson === 'string';
+      const containsEscapes = 
+        cleanJson.includes('\\"') || 
+        cleanJson.includes('\\\\') ||
+        cleanJson.includes('\\n') || 
+        cleanJson.includes('\\t') || 
+        cleanJson.includes('\\r') || 
+        cleanJson.includes('\\u');
+      
+      // 如果是字符串或包含转义字符的JSON，尝试去除转义字符
+      if (isJsonString) {
         try {
           // 尝试再次解析字符串，去除转义
           const unescapedJson = JSON.parse(parsedJson);
@@ -756,11 +1235,11 @@ export default function JsonFormatter() {
           // 检查是否实际需要转义
           const reStringifiedOriginal = JSON.stringify(parsedJson);
           const needsUnescaping = reStringifiedOriginal !== `"${parsedJson}"` || 
-                                  parsedJson.includes('\\\"') || 
-                                  parsedJson.includes('\\\\') ||
-                                  parsedJson.includes('\\n') ||
-                                  parsedJson.includes('\\t') ||
-                                  parsedJson.includes('\\r');
+                                parsedJson.includes('\\\"') || 
+                                parsedJson.includes('\\\\') ||
+                                parsedJson.includes('\\n') ||
+                                parsedJson.includes('\\t') ||
+                                parsedJson.includes('\\r');
           
           if (!needsUnescaping) {
             setError(null);
@@ -810,21 +1289,117 @@ export default function JsonFormatter() {
             };
             saveToHistory(historyItem);
           }
+        } catch (e) {
+          // 如果再次解析失败，保持原始字符串
+          setError(t('errors.invalidEscape'));
+        }
+      } else if (containsEscapes) {
+        // 如果包含转义字符但不是字符串，可能是JSON对象中包含转义字符
+        try {
+          // 尝试将JSON字符串化后去除转义字符
+          const jsonString = JSON.stringify(parsedJson);
+          const unescapedString = jsonString
+            .replace(/\\\\"/g, '\\"') // 处理双重转义的引号
+            .replace(/\\\\/g, '\\')   // 处理双重转义的反斜杠
+            .replace(/\\n/g, '\n')    // 处理换行符
+            .replace(/\\t/g, '\t')    // 处理制表符
+            .replace(/\\r/g, '\r');   // 处理回车符
+          
+          // 尝试解析去除转义后的字符串
+          const finalJson = JSON.parse(unescapedString);
+          const formattedJson = JSON.stringify(finalJson, null, 2);
+          
+          if (inputEditorRef.current) {
+            inputEditorRef.current.setValue(formattedJson);
+          }
+          setJsonInput(formattedJson);
+          setJsonOutput(formattedJson);
+          setError(null);
+          setSuccess(t('success.unescaped'));
+          
+          // 保存到历史记录
+          const historyItem = {
+            id: Date.now().toString(),
+            timestamp: Date.now(),
+            input: inputValue,
+            output: formattedJson,
+            operation: 'unescape' as const
+          };
+          saveToHistory(historyItem);
           
           // 2秒后自动清除成功提示
           setTimeout(() => {
             setSuccess(null);
           }, 2000);
-        } catch (e) {
-          // 如果再次解析失败，保持原始字符串
-          setError(t('errors.invalidEscape'));
+          return;
+        } catch (complexError) {
+          // 无法处理的复杂转义情况
+          setError(t('errors.complexEscape') || '无法处理复杂的转义字符');
+          return;
         }
       } else {
-        // 如果不是字符串，提示用户
+        // 如果不是字符串且不包含转义字符，提示用户
         setError(t('errors.notString'));
       }
+      
+      // 2秒后自动清除成功提示
+      setTimeout(() => {
+        setSuccess(null);
+      }, 2000);
     } catch (e) {
-      setError(t('errors.invalid'));
+      // 使用我们已经实现的URL保护机制尝试解析
+      try {
+        // 识别并保护所有URL
+        const urlProtectionRegex = /"(https?:\/\/[^"]+)"/g;
+        let matches: string[] = [];
+        let match;
+        let modifiedValue = inputValue;
+        
+        // 先收集所有匹配到的URL
+        while ((match = urlProtectionRegex.exec(inputValue)) !== null) {
+          matches.push(match[0]);
+        }
+        
+        // 替换所有URL为安全占位符
+        for (let i = 0; i < matches.length; i++) {
+          const safeUrl = matches[i].replace(/\/\//g, '__URL_SLASH__').replace(/\[/g, '__LEFT_BRACKET__').replace(/\]/g, '__RIGHT_BRACKET__');
+          modifiedValue = modifiedValue.replace(matches[i], safeUrl);
+        }
+        
+        // 移除注释和控制字符
+        modifiedValue = modifiedValue
+          .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '')
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+        
+        // 还原所有URL
+        for (let i = 0; i < matches.length; i++) {
+          const safeUrl = matches[i]
+            .replace(/\/\//g, '__URL_SLASH__')
+            .replace(/\[/g, '__LEFT_BRACKET__')
+            .replace(/\]/g, '__RIGHT_BRACKET__');
+          
+          modifiedValue = modifiedValue.replace(
+            safeUrl, 
+            matches[i]
+          );
+        }
+        
+        // 尝试解析修复后的JSON
+        const parsedJson = JSON.parse(modifiedValue);
+        // 检查是否实际是一个字符串
+        if (typeof parsedJson === 'string') {
+          // 此时处理字符串...
+          // 与上面的逻辑相同
+        } else {
+          // 格式化并显示JSON，提示用户这不是转义的字符串
+          const formattedJson = JSON.stringify(parsedJson, null, 2);
+          setJsonOutput(formattedJson);
+          setError(t('errors.validJsonNotString') || "输入是有效的JSON，但不是需要去除转义的字符串");
+        }
+      } catch (finalError) {
+        // 最终失败，显示通用错误
+        setError(t('errors.invalid'));
+      }
     }
   };
 
@@ -1629,7 +2204,7 @@ export default function JsonFormatter() {
                     className="inline-flex items-center px-2 py-1 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors disabled:bg-purple-500/50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 whitespace-nowrap"
                   >
                     <svg className="w-3.5 h-3.5 mr-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                     <span className="truncate max-w-[60px] sm:max-w-none">{t('downloadBtn')}</span>
                   </button>
@@ -1701,14 +2276,14 @@ export default function JsonFormatter() {
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
-              <span>总访问量: {visitorCount.toLocaleString()}</span>
+              <span>{t('stats.totalVisits')}: {visitorCount.toLocaleString()}</span>
             </div>
             <div className="flex items-center">
               <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              <span>在线用户: {onlineUsers}</span>
+              <span>{t('stats.onlineUsers')}: {onlineUsers}</span>
             </div>
           </div>
         </div>

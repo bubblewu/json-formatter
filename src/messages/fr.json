@@ -125,5 +125,9 @@
     "title": "Partager sur",
     "open": "Ouvrir le menu de partage",
     "close": "Fermer le menu de partage"
+  },
+  "stats": {
+    "totalVisits": "Visites Totales",
+    "onlineUsers": "Utilisateurs en Ligne"
   }
 } 
