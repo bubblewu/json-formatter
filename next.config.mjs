@@ -51,10 +51,6 @@ const nextConfig = {
     host: '0.0.0.0',  // 监听所有地址
     port: 3000,
   },
-  serverRuntimeConfig: {
-    host: '0.0.0.0',  // 监听所有地址
-    port: 3000,
-  },
 };
 
 export default withNextIntl(nextConfig); 
