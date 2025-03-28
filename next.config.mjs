@@ -21,6 +21,10 @@ const nextConfig = {
     // 禁用特定路径的静态预渲染
     workerThreads: false,
     cpus: 1
+  },
+  devServer: {
+    host: '0.0.0.0', // Allow binding on all network interfaces
+    port: 3100, // Keep the same port
   }
 };
 
