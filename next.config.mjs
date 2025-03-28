@@ -46,7 +46,11 @@ const nextConfig = {
   // 设置环境变量
   env: {
     _next_intl_trailing_slash: 'true'
-  }
+  },
+  devServer: {
+    host: '0.0.0.0', // Allow binding on all network interfaces
+    port: 3000, // Keep the same port
+  },
 };
 
 export default withNextIntl(nextConfig); 
