@@ -1701,14 +1701,14 @@ export default function JsonFormatter() {
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
-              <span>总访问量: {visitorCount.toLocaleString()}</span>
+              <span>{t('stats.totalVisits')}: {visitorCount.toLocaleString()}</span>
             </div>
             <div className="flex items-center">
               <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              <span>在线用户: {onlineUsers}</span>
+              <span>{t('stats.onlineUsers')}: {onlineUsers}</span>
             </div>
           </div>
         </div>

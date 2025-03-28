@@ -125,5 +125,9 @@
     "title": "で共有",
     "open": "共有メニューを開く",
     "close": "共有メニューを閉じる"
+  },
+  "stats": {
+    "totalVisits": "総訪問数",
+    "onlineUsers": "オンラインユーザー"
   }
 } 

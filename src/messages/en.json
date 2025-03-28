@@ -126,5 +126,9 @@
     "title": "Share to",
     "open": "Open share menu",
     "close": "Close share menu"
+  },
+  "stats": {
+    "totalVisits": "Total Visits",
+    "onlineUsers": "Online Users"
   }
 } 
