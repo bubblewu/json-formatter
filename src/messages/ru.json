@@ -47,28 +47,29 @@
   "backToFormatter": "Вернуться к форматировщику",
   "history": {
     "title": "История",
-    "searchPlaceholder": "Поиск по истории...",
-    "empty": "Нет записей истории",
-    "noResults": "Соответствующих записей не найдено",
-    "input": "Ввод",
-    "output": "Вывод",
-    "copy": "Копировать",
+    "empty": "Нет истории",
+    "noResults": "Записи не найдены",
     "clear": "Очистить историю",
-    "operations": {
-      "format": "Форматировать",
-      "compress": "Сжать",
-      "unescape": "Удалить escape"
-    },
-    "time": {
-      "today": "Сегодня в {time}",
-      "yesterday": "Вчера в {time}",
-      "daysAgo": "{days} дней назад в {time}"
-    },
+    "copy": "Копировать",
+    "searchPlaceholder": "Поиск в истории...",
     "timeFilter": {
       "all": "Все",
       "today": "Сегодня",
-      "week": "Последняя неделя",
-      "month": "Последний месяц"
+      "week": "На этой неделе",
+      "month": "В этом месяце"
+    },
+    "format": "Форматировать",
+    "compress": "Сжать",
+    "unescape": "Убрать экранирование",
+    "operations": {
+      "format": "Форматировать",
+      "compress": "Сжать",
+      "unescape": "Убрать экранирование"
+    },
+    "time": {
+      "today": "Сегодня {time}",
+      "yesterday": "Вчера {time}",
+      "daysAgo": "{days} дней назад {time}"
     }
   },
   "languages": {

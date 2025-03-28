@@ -91,6 +91,11 @@
     "format": "格式化",
     "compress": "压缩",
     "unescape": "去除转义",
+    "operations": {
+      "format": "格式化",
+      "compress": "压缩",
+      "unescape": "去除转义"
+    },
     "time": {
       "today": "今天 {time}",
       "yesterday": "昨天 {time}",

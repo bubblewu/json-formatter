@@ -87,9 +87,14 @@
       "week": "이번 주",
       "month": "이번 달"
     },
-    "format": "포맷팅",
+    "format": "포맷",
     "compress": "압축",
-    "unescape": "이스케이프 해제",
+    "unescape": "이스케이프 제거",
+    "operations": {
+      "format": "포맷",
+      "compress": "압축",
+      "unescape": "이스케이프 제거"
+    },
     "time": {
       "today": "오늘 {time}",
       "yesterday": "어제 {time}",
