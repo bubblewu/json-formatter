@@ -47,6 +47,10 @@ const nextConfig = {
   env: {
     _next_intl_trailing_slash: 'true'
   },
+  devServer: {
+    host: '0.0.0.0', // Allow binding on all network interfaces
+    port: 3000, // Keep the same port
+  },
   serverRuntimeConfig: {
     host: '0.0.0.0',  // 监听所有地址
     port: 3000,
