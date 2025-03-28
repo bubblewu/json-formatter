@@ -91,6 +91,11 @@
     "format": "Format",
     "compress": "Compress",
     "unescape": "Unescape",
+    "operations": {
+      "format": "Format",
+      "compress": "Compress",
+      "unescape": "Unescape"
+    },
     "time": {
       "today": "Today {time}",
       "yesterday": "Yesterday {time}",

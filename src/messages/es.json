@@ -90,6 +90,11 @@
     "format": "Formatear",
     "compress": "Comprimir",
     "unescape": "Quitar Escape",
+    "operations": {
+      "format": "Formatear",
+      "compress": "Comprimir",
+      "unescape": "Quitar Escape"
+    },
     "time": {
       "today": "Hoy {time}",
       "yesterday": "Ayer {time}",

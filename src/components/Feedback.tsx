@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-interface FeedbackProps {
-  isOpen: boolean;
+export interface FeedbackProps {
   onClose: () => void;
   userId: string;
+  isOpen?: boolean;
 }
 
 // 邮箱验证函数
@@ -13,7 +13,7 @@ const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-export default function Feedback({ isOpen, onClose, userId }: FeedbackProps) {
+export default function Feedback({ onClose, userId, isOpen = true }: FeedbackProps) {
   const t = useTranslations();
   const [feedback, setFeedback] = useState('');
   const [contact, setContact] = useState('');

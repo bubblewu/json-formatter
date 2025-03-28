@@ -1006,18 +1006,60 @@ export default function JsonFormatter() {
 
   // 监听窗口大小变化
   useEffect(() => {
+    // 计算编辑器高度的函数
+    const calculateEditorHeight = () => {
+      const windowHeight = window.innerHeight;
+      const headerHeight = 64; // 导航栏高度
+      const footerHeight = 56; // 页脚高度
+      const toolbarHeight = 48; // 工具栏高度
+      const padding = 48; // 页面内边距总和
+      const extraSpace = 50; // 额外空间
+      
+      // 根据屏幕尺寸动态计算
+      let editorHeightValue;
+      
+      if (window.innerWidth < 768) { // 移动设备
+        editorHeightValue = Math.floor((windowHeight - headerHeight - footerHeight - toolbarHeight - padding) * 0.4);
+      } else if (window.innerWidth < 1280) { // 平板设备
+        editorHeightValue = Math.floor((windowHeight - headerHeight - footerHeight - toolbarHeight - padding) * 0.5);
+      } else { // 桌面设备
+        editorHeightValue = Math.floor((windowHeight - headerHeight - footerHeight - toolbarHeight - padding) * 0.99);
+      }
+      
+      // 设置最小和最大高度限制
+      const minHeight = 300;
+      const maxHeight = 800;
+      
+      editorHeightValue = Math.max(minHeight, Math.min(editorHeightValue, maxHeight));
+      
+      return `${editorHeightValue}px`;
+    };
+    
+    // 初始化设置编辑器高度
+    const newHeight = calculateEditorHeight();
+    setEditorHeight(newHeight);
+    inputEditorHeight.current = newHeight;
+    outputEditorHeight.current = newHeight;
+    
+    // 窗口大小变化时更新高度
     const handleWindowResize = () => {
-      const isMobile = window.innerWidth < 768;
-      if (isMobile && parseInt(editorHeight) > 400) {
-        setEditorHeight("400px");
-        inputEditorHeight.current = "400px";
-        outputEditorHeight.current = "400px";
+      const newHeight = calculateEditorHeight();
+      setEditorHeight(newHeight);
+      inputEditorHeight.current = newHeight;
+      outputEditorHeight.current = newHeight;
+      
+      // 如果编辑器已加载，手动触发布局更新
+      if (inputEditorRef.current) {
+        inputEditorRef.current.layout();
+      }
+      if (outputEditorRef.current) {
+        outputEditorRef.current.layout();
       }
     };
 
     window.addEventListener('resize', handleWindowResize);
     return () => window.removeEventListener('resize', handleWindowResize);
-  }, [editorHeight]);
+  }, []);
 
   useEffect(() => {
     // 动态更新页面标题以提高SEO
@@ -1158,8 +1200,8 @@ export default function JsonFormatter() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm mt-0 pt-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               {/* Logo和站点标题 */}
@@ -1187,9 +1229,9 @@ export default function JsonFormatter() {
               {/* 历史记录按钮 */}
               <button
                 onClick={() => router.push(`/${pathname.split('/')[1]}/history`)}
-                className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="inline-flex items-center px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
-                <svg className="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span className="text-gray-700 dark:text-gray-300">{t('historyBtn')}</span>
@@ -1198,9 +1240,9 @@ export default function JsonFormatter() {
               {/* 反馈按钮 */}
               <button
                 onClick={() => setIsFeedbackOpen(true)}
-                className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="inline-flex items-center px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
-                <svg className="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
                 <span className="text-gray-700 dark:text-gray-300">{t('feedbackBtn')}</span>
@@ -1225,7 +1267,7 @@ export default function JsonFormatter() {
               
               {/* 语言切换下拉菜单 */}
               <div className="relative">
-                <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-md px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
                   <svg className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                   </svg>
@@ -1458,7 +1500,7 @@ export default function JsonFormatter() {
                   </label>
                 </div>
               </div>
-              <div style={{ height: inputEditorHeight.current, minHeight: '600px' }}>
+              <div style={{ height: inputEditorHeight.current, minHeight: '400px' }}>
                 <Editor
                   height="100%"
                   defaultLanguage="json"
@@ -1575,7 +1617,7 @@ export default function JsonFormatter() {
                   </button>
                 </div>
               </div>
-              <div style={{ height: isFullScreen ? 'calc(100% - 55px)' : outputEditorHeight.current, minHeight: '600px' }}>
+              <div style={{ height: isFullScreen ? 'calc(100% - 55px)' : outputEditorHeight.current, minHeight: '400px' }}>
                 <Editor
                   height="100%"
                   language="json"

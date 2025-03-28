@@ -76,8 +76,8 @@
   },
   "history": {
     "title": "Verlauf",
-    "empty": "Keine Verlaufsdaten",
-    "noResults": "Keine übereinstimmenden Einträge gefunden",
+    "empty": "Keine Einträge vorhanden",
+    "noResults": "Keine passenden Einträge gefunden",
     "clear": "Verlauf löschen",
     "copy": "Kopieren",
     "searchPlaceholder": "Verlauf durchsuchen...",
@@ -85,11 +85,16 @@
       "all": "Alle",
       "today": "Heute",
       "week": "Diese Woche",
-      "month": "Dieser Monat"
+      "month": "Diesen Monat"
     },
     "format": "Formatieren",
     "compress": "Komprimieren",
     "unescape": "Escape entfernen",
+    "operations": {
+      "format": "Formatieren",
+      "compress": "Komprimieren",
+      "unescape": "Escape entfernen"
+    },
     "time": {
       "today": "Heute {time}",
       "yesterday": "Gestern {time}",
