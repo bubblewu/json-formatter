@@ -305,6 +305,53 @@ export default function JsonFormatter() {
       scrollBeyondLastLine: false,
       largeFileOptimizations: true,
     });
+    
+    // 监听输出编辑器中的选择变化
+    editor.onDidChangeCursorSelection((e) => {
+      if (inputEditorRef.current) {
+        const inputEditor = inputEditorRef.current;
+        const outputModel = editor.getModel();
+        const inputModel = inputEditor.getModel();
+        
+        if (inputModel && outputModel) {
+          const outputText = outputModel.getValue();
+          const inputText = inputModel.getValue();
+          
+          // 获取选中的文本
+          const selection = editor.getSelection();
+          if (selection) {
+            const selectedText = outputModel.getValueInRange(selection);
+            if (selectedText && selectedText.length > 0) {
+              // 在输入文本中查找对应的位置
+              const inputIndex = inputText.indexOf(selectedText);
+              if (inputIndex !== -1) {
+                // 计算输入文本中的行和列
+                const inputLines = inputText.substring(0, inputIndex).split('\n');
+                const lineNumber = inputLines.length;
+                const column = inputLines[inputLines.length - 1].length + 1;
+                
+                // 创建选中范围
+                const inputSelection = new monaco.Selection(
+                  lineNumber,
+                  column,
+                  lineNumber,
+                  column + selectedText.length
+                );
+                
+                // 设置输入编辑器的选中范围
+                inputEditor.setSelection(inputSelection);
+                
+                // 确保选中区域在视图中可见
+                inputEditor.revealPositionInCenter({
+                  lineNumber,
+                  column
+                });
+              }
+            }
+          }
+        }
+      }
+    });
   };
 
   const formatJson = () => {
