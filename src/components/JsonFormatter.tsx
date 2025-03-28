@@ -9,6 +9,8 @@ import dynamic from 'next/dynamic';
 // 只导入类型，不导入实际代码
 import type { OnMount, Monaco } from '@monaco-editor/react';
 import Feedback from './Feedback';
+import ShareButtons from './ShareButtons';
+import { StatsData } from '@/types/stats';
 
 // 动态导入Monaco编辑器，减少初始加载包体积
 const Editor = dynamic(() => import('@monaco-editor/react'), {
@@ -20,25 +22,29 @@ export default function JsonFormatter() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [jsonInput, setJsonInput] = useState('');
   const [jsonOutput, setJsonOutput] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [isCompressed, setIsCompressed] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [editorHeight, setEditorHeight] = useState('600px');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [showDemo, setShowDemo] = useState(false);
   const [userId, setUserId] = useState<string>('');
+  const [monacoLoaded, setMonacoLoaded] = useState(false);
   const outputEditorRef = useRef<any>(null);
   const inputEditorRef = useRef<any>(null);
   const outputContainerRef = useRef<HTMLDivElement>(null);
-  const [editorHeight, setEditorHeight] = useState("600px");
   const inputEditorHeight = useRef("600px");
   const outputEditorHeight = useRef("600px");
   const monacoRef = useRef<Monaco | null>(null);
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const [showDemo, setShowDemo] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [monacoLoaded, setMonacoLoaded] = useState(false);
+  
+  // 站点访问统计数据
+  const [visitorCount, setVisitorCount] = useState<number>(0); // 总访问人数
+  const [onlineUsers, setOnlineUsers] = useState<number>(0); // 在线人数
 
   // 生成或获取用户ID
   useEffect(() => {
@@ -1197,6 +1203,25 @@ export default function JsonFormatter() {
     }
   }`;
 
+  // 模拟获取访问统计数据
+  useEffect(() => {
+    // 模拟从服务器获取数据
+    // 实际项目中应该从后端API获取这些数据
+    const fetchVisitorStats = () => {
+      // 这里模拟服务器返回的数据
+      setVisitorCount(Math.floor(Math.random() * 10000) + 5000); // 模拟 5000-15000 的访问量
+      setOnlineUsers(Math.floor(Math.random() * 200) + 50); // 模拟 50-250 的在线用户
+    };
+    
+    // 立即获取一次数据
+    fetchVisitorStats();
+    
+    // 每分钟更新一次数据
+    const intervalId = setInterval(fetchVisitorStats, 60000);
+    
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
@@ -1400,6 +1425,12 @@ export default function JsonFormatter() {
           </div>
         )}
       </nav>
+
+      {/* 分享按钮 */}
+      <ShareButtons
+        title={t('title')}
+        description={t('description')}
+      />
 
       {/* 主内容区域 */}
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -1658,8 +1689,28 @@ export default function JsonFormatter() {
 
       {/* 页脚 */}
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-4">
-        <div className="container mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
-          {t('footer.copyright')}
+        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+          <div className="mb-2 sm:mb-0">
+            {t('footer.copyright')}
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>总访问量: {visitorCount.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center">
+              <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>在线用户: {onlineUsers}</span>
+            </div>
+          </div>
         </div>
       </footer>
 

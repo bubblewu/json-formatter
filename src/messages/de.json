@@ -119,5 +119,11 @@
     }
   },
   "showDemoBtn": "Demo anzeigen",
-  "hideDemoBtn": "Demo ausblenden"
+  "hideDemoBtn": "Demo ausblenden",
+  "share": "Teilen",
+  "shareMenu": {
+    "title": "Teilen auf",
+    "open": "Teilen-Menü öffnen",
+    "close": "Teilen-Menü schließen"
+  }
 } 

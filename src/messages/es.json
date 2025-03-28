@@ -115,5 +115,11 @@
     "error": "Error al enviar, por favor intenta de nuevo más tarde"
   },
   "showDemoBtn": "Mostrar Demo",
-  "hideDemoBtn": "Ocultar Demo"
+  "hideDemoBtn": "Ocultar Demo",
+  "share": "Compartir",
+  "shareMenu": {
+    "title": "Compartir en",
+    "open": "Abrir menú de compartir",
+    "close": "Cerrar menú de compartir"
+  }
 } 

@@ -25,6 +25,7 @@ export default function HistoryPage() {
   const [filteredHistory, setFilteredHistory] = useState<HistoryItem[]>([]);
   const [timeFilter, setTimeFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
   const [userId, setUserId] = useState<string>('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     // 获取用户ID
@@ -135,39 +136,57 @@ export default function HistoryPage() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <StructuredData />
       {/* 导航栏 */}
       <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="flex justify-between items-center h-14">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Logo和站点标题 */}
               <div 
                 className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => router.push(`/${pathname.split('/')[1]}`)}
               >
-                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg shadow-md">
-                  <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-1.5 sm:p-2 rounded-lg shadow-md">
+                  <svg className="h-5 w-5 sm:h-6 sm:w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 5H20V19H4V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M4 9H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                     <path d="M8 15H12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
                 </div>
-                <div className="ml-3">
-                  <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                <div className="ml-2 sm:ml-3">
+                  <h1 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white">
                     {t('title')}
                   </h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
                     {t('subtitle')}
                   </p>
                 </div>
               </div>
             </div>
             
-            {/* 右侧导航项目 */}
-            <div className="flex items-center space-x-4">
+            {/* 移动端菜单按钮 */}
+            <button 
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              onClick={toggleMenu}
+            >
+              <span className="sr-only">打开菜单</span>
+              <svg className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* 右侧导航项目 - 桌面端 */}
+            <div className="hidden md:flex items-center space-x-4">
               {/* 返回按钮 */}
               <button
                 onClick={() => router.push(`/${pathname.split('/')[1]}`)}
@@ -203,17 +222,54 @@ export default function HistoryPage() {
               </div>
             </div>
           </div>
+          
+          {/* 移动端菜单 */}
+          <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden border-t border-gray-200 dark:border-gray-700 py-2`}>
+            <div className="flex flex-col space-y-3 pt-2 pb-3">
+              {/* 返回按钮 */}
+              <button
+                onClick={() => router.push(`/${pathname.split('/')[1]}`)}
+                className="inline-flex items-center px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 w-full justify-center"
+              >
+                <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {t('backToFormatter')}
+              </button>
+              
+              {/* 语言切换下拉菜单 */}
+              <div className="flex items-center justify-between px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-md">
+                <div className="flex items-center">
+                  <svg className="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{t('language')}</span>
+                </div>
+                <select
+                  onChange={(e) => handleLanguageChange(e.target.value)}
+                  className="appearance-none bg-transparent focus:outline-none text-gray-700 dark:text-gray-300 pr-8"
+                  value={pathname.split('/')[1]}
+                >
+                  {locales.map((locale) => (
+                    <option key={locale} value={locale}>
+                      {t(`languages.${locale}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
 
       {/* 主内容区域 */}
-      <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
-          <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800">
-            <div className="flex items-center justify-between">
+          <div className="px-3 sm:px-4 py-3 bg-blue-50 dark:bg-blue-900/30 border-b border-blue-200 dark:border-blue-800">
+            <div className="flex items-center justify-between flex-wrap sm:flex-nowrap gap-2">
               <div className="flex items-center">
                 <div className="w-1 h-5 bg-blue-600 rounded-r mr-3"></div>
-                <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200">
+                <h2 className="text-base sm:text-lg font-medium text-blue-800 dark:text-blue-200">
                   {t('history.title')}
                 </h2>
               </div>
@@ -229,7 +285,7 @@ export default function HistoryPage() {
           </div>
           
           {/* 搜索和筛选区域 */}
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700 space-y-4">
+          <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 space-y-3 sm:space-y-4">
             <div className="relative">
               <input
                 type="text"
@@ -257,7 +313,7 @@ export default function HistoryPage() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setTimeFilter('all')}
-                className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
                   timeFilter === 'all'
                     ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -267,7 +323,7 @@ export default function HistoryPage() {
               </button>
               <button
                 onClick={() => setTimeFilter('today')}
-                className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
                   timeFilter === 'today'
                     ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -277,7 +333,7 @@ export default function HistoryPage() {
               </button>
               <button
                 onClick={() => setTimeFilter('week')}
-                className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
                   timeFilter === 'week'
                     ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -287,7 +343,7 @@ export default function HistoryPage() {
               </button>
               <button
                 onClick={() => setTimeFilter('month')}
-                className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
                   timeFilter === 'month'
                     ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -304,11 +360,11 @@ export default function HistoryPage() {
               filteredHistory.map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                  className="p-3 sm:p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <span className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full ${
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                      <span className={`inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 text-xs font-medium rounded-full ${
                         item.operation === 'format'
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
                           : item.operation === 'compress'
@@ -317,11 +373,11 @@ export default function HistoryPage() {
                       }`}>
                         {getOperationText(item.operation)}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                         {formatDate(item.timestamp)}
                       </span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center">
                       <button
                         onClick={() => {
                           navigator.clipboard.writeText(item.input);
@@ -337,7 +393,7 @@ export default function HistoryPage() {
                     </div>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-                    <pre className="text-sm p-3 overflow-x-auto whitespace-pre-wrap break-all">
+                    <pre className="text-xs sm:text-sm p-2 sm:p-3 overflow-x-auto whitespace-pre-wrap break-all">
                       {item.input}
                     </pre>
                   </div>
@@ -353,8 +409,8 @@ export default function HistoryPage() {
       </main>
 
       {/* 添加页脚 */}
-      <footer className="py-6 px-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
-        <div className="container mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
+      <footer className="py-4 sm:py-6 px-3 sm:px-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+        <div className="container mx-auto text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           <p>{t('footer.copyright')}</p>
         </div>
       </footer>
