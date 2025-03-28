@@ -17,6 +17,7 @@ export default function StructuredData() {
       <Script
         id="structured-data"
         type="application/ld+json"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
@@ -67,10 +68,7 @@ export default function StructuredData() {
             },
             'potentialAction': {
               '@type': 'UseAction',
-              'target': {
-                '@type': 'EntryPoint',
-                'urlTemplate': `https://json-formatter.vercel.app/${locale}`
-              }
+              'target': `https://json-formatter.vercel.app/${locale}`
             }
           })
         }}

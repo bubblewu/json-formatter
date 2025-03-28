@@ -5,9 +5,15 @@ import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { usePathname, useRouter } from 'next/navigation';
 import { locales } from '@/i18n/request';
-import Editor, { Monaco, OnMount } from '@monaco-editor/react';
-import * as monaco from 'monaco-editor';
+import dynamic from 'next/dynamic';
+// 只导入类型，不导入实际代码
+import type { OnMount, Monaco } from '@monaco-editor/react';
 import Feedback from './Feedback';
+
+// 动态导入Monaco编辑器，减少初始加载包体积
+const Editor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false
+});
 
 export default function JsonFormatter() {
   const t = useTranslations();
@@ -32,6 +38,7 @@ export default function JsonFormatter() {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [showDemo, setShowDemo] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [monacoLoaded, setMonacoLoaded] = useState(false);
 
   // 生成或获取用户ID
   useEffect(() => {
@@ -62,11 +69,12 @@ export default function JsonFormatter() {
   const handleInputEditorDidMount: OnMount = (editor, monaco) => {
     inputEditorRef.current = editor;
     monacoRef.current = monaco;
+    setMonacoLoaded(true);
     
     // 配置编辑器
-    const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-      renderLineHighlight: 'none',
-      renderWhitespace: 'none',
+    const options = {
+      renderLineHighlight: 'none' as const,
+      renderWhitespace: 'none' as const,
       renderControlCharacters: false,
       guides: { indentation: false },
       scrollBeyondLastLine: false,
@@ -102,6 +110,23 @@ export default function JsonFormatter() {
       foldingRanges: true,
       diagnostics: true,
     });
+
+    // 设置编辑器主题
+    monaco.editor.defineTheme('jsonc-theme', {
+      base: 'vs',
+      inherit: true,
+      rules: [
+        { token: 'comment', foreground: '6A9955' },
+        { token: 'string', foreground: 'CE9178' },
+        { token: 'number', foreground: 'B5CEA8' },
+        { token: 'keyword', foreground: '569CD6' },
+        { token: 'operator', foreground: 'D4D4D4' },
+        { token: 'delimiter', foreground: 'D4D4D4' },
+      ],
+      colors: {},
+    });
+
+    monaco.editor.setTheme('jsonc-theme');
 
     // 设置输入编辑器的默认值
     editor.setValue(jsonInput);
@@ -246,7 +271,7 @@ export default function JsonFormatter() {
                 editor.setPosition({ lineNumber, column });
               }
             } catch (err) {
-              console.error(t('jsonErrors.clearMarkError'), err);
+              console.error(t('jsonErrors.setMarkError'), err);
             }
           }
         }
@@ -254,7 +279,7 @@ export default function JsonFormatter() {
         setJsonOutput('');
         setError(null);
       }
-    }, 10000); // 点击显示DEMO按钮时，10秒后自动清除错误提示
+    }, 300);
     
     // 监听输入变化
     editor.onDidChangeModelContent(() => {
@@ -1040,37 +1065,39 @@ export default function JsonFormatter() {
     const editor = monacoRef.current.editor.getEditors()[0];
     if (!editor) return;
 
-    monaco.editor.defineTheme('jsonc-theme', {
-      base: 'vs',
-      inherit: true,
-      rules: [
-        { token: 'comment', foreground: '6A9955' },
-        { token: 'string', foreground: 'CE9178' },
-        { token: 'number', foreground: 'B5CEA8' },
-        { token: 'keyword', foreground: '569CD6' },
-        { token: 'operator', foreground: 'D4D4D4' },
-        { token: 'delimiter', foreground: 'D4D4D4' },
-      ],
-      colors: {},
-    });
+    if (monacoRef.current) {
+      monacoRef.current.editor.defineTheme('jsonc-theme', {
+        base: 'vs',
+        inherit: true,
+        rules: [
+          { token: 'comment', foreground: '6A9955' },
+          { token: 'string', foreground: 'CE9178' },
+          { token: 'number', foreground: 'B5CEA8' },
+          { token: 'keyword', foreground: '569CD6' },
+          { token: 'operator', foreground: 'D4D4D4' },
+          { token: 'delimiter', foreground: 'D4D4D4' },
+        ],
+        colors: {},
+      });
 
-    monaco.editor.setTheme('jsonc-theme');
+      monacoRef.current.editor.setTheme('jsonc-theme');
+    }
 
-    const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+    const editorOptions = {
       minimap: { enabled: false },
       fontSize: 14,
-      lineNumbers: 'on',
+      lineNumbers: 'on' as const,
       scrollBeyondLastLine: false,
       automaticLayout: true,
-      wordWrap: 'on',
+      wordWrap: 'on' as const,
       formatOnPaste: true,
       formatOnType: true,
       insertSpaces: true,
       detectIndentation: true,
-      renderWhitespace: 'selection',
+      renderWhitespace: 'selection' as const,
       scrollbar: {
-        vertical: 'visible',
-        horizontal: 'visible',
+        vertical: 'visible' as const,
+        horizontal: 'visible' as const,
         useShadows: false,
         verticalScrollbarSize: 10,
         horizontalScrollbarSize: 10,
@@ -1082,8 +1109,10 @@ export default function JsonFormatter() {
       },
     };
 
-    editor.updateOptions(options);
-    monaco.editor.setModelLanguage(editor.getModel()!, 'jsonc');
+    editor.updateOptions(editorOptions);
+    if (monacoRef.current) {
+      monacoRef.current.editor.setModelLanguage(editor.getModel()!, 'jsonc');
+    }
   }, [monacoRef.current]);
 
   // 添加显示示例的函数
