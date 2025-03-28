@@ -28,6 +28,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
           { url: '/logo-json.png', type: 'image/png' },
         ],
       },
+      viewport: {
+        width: 'device-width',
+        initialScale: 1,
+        maximumScale: 1.5,
+        userScalable: true,
+      },
     };
   }
 
@@ -49,6 +55,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       apple: [
         { url: '/logo-json.png', type: 'image/png' },
       ],
+    },
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 1.5,
+      userScalable: true,
     },
   };
 }
