@@ -15,6 +15,7 @@
   "exitFullscreenBtn": "退出全屏",
   "inputLabel": "JSON输入",
   "outputLabel": "格式化结果",
+  "language": "语言",
   "lineNumbers": {
     "show": "显示行号",
     "hide": "隐藏行号"

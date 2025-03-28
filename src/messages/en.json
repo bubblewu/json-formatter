@@ -15,6 +15,7 @@
   "exitFullscreenBtn": "Exit Full",
   "inputLabel": "JSON Input",
   "outputLabel": "Result",
+  "language": "Language",
   "lineNumbers": {
     "show": "Show Line Number",
     "hide": "Hide Line Number"

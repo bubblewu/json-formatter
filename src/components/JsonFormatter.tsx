@@ -31,6 +31,7 @@ export default function JsonFormatter() {
   const monacoRef = useRef<Monaco | null>(null);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [showDemo, setShowDemo] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // 生成或获取用户ID
   useEffect(() => {
@@ -1131,7 +1132,7 @@ export default function JsonFormatter() {
       <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm mt-0 pt-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
               {/* Logo和站点标题 */}
               <div className="flex items-center">
                 <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg shadow-md">
@@ -1145,15 +1146,15 @@ export default function JsonFormatter() {
                   <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                     {t('title')}
                   </h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
                     {t('subtitle')}
                   </p>
                 </div>
               </div>
             </div>
             
-            {/* 右侧导航项目 */}
-            <div className="flex items-center space-x-4">
+            {/* 桌面端导航项目 */}
+            <div className="hidden md:flex items-center space-x-4">
               {/* 历史记录按钮 */}
               <button
                 onClick={() => router.push(`/${pathname.split('/')[1]}/history`)}
@@ -1216,8 +1217,117 @@ export default function JsonFormatter() {
                 </div>
               </div>
             </div>
+
+            {/* 移动端菜单按钮 */}
+            <div className="md:hidden flex items-center space-x-3">
+              {/* 主题切换按钮 - 始终显示 */}
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                )}
+              </button>
+              
+              {/* 菜单切换按钮 */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none"
+                aria-label="Toggle mobile menu"
+              >
+                {mobileMenuOpen ? (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* 移动端下拉菜单 */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div className="px-4 py-3 space-y-3">
+              {/* 历史记录按钮 */}
+              <button
+                onClick={() => {
+                  router.push(`/${pathname.split('/')[1]}/history`);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none"
+              >
+                <div className="flex items-center">
+                  <svg className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-gray-700 dark:text-gray-300">{t('historyBtn')}</span>
+                </div>
+                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              
+              {/* 反馈按钮 */}
+              <button
+                onClick={() => {
+                  setIsFeedbackOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none"
+              >
+                <div className="flex items-center">
+                  <svg className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                  <span className="text-gray-700 dark:text-gray-300">{t('feedbackBtn')}</span>
+                </div>
+              </button>
+              
+              {/* 语言切换 */}
+              <div className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-md">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <svg className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                    </svg>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{t('language')}</span>
+                  </div>
+                </div>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {locales.map((locale) => (
+                    <button
+                      key={locale}
+                      onClick={() => {
+                        handleLanguageChange(locale);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none ${
+                        pathname.split('/')[1] === locale
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      }`}
+                    >
+                      {t(`languages.${locale}`)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* 主内容区域 */}
