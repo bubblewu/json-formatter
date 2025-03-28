@@ -84,22 +84,10 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="robots" content="index, follow" />
-        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        <link rel="icon" type="image/png" href="/logo-json.png" />
-        <link rel="apple-touch-icon" type="image/png" href="/logo-json.png" />
-      </head>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider>
-            {children}
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <ThemeProvider>
+        {children}
+      </ThemeProvider>
+    </NextIntlClientProvider>
   );
 } 
