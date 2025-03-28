@@ -120,5 +120,11 @@
     }
   },
   "showDemoBtn": "显示示例",
-  "hideDemoBtn": "隐藏示例"
+  "hideDemoBtn": "隐藏示例",
+  "share": "分享",
+  "shareMenu": {
+    "title": "分享到",
+    "open": "打开分享菜单",
+    "close": "关闭分享菜单"
+  }
 } 

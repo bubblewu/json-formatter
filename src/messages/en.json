@@ -120,5 +120,11 @@
     }
   },
   "showDemoBtn": "Show Demo",
-  "hideDemoBtn": "Hide Demo"
+  "hideDemoBtn": "Hide Demo",
+  "share": "Share",
+  "shareMenu": {
+    "title": "Share to",
+    "open": "Open share menu",
+    "close": "Close share menu"
+  }
 } 

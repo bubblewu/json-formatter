@@ -118,6 +118,12 @@
       "invalidEmail": "유효한 이메일 주소를 입력하세요"
     }
   },
-  "showDemoBtn": "예제 표시",
-  "hideDemoBtn": "예제 숨기기"
+  "showDemoBtn": "데모 표시",
+  "hideDemoBtn": "데모 숨기기",
+  "share": "공유",
+  "shareMenu": {
+    "title": "공유하기",
+    "open": "공유 메뉴 열기",
+    "close": "공유 메뉴 닫기"
+  }
 } 

@@ -118,6 +118,12 @@
       "invalidEmail": "有効なメールアドレスを入力してください"
     }
   },
-  "showDemoBtn": "サンプルを表示",
-  "hideDemoBtn": "サンプルを非表示"
+  "showDemoBtn": "デモを表示",
+  "hideDemoBtn": "デモを隠す",
+  "share": "共有",
+  "shareMenu": {
+    "title": "で共有",
+    "open": "共有メニューを開く",
+    "close": "共有メニューを閉じる"
+  }
 } 
