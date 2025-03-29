@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from 'next/font/google';
 import "./globals.css";
-
-const inter = Inter({ subsets: ['latin'] });
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "JSON Formatter",
@@ -38,9 +36,19 @@ export default function RootLayout({
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="icon" type="image/png" href="/logo-json.png" />
         <link rel="apple-touch-icon" type="image/png" href="/logo-json.png" />
+        {/* Google Analytics */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DJBK27P6ZF" />
+        <Script id="google-analytics">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DJBK27P6ZF');
+          `}
+        </Script>
       </head>
       <body>
-        <div className={inter.className}>
+        <div className="font-sans">
           {children}
         </div>
       </body>
