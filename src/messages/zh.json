@@ -130,5 +130,12 @@
   "stats": {
     "totalVisits": "总访问量",
     "onlineUsers": "在线用户"
+  },
+  "breadcrumb": {
+    "home": "首页",
+    "history": "历史记录",
+    "contact": "联系我们",
+    "privacy": "隐私政策",
+    "terms": "使用条款"
   }
 } 

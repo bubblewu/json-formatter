@@ -129,5 +129,12 @@
   "stats": {
     "totalVisits": "総訪問数",
     "onlineUsers": "オンラインユーザー"
+  },
+  "breadcrumb": {
+    "home": "ホーム",
+    "history": "履歴",
+    "contact": "お問い合わせ",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
   }
 } 

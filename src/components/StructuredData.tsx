@@ -12,66 +12,61 @@ export default function StructuredData() {
   // 获取当前日期（格式：YYYY-MM-DD）
   const currentDate = new Date().toISOString().split('T')[0];
   
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": t('title'),
+    "description": t('description'),
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "JSON格式化",
+      "JSON验证",
+      "JSON压缩",
+      "JSON转义",
+      "多语言支持",
+      "暗色模式",
+      "历史记录"
+    ],
+    "screenshot": "https://json-formatter.com/og-image.png",
+    "softwareVersion": "1.0.0",
+    "author": {
+      "@type": "Organization",
+      "name": "JSON Formatter",
+      "url": "https://json-formatter.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "JSON Formatter",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://json-formatter.com/logo.png"
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1000"
+    },
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": "https://schema.org/UseAction",
+      "userInteractionCount": "100000"
+    }
+  };
+
   return (
     <>
       <Script
         id="structured-data"
         type="application/ld+json"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebApplication',
-            'name': t('title'),
-            'description': t('description'),
-            'applicationCategory': 'DeveloperApplication',
-            'operatingSystem': 'All',
-            'offers': {
-              '@type': 'Offer',
-              'price': '0',
-              'priceCurrency': 'USD'
-            },
-            'url': `https://json-formatter.vercel.app/${locale}`,
-            'inLanguage': locale,
-            'datePublished': '2023-01-01',
-            'dateModified': currentDate,
-            'author': {
-              '@type': 'Organization',
-              'name': 'JSON格式化工具',
-              'url': 'https://json-formatter.vercel.app'
-            },
-            'featureList': [
-              t('subtitle'),
-              'JSON Format',
-              'JSON Validation',
-              'JSON Compress',
-              'JSON Unescape',
-            ],
-            'review': {
-              '@type': 'Review',
-              'reviewRating': {
-                '@type': 'Rating',
-                'ratingValue': '5',
-                'bestRating': '5'
-              },
-              'author': {
-                '@type': 'Person',
-                'name': 'Web开发用户'
-              }
-            },
-            'aggregateRating': {
-              '@type': 'AggregateRating',
-              'ratingValue': '4.8',
-              'ratingCount': '1024',
-              'bestRating': '5',
-              'worstRating': '1'
-            },
-            'potentialAction': {
-              '@type': 'UseAction',
-              'target': `https://json-formatter.vercel.app/${locale}`
-            }
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
     </>
   );

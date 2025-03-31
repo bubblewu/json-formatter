@@ -130,5 +130,12 @@
   "stats": {
     "totalVisits": "Total Visits",
     "onlineUsers": "Online Users"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "history": "History",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   }
 } 

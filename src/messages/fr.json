@@ -129,5 +129,12 @@
   "stats": {
     "totalVisits": "Visites Totales",
     "onlineUsers": "Utilisateurs en Ligne"
+  },
+  "breadcrumb": {
+    "home": "Accueil",
+    "history": "Historique",
+    "contact": "Contact",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation"
   }
 } 
