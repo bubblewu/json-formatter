@@ -1797,6 +1797,11 @@ export default function JsonFormatter() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const navigateToHistory = () => {
+    const locale = pathname.split('/')[1];
+    router.push(`/${locale}/history`);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* 导航栏 */}
@@ -1828,7 +1833,7 @@ export default function JsonFormatter() {
             <div className="hidden md:flex items-center space-x-4">
               {/* 历史记录按钮 */}
               <button
-                onClick={() => router.push(`/${pathname.split('/')[1]}/history`)}
+                onClick={() => navigateToHistory()}
                 className="inline-flex items-center px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 <svg className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1935,7 +1940,7 @@ export default function JsonFormatter() {
               {/* 历史记录按钮 */}
               <button
                 onClick={() => {
-                  router.push(`/${pathname.split('/')[1]}/history`);
+                  navigateToHistory();
                   setMobileMenuOpen(false);
                 }}
                 className="w-full flex items-center justify-between px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none"

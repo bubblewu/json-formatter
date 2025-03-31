@@ -189,7 +189,10 @@ export default function HistoryPage() {
             <div className="hidden md:flex items-center space-x-4">
               {/* 返回按钮 */}
               <button
-                onClick={() => router.push(`/${pathname.split('/')[1]}`)}
+                onClick={() => {
+                  const locale = pathname.split('/')[1];
+                  router.push(`/${locale}`);
+                }}
                 className="inline-flex items-center px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,7 +231,10 @@ export default function HistoryPage() {
             <div className="flex flex-col space-y-3 pt-2 pb-3">
               {/* 返回按钮 */}
               <button
-                onClick={() => router.push(`/${pathname.split('/')[1]}`)}
+                onClick={() => {
+                  const locale = pathname.split('/')[1];
+                  router.push(`/${locale}`);
+                }}
                 className="inline-flex items-center px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 w-full justify-center"
               >
                 <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
