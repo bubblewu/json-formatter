@@ -1,6 +1,6 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -43,10 +43,12 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   // 配置ESM兼容性
   transpilePackages: ['@monaco-editor/react', 'monaco-editor'],
-  // 设置环境变量
-  env: {
-    _next_intl_trailing_slash: 'true'
+  
+  // 使用公共环境变量方式
+  publicRuntimeConfig: {
+    _next_intl_trailing_slash: 'false'
   },
+  
   serverRuntimeConfig: {
     host: '0.0.0.0',  // 监听所有地址
     port: 3000,
