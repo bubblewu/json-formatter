@@ -7,7 +7,9 @@ import { usePathname } from 'next/navigation';
 export default function StructuredData() {
   const t = useTranslations();
   const pathname = usePathname();
-  const locale = pathname.split('/')[1];
+  // 安全提取locale，确保其有效
+  const localeParts = pathname.split('/');
+  const locale = localeParts.length > 1 ? localeParts[1] : 'en';
   
   // 获取当前日期（格式：YYYY-MM-DD）
   const currentDate = new Date().toISOString().split('T')[0];

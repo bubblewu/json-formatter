@@ -5,6 +5,9 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  env: {
+    _next_intl_trailing_slash: 'false'
+  },
   // 添加Monaco编辑器的webpack配置
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -43,11 +46,6 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   // 配置ESM兼容性
   transpilePackages: ['@monaco-editor/react', 'monaco-editor'],
-  
-  // 使用公共环境变量方式
-  publicRuntimeConfig: {
-    _next_intl_trailing_slash: 'false'
-  },
   
   serverRuntimeConfig: {
     host: '0.0.0.0',  // 监听所有地址

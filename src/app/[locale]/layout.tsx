@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const messages = await getMessages({ locale: params.locale });
+  const messages = await getMessages();
   const title = (messages as any)?.title as string;
   const description = (messages as any)?.description as string;
 
@@ -114,13 +114,15 @@ export default async function LocaleLayout({
 }) {
   let messages;
   try {
-    messages = await getMessages({ locale: params.locale });
+    messages = await getMessages();
   } catch (error) {
     notFound();
   }
 
+  const locale = params.locale;
+
   return (
-    <html lang={params.locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -131,7 +133,7 @@ export default async function LocaleLayout({
         <meta name="google-adsense-account" content="ca-pub-4496244939895412" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <NextIntlClientProvider locale={params.locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider>
             <StructuredData />
             <Breadcrumb />
