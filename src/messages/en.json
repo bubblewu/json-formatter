@@ -154,6 +154,7 @@
     "sitemap": "Sitemap",
     "tutorials": "Tutorials",
     "blog": "Blog",
+    "json-schema-tutorial": "JSON Schema Tutorial",
     "images": {
       "og_image": "Image",
       "favicon_16x16": "Icon",
@@ -173,6 +174,30 @@
       "favicon_json": "JSON Favicon",
       "favicon_json_16x16": "JSON Favicon Small",
       "favicon_json_32x32": "JSON Favicon Medium"
+    }
+  },
+  "schema": {
+    "pageTitle": "JSON Schema Tutorial - Learn How to Use JSON Schema",
+    "pageDescription": "Learn how to use JSON Schema to validate, document, and annotate your JSON data with this comprehensive tutorial",
+    "introduction": {
+      "title": "Introduction to JSON Schema",
+      "description": "JSON Schema is a vocabulary that allows you to annotate and validate JSON documents. It helps you describe the structure and validation constraints of your JSON data. This tutorial will help you understand and implement JSON Schema effectively."
+    },
+    "basics": {
+      "title": "JSON Schema Basics",
+      "description": "In this section, we'll cover the fundamental concepts of JSON Schema, including its structure, data types, properties, and constraints. You'll learn how to create basic schemas to validate simple JSON documents and understand nested structures."
+    },
+    "validation": {
+      "title": "Validation with JSON Schema",
+      "description": "Validation is one of the primary purposes of JSON Schema. This section explains how JSON Schema validates data against specified constraints, how to define validation rules, and how to handle validation errors effectively."
+    },
+    "advanced": {
+      "title": "Advanced JSON Schema Features",
+      "description": "Explore advanced features of JSON Schema including references ($ref), conditional validation, format validation, and custom vocabularies. Learn how to create complex schemas for sophisticated JSON data structures."
+    },
+    "tools": {
+      "title": "JSON Schema Tools and Libraries",
+      "description": "Discover popular tools and libraries that support JSON Schema, such as Ajv for Node.js, JsonSchema.Net for web-based schema creation, and integration options with various programming languages and frameworks."
     }
   }
 } 

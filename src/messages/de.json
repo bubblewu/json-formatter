@@ -173,6 +173,31 @@
       "favicon_json": "JSON-Favicon",
       "favicon_json_16x16": "Kleines JSON-Favicon",
       "favicon_json_32x32": "Mittleres JSON-Favicon"
+    },
+    "json-schema-tutorial": "JSON Schema Tutorial"
+  },
+  "schema": {
+    "pageTitle": "JSON Schema Tutorial - Lernen Sie, wie man JSON Schema verwendet",
+    "pageDescription": "Lernen Sie mit diesem umfassenden Tutorial, wie Sie JSON Schema zur Validierung, Dokumentation und Annotation Ihrer JSON-Daten verwenden können",
+    "introduction": {
+      "title": "Einführung in JSON Schema",
+      "description": "JSON Schema ist ein Vokabular, mit dem Sie JSON-Dokumente annotieren und validieren können. Es hilft Ihnen, die Struktur und Validierungseinschränkungen Ihrer JSON-Daten zu beschreiben. Dieses Tutorial wird Ihnen helfen, JSON Schema effektiv zu verstehen und zu implementieren."
+    },
+    "basics": {
+      "title": "Grundlagen von JSON Schema",
+      "description": "In diesem Abschnitt werden wir die grundlegenden Konzepte von JSON Schema behandeln, einschließlich seiner Struktur, Datentypen, Eigenschaften und Einschränkungen. Sie lernen, wie Sie grundlegende Schemas erstellen, um einfache JSON-Dokumente zu validieren und verschachtelte Strukturen zu verstehen."
+    },
+    "validation": {
+      "title": "Validierung mit JSON Schema",
+      "description": "Die Validierung ist einer der Hauptzwecke von JSON Schema. Dieser Abschnitt erklärt, wie JSON Schema Daten gegen spezifizierte Einschränkungen validiert, wie man Validierungsregeln definiert und wie man Validierungsfehler effektiv behandelt."
+    },
+    "advanced": {
+      "title": "Fortgeschrittene JSON Schema Funktionen",
+      "description": "Entdecken Sie fortgeschrittene Funktionen von JSON Schema, einschließlich Referenzen ($ref), bedingte Validierung, Formatvalidierung und benutzerdefinierte Vokabulare. Lernen Sie, wie Sie komplexe Schemas für anspruchsvolle JSON-Datenstrukturen erstellen."
+    },
+    "tools": {
+      "title": "JSON Schema Tools und Bibliotheken",
+      "description": "Entdecken Sie beliebte Tools und Bibliotheken, die JSON Schema unterstützen, wie Ajv für Node.js, JsonSchema.Net für webbasierte Schema-Erstellung und Integrationsoptionen mit verschiedenen Programmiersprachen und Frameworks."
     }
   }
 } 

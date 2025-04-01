@@ -172,7 +172,32 @@
       "logo_json_32x32": "JSONロゴ中",
       "favicon_json": "JSONファビコン",
       "favicon_json_16x16": "JSONファビコン小",
-      "favicon_json_32x32": "JSONファビコン中"
+      "favicon_json_32x32": "JSONファビコン中",
+      "json-schema-tutorial": "JSONスキーマチュートリアル"
+    }
+  },
+  "schema": {
+    "pageTitle": "JSONスキーマチュートリアル - JSONスキーマの使い方を学ぶ",
+    "pageDescription": "この包括的なチュートリアルでJSONスキーマを使用してJSONデータを検証、文書化、注釈付けする方法を学びます",
+    "introduction": {
+      "title": "JSONスキーマの紹介",
+      "description": "JSONスキーマは、JSONドキュメントに注釈を付け、検証するための語彙です。JSONデータの構造と検証制約を記述するのに役立ちます。このチュートリアルでは、JSONスキーマを効果的に理解し実装するのに役立ちます。"
+    },
+    "basics": {
+      "title": "JSONスキーマの基本",
+      "description": "このセクションでは、JSONスキーマの基本的な概念（構造、データ型、プロパティ、制約を含む）について説明します。基本的なスキーマを作成して単純なJSONドキュメントを検証し、ネストされた構造を理解する方法を学びます。"
+    },
+    "validation": {
+      "title": "JSONスキーマによる検証",
+      "description": "検証はJSONスキーマの主な目的の一つです。このセクションでは、JSONスキーマが指定された制約に対してデータを検証する方法、検証ルールを定義する方法、および検証エラーを効果的に処理する方法について説明します。"
+    },
+    "advanced": {
+      "title": "JSONスキーマの高度な機能",
+      "description": "参照（$ref）、条件付き検証、フォーマット検証、カスタム語彙などのJSONスキーマの高度な機能を探索します。複雑なJSONデータ構造のための高度なスキーマを作成する方法を学びます。"
+    },
+    "tools": {
+      "title": "JSONスキーマツールとライブラリ",
+      "description": "Node.js用のAjv、ウェブベースのスキーマ作成用のJsonSchema.Net、さまざまなプログラミング言語やフレームワークとの統合オプションなど、JSONスキーマをサポートする人気のあるツールとライブラリを発見します。"
     }
   }
 } 

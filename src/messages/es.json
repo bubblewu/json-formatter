@@ -173,6 +173,31 @@
       "favicon_json": "Favicon JSON",
       "favicon_json_16x16": "Favicon JSON Pequeño",
       "favicon_json_32x32": "Favicon JSON Mediano"
+    },
+    "json-schema-tutorial": "Tutorial de JSON Schema"
+  },
+  "schema": {
+    "pageTitle": "Tutorial de JSON Schema - Aprenda a Utilizar JSON Schema",
+    "pageDescription": "Aprenda a utilizar JSON Schema para validar, documentar y anotar sus datos JSON con este tutorial completo",
+    "introduction": {
+      "title": "Introducción a JSON Schema",
+      "description": "JSON Schema es un vocabulario que permite anotar y validar documentos JSON. Ayuda a describir la estructura y las restricciones de validación de sus datos JSON. Este tutorial le ayudará a comprender e implementar JSON Schema de manera efectiva."
+    },
+    "basics": {
+      "title": "Fundamentos de JSON Schema",
+      "description": "En esta sección, cubriremos los conceptos fundamentales de JSON Schema, incluyendo su estructura, tipos de datos, propiedades y restricciones. Aprenderá a crear esquemas básicos para validar documentos JSON simples y a entender estructuras anidadas."
+    },
+    "validation": {
+      "title": "Validación con JSON Schema",
+      "description": "La validación es uno de los propósitos principales de JSON Schema. Esta sección explica cómo JSON Schema valida datos contra restricciones especificadas, cómo definir reglas de validación y cómo manejar errores de validación de manera efectiva."
+    },
+    "advanced": {
+      "title": "Características Avanzadas de JSON Schema",
+      "description": "Explore características avanzadas de JSON Schema incluyendo referencias ($ref), validación condicional, validación de formato y vocabularios personalizados. Aprenda a crear esquemas complejos para estructuras de datos JSON sofisticadas."
+    },
+    "tools": {
+      "title": "Herramientas y Bibliotecas para JSON Schema",
+      "description": "Descubra herramientas y bibliotecas populares que soportan JSON Schema, como Ajv para Node.js, JsonSchema.Net para creación de esquemas basada en web, y opciones de integración con varios lenguajes de programación y frameworks."
     }
   }
 } 

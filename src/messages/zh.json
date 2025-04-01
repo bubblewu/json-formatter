@@ -153,6 +153,7 @@
     "about": "关于我们",
     "sitemap": "网站地图",
     "tutorials": "教程",
+    "json-schema": "JSON Schema教程",
     "blog": "博客",
     "images": {
       "og_image": "图片",
@@ -173,6 +174,53 @@
       "favicon_json": "JSON网页图标",
       "favicon_json_16x16": "JSON小网页图标",
       "favicon_json_32x32": "JSON中网页图标"
+    }
+  },
+  "schema": {
+    "pageTitle": "JSON Schema教程",
+    "pageDescription": "学习JSON Schema，了解如何验证JSON数据以及在应用程序中实现JSON Schema",
+    "introduction": {
+      "title": "JSON Schema介绍",
+      "description": "JSON Schema是一种允许您注释和验证JSON文档的词汇表。它帮助您定义JSON数据的结构、内容和验证规则。"
+    },
+    "basics": {
+      "title": "JSON Schema基础",
+      "description": "JSON Schema本身就是一个JSON文档。模式定义了：",
+      "list": {
+        "types": "允许的数据类型",
+        "properties": "必需和可选属性",
+        "constraints": "数据约束和验证规则",
+        "structures": "嵌套对象结构"
+      }
+    },
+    "validation": {
+      "title": "Schema验证",
+      "description": "验证是JSON Schema的主要目的之一。它允许您：",
+      "list": {
+        "conformity": "确保数据符合预期格式",
+        "rejection": "在处理前拒绝无效数据",
+        "errors": "当验证失败时提供清晰的错误消息"
+      }
+    },
+    "advanced": {
+      "title": "高级功能",
+      "description": "JSON Schema为复杂的验证场景提供了许多高级功能：",
+      "list": {
+        "references": "引用和定义可重用的模式组件",
+        "conditional": "使用if-then-else进行条件验证",
+        "format": "常见数据类型的格式验证",
+        "vocabulary": "自定义词汇表和扩展"
+      }
+    },
+    "tools": {
+      "title": "JSON Schema工具",
+      "description": "许多库和工具支持JSON Schema：",
+      "list": {
+        "ajv": "Ajv - JavaScript的JSON Schema验证器",
+        "jsonschemanet": "JsonSchema.Net - 在线模式生成器和验证器",
+        "javavalidator": "json-schema-validator - 基于Java的验证器",
+        "registry": "用于API开发的Schema Registry工具"
+      }
     }
   }
 } 
