@@ -4,29 +4,27 @@ import { getRequestConfig } from 'next-intl/server';
 export const locales = ['en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', 'ru'] as const;
 export const defaultLocale = 'en';
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // 等待requestLocale解析
-  let locale = await requestLocale || defaultLocale;
+export default getRequestConfig(async ({ locale }) => {
+  // 使用locale参数 (v3.4.0的API)
+  let effectiveLocale = locale || defaultLocale;
   
   // 确保locale是有效的
-  if (!locale || !(locales as readonly string[]).includes(locale)) {
-    locale = defaultLocale;
+  if (!effectiveLocale || !(locales as readonly string[]).includes(effectiveLocale)) {
+    effectiveLocale = defaultLocale;
   }
   
   try {
     // 根据locale加载消息
-    const messages = (await import(`../messages/${locale}.json`)).default;
+    const messages = (await import(`../messages/${effectiveLocale}.json`)).default;
     return {
-      locale, // 必须返回locale
       messages,
       timeZone: 'UTC'
     };
   } catch (error) {
-    console.error(`Error loading messages for locale ${locale}:`, error);
+    console.error(`Error loading messages for locale ${effectiveLocale}:`, error);
     // 出错时使用默认语言
     const defaultMessages = (await import(`../messages/${defaultLocale}.json`)).default;
     return {
-      locale: defaultLocale, // 出错时使用默认locale
       messages: defaultMessages,
       timeZone: 'UTC'
     };

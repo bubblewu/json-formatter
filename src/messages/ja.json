@@ -1,8 +1,8 @@
 {
   "title": "JSONフォーマッター",
-  "subtitle": "オンラインJSONフォーマッター、バリデーター、ビューティファイアー",
-  "description": "JSONデータを無料でフォーマット、検証、圧縮、エスケープできるオンラインツール。",
-  "formatBtn": "フォーマット",
+  "subtitle": "オンラインJSONフォーマッター、バリデーター、整形ツール",
+  "description": "JSONデータの整形、検証、圧縮、エスケープ処理を行う無料オンラインツール。",
+  "formatBtn": "整形",
   "compressBtn": "圧縮",
   "clearBtn": "クリア",
   "uploadBtn": "アップロード",
@@ -12,29 +12,30 @@
   "backToFormatter": "フォーマッターに戻る",
   "removeEscapeBtn": "エスケープ解除",
   "fullscreenBtn": "全画面",
-  "exitFullscreenBtn": "全画面解除",
+  "exitFullscreenBtn": "全画面終了",
   "inputLabel": "JSON入力",
   "outputLabel": "結果",
+  "language": "言語",
   "lineNumbers": {
     "show": "行番号を表示",
     "hide": "行番号を非表示"
   },
   "errors": {
-    "empty": "JSONは空にできません",
-    "invalid": "無効なJSON",
-    "invalidEscape": "エスケープ文字を削除できません。有効なJSON文字列ではありません",
-    "notString": "入力はJSON文字列ではありません。エスケープ文字を削除できません",
+    "empty": "JSONが空です",
+    "invalid": "無効なJSONです",
+    "invalidEscape": "有効なJSON文字列ではないため、エスケープ文字を削除できません",
+    "notString": "入力はJSON文字列ではないため、エスケープ文字を削除できません",
     "suggestion": "修正提案",
-    "autoFixAvailable": "このエラーは自動修正できます",
+    "autoFixAvailable": "このエラーは自動的に修正できます",
     "clickToFix": "クリックして修正を適用",
     "applyFix": "修正を適用"
   },
   "success": {
-    "formatted": "JSONのフォーマットが完了しました",
-    "compressed": "JSONの圧縮が完了しました",
+    "formatted": "JSON整形完了",
+    "compressed": "JSON圧縮完了",
     "copied": "クリップボードにコピーしました",
-    "unescaped": "エスケープ文字の削除が完了しました",
-    "noEscapeNeeded": "文字列にエスケープ解除は不要です",
+    "unescaped": "エスケープ文字の削除に成功しました",
+    "noEscapeNeeded": "文字列にはエスケープ解除が必要ありません",
     "fixApplied": "修正が適用されました"
   },
   "jsonErrors": {
@@ -49,20 +50,20 @@
     "clearHistoryError": "履歴のクリア中にエラーが発生しました"
   },
   "suggestions": {
-    "checkSyntax": "JSONの構文を確認してください。特に括弧、中括弧、引用符の対応を確認",
+    "checkSyntax": "JSONの構文、特に括弧、中括弧、引用符の対応を確認してください",
     "missingClosingBracket": "閉じ括弧または中括弧が不足しています",
     "missingClosingQuote": "閉じ引用符が不足しています",
-    "incompleteJson": "JSONが不完全です。不足している部分を確認してください",
-    "missingQuotesAroundKey": "プロパティ名は二重引用符で囲む必要があります",
-    "trailingComma": "JSONでは末尾のカンマは使用できません",
-    "missingComma": "値の間にカンマが不足しています",
-    "singleQuotes": "JSONでは単一引用符の代わりに二重引用符を使用する必要があります",
-    "booleanCase": "ブール値は小文字である必要があります：{value}",
-    "nullCase": "null値は小文字である必要があります",
+    "incompleteJson": "JSONが不完全です。不足している箇所を確認してください",
+    "missingQuotesAroundKey": "プロパティ名はダブルクォーテーションで囲む必要があります",
+    "trailingComma": "JSONでは末尾のカンマは許可されていません",
+    "missingComma": "値の間にカンマがありません",
+    "singleQuotes": "JSONではシングルクォーテーションではなくダブルクォーテーションが必要です",
+    "booleanCase": "ブール値は小文字でなければなりません: {value}",
+    "nullCase": "null値は小文字でなければなりません",
     "unescapedQuote": "文字列内の引用符はエスケープする必要があります"
   },
   "footer": {
-    "copyright": "© 2025 JSONフォーマッター | あなたの効率化ヘルパー"
+    "copyright": "© 2025 JSONフォーマッター | 効率化サポート"
   },
   "languages": {
     "en": "英語",
@@ -75,10 +76,10 @@
     "ru": "ロシア語"
   },
   "history": {
-    "title": "履歴",
-    "empty": "履歴はありません",
+    "title": "履歴記録",
+    "empty": "履歴がありません",
     "noResults": "一致する記録が見つかりません",
-    "clear": "履歴を消去",
+    "clear": "履歴をクリア",
     "copy": "コピー",
     "searchPlaceholder": "履歴を検索...",
     "timeFilter": {
@@ -87,11 +88,11 @@
       "week": "今週",
       "month": "今月"
     },
-    "format": "フォーマット",
+    "format": "整形",
     "compress": "圧縮",
     "unescape": "エスケープ解除",
     "operations": {
-      "format": "フォーマット",
+      "format": "整形",
       "compress": "圧縮",
       "unescape": "エスケープ解除"
     },
@@ -105,16 +106,16 @@
   "feedback": {
     "title": "フィードバック",
     "content": "フィードバック内容",
-    "contentPlaceholder": "フィードバック内容を入力してください...",
+    "contentPlaceholder": "フィードバックを入力してください...",
     "contact": "連絡先（任意）",
-    "contactPlaceholder": "メールアドレスまたはその他の連絡先情報を入力してください",
+    "contactPlaceholder": "メールアドレスまたはその他の連絡先を入力してください",
     "submit": "フィードバックを送信",
     "submitting": "送信中...",
     "cancel": "キャンセル",
     "success": "フィードバックありがとうございます！",
     "error": "送信に失敗しました。後でもう一度お試しください",
     "validation": {
-      "required": "この項目を入力してください",
+      "required": "このフィールドを入力してください",
       "invalidEmail": "有効なメールアドレスを入力してください"
     }
   },
@@ -122,7 +123,7 @@
   "hideDemoBtn": "デモを隠す",
   "share": "共有",
   "shareMenu": {
-    "title": "で共有",
+    "title": "共有先",
     "open": "共有メニューを開く",
     "close": "共有メニューを閉じる"
   },
@@ -135,6 +136,43 @@
     "history": "履歴",
     "contact": "お問い合わせ",
     "privacy": "プライバシーポリシー",
-    "terms": "利用規約"
+    "terms": "利用規約",
+    "beautify": "整形",
+    "minify": "圧縮",
+    "validate": "検証",
+    "json-to-xml": "JSONからXMLへ",
+    "json-to-csv": "JSONからCSVへ",
+    "json-to-yaml": "JSONからYAMLへ",
+    "json-to-java": "JSONからJavaへ",
+    "json-to-csharp": "JSONからC#へ",
+    "json-to-golang": "JSONからGoへ",
+    "json-to-php": "JSONからPHPへ",
+    "json-to-python": "JSONからPythonへ",
+    "json-to-typescript": "JSONからTypeScriptへ",
+    "faq": "よくある質問",
+    "about": "サイトについて",
+    "sitemap": "サイトマップ",
+    "tutorials": "チュートリアル",
+    "blog": "ブログ",
+    "images": {
+      "og_image": "画像",
+      "favicon_16x16": "アイコン",
+      "favicon_32x32": "アイコン",
+      "favicon": "アイコン",
+      "android_chrome_192x192": "Chromeアイコン",
+      "android_chrome_512x512": "Chromeアイコン",
+      "apple_touch_icon": "Appleアイコン",
+      "mstile_70x70": "MSタイル",
+      "mstile_150x150": "MSタイル",
+      "mstile_310x310": "MSタイル",
+      "mstile_310x150": "MSタイル",
+      "logo": "ロゴ",
+      "logo_json": "JSONロゴ",
+      "logo_json_16x16": "JSONロゴ小",
+      "logo_json_32x32": "JSONロゴ中",
+      "favicon_json": "JSONファビコン",
+      "favicon_json_16x16": "JSONファビコン小",
+      "favicon_json_32x32": "JSONファビコン中"
+    }
   }
 } 

@@ -1,6 +1,6 @@
 {
   "title": "Formateador JSON",
-  "subtitle": "Formateador, Validador y Embellecedor JSON en Línea",
+  "subtitle": "Formateador, Validador y Embellecedor de JSON Online",
   "description": "Una herramienta gratuita en línea para formatear, validar, comprimir y escapar tus datos JSON.",
   "formatBtn": "Formatear",
   "compressBtn": "Comprimir",
@@ -11,21 +11,22 @@
   "historyBtn": "Historial",
   "backToFormatter": "Volver al Formateador",
   "removeEscapeBtn": "Quitar Escape",
-  "fullscreenBtn": "Pantalla Completa",
-  "exitFullscreenBtn": "Salir de Pantalla Completa",
+  "fullscreenBtn": "Completo",
+  "exitFullscreenBtn": "Salir",
   "inputLabel": "Entrada JSON",
   "outputLabel": "Resultado",
+  "language": "Idioma",
   "lineNumbers": {
     "show": "Mostrar Números de Línea",
     "hide": "Ocultar Números de Línea"
   },
   "errors": {
-    "empty": "El JSON no puede estar vacío",
+    "empty": "JSON no puede estar vacío",
     "invalid": "JSON inválido",
-    "invalidEscape": "No se pueden quitar los caracteres de escape, no es una cadena JSON válida",
-    "notString": "La entrada no es una cadena JSON, no se pueden quitar los caracteres de escape",
+    "invalidEscape": "No se pueden eliminar caracteres de escape, no es una cadena JSON válida",
+    "notString": "La entrada no es una cadena JSON, no se pueden eliminar caracteres de escape",
     "suggestion": "Sugerencia de corrección",
-    "autoFixAvailable": "Este error se puede corregir automáticamente",
+    "autoFixAvailable": "Este error puede ser corregido automáticamente",
     "clickToFix": "Haz clic para aplicar esta corrección",
     "applyFix": "Aplicar Corrección"
   },
@@ -34,32 +35,32 @@
     "compressed": "JSON comprimido con éxito",
     "copied": "Copiado al portapapeles",
     "unescaped": "Caracteres de escape eliminados con éxito",
-    "noEscapeNeeded": "La cadena no necesita quitar escape",
-    "fixApplied": "Se ha aplicado la corrección"
+    "noEscapeNeeded": "La cadena no necesita eliminación de escape",
+    "fixApplied": "Corrección aplicada"
   },
   "jsonErrors": {
     "unexpectedToken": "Token inesperado",
-    "expected": "Se esperaba",
-    "inPosition": "en JSON en la posición",
+    "expected": "Esperado",
+    "inPosition": "en JSON en posición",
     "clearMarkError": "Error al limpiar marcadores",
-    "setMarkError": "Error al establecer marcadores",
+    "setMarkError": "Error al configurar marcadores",
     "fullscreenError": "Error en modo pantalla completa",
-    "saveHistoryError": "Error al guardar el historial",
-    "getHistoryError": "Error al obtener el historial",
-    "clearHistoryError": "Error al limpiar el historial"
+    "saveHistoryError": "Error al guardar historial",
+    "getHistoryError": "Error al obtener historial",
+    "clearHistoryError": "Error al limpiar historial"
   },
   "suggestions": {
-    "checkSyntax": "Verifica la sintaxis de tu JSON, especialmente los corchetes, llaves y comillas coincidentes",
+    "checkSyntax": "Verifica la sintaxis JSON, especialmente los corchetes, llaves y comillas coincidentes",
     "missingClosingBracket": "Falta corchete o llave de cierre",
     "missingClosingQuote": "Falta comilla de cierre",
-    "incompleteJson": "El JSON está incompleto, verifica las partes faltantes",
-    "missingQuotesAroundKey": "Los nombres de propiedades deben estar entre comillas dobles",
-    "trailingComma": "No se permiten comas finales en JSON",
+    "incompleteJson": "JSON incompleto, verifica si faltan partes",
+    "missingQuotesAroundKey": "Los nombres de propiedades deben estar rodeados por comillas dobles",
+    "trailingComma": "No se permiten comas al final en JSON",
     "missingComma": "Falta coma entre valores",
     "singleQuotes": "JSON requiere comillas dobles en lugar de comillas simples",
     "booleanCase": "Los valores booleanos deben estar en minúsculas: {value}",
-    "nullCase": "El valor null debe estar en minúsculas",
-    "unescapedQuote": "Las comillas dentro de las cadenas necesitan ser escapadas"
+    "nullCase": "El valor nulo debe estar en minúsculas",
+    "unescapedQuote": "Las comillas dentro de cadenas deben ser escapadas"
   },
   "footer": {
     "copyright": "© 2025 Formateador JSON | Tu Asistente de Eficiencia"
@@ -75,14 +76,14 @@
     "ru": "Ruso"
   },
   "history": {
-    "title": "Registros",
+    "title": "Registros del Historial",
     "empty": "No hay registros",
     "noResults": "No se encontraron registros coincidentes",
     "clear": "Limpiar Historial",
     "copy": "Copiar",
-    "searchPlaceholder": "Buscar en el historial...",
+    "searchPlaceholder": "Buscar historial...",
     "timeFilter": {
-      "all": "Todo",
+      "all": "Todos",
       "today": "Hoy",
       "week": "Esta Semana",
       "month": "Este Mes"
@@ -105,14 +106,18 @@
   "feedback": {
     "title": "Comentarios",
     "content": "Contenido del Comentario",
-    "contentPlaceholder": "Por favor, ingresa tus comentarios...",
+    "contentPlaceholder": "Por favor ingresa tus comentarios...",
     "contact": "Contacto (Opcional)",
-    "contactPlaceholder": "Por favor, ingresa tu correo electrónico u otra información de contacto",
-    "submit": "Enviar Comentarios",
+    "contactPlaceholder": "Por favor ingresa tu correo electrónico u otra información de contacto",
+    "submit": "Enviar Comentario",
     "submitting": "Enviando...",
     "cancel": "Cancelar",
     "success": "¡Gracias por tus comentarios!",
-    "error": "Error al enviar, por favor intenta de nuevo más tarde"
+    "error": "El envío falló, por favor intenta más tarde",
+    "validation": {
+      "required": "Por favor completa este campo",
+      "invalidEmail": "Por favor ingresa una dirección de correo válida"
+    }
   },
   "showDemoBtn": "Mostrar Demo",
   "hideDemoBtn": "Ocultar Demo",
@@ -131,6 +136,43 @@
     "history": "Historial",
     "contact": "Contacto",
     "privacy": "Política de Privacidad",
-    "terms": "Términos de Uso"
+    "terms": "Términos de Uso",
+    "beautify": "Embellecer",
+    "minify": "Minimizar",
+    "validate": "Validar",
+    "json-to-xml": "JSON a XML",
+    "json-to-csv": "JSON a CSV",
+    "json-to-yaml": "JSON a YAML",
+    "json-to-java": "JSON a Java",
+    "json-to-csharp": "JSON a C#",
+    "json-to-golang": "JSON a Go",
+    "json-to-php": "JSON a PHP",
+    "json-to-python": "JSON a Python",
+    "json-to-typescript": "JSON a TypeScript",
+    "faq": "Preguntas Frecuentes",
+    "about": "Acerca de",
+    "sitemap": "Mapa del Sitio",
+    "tutorials": "Tutoriales",
+    "blog": "Blog",
+    "images": {
+      "og_image": "Imagen",
+      "favicon_16x16": "Icono",
+      "favicon_32x32": "Icono",
+      "favicon": "Icono",
+      "android_chrome_192x192": "Icono de Chrome",
+      "android_chrome_512x512": "Icono de Chrome",
+      "apple_touch_icon": "Icono de Apple",
+      "mstile_70x70": "MS Tile",
+      "mstile_150x150": "MS Tile",
+      "mstile_310x310": "MS Tile",
+      "mstile_310x150": "MS Tile",
+      "logo": "Logo",
+      "logo_json": "Logo JSON",
+      "logo_json_16x16": "Logo JSON Pequeño",
+      "logo_json_32x32": "Logo JSON Mediano",
+      "favicon_json": "Favicon JSON",
+      "favicon_json_16x16": "Favicon JSON Pequeño",
+      "favicon_json_32x32": "Favicon JSON Mediano"
+    }
   }
 } 

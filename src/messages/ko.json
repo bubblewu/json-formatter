@@ -1,8 +1,8 @@
 {
   "title": "JSON 포맷터",
-  "subtitle": "온라인 JSON 포맷터, 검증기 및 미화기",
-  "description": "JSON 데이터를 무료로 포맷팅, 검증, 압축 및 이스케이프할 수 있는 온라인 도구입니다.",
-  "formatBtn": "포맷팅",
+  "subtitle": "온라인 JSON 포맷터, 검증기, 미화 도구",
+  "description": "JSON 데이터를 무료로 포맷팅, 검증, 압축, 이스케이프 처리할 수 있는 온라인 도구입니다.",
+  "formatBtn": "포맷",
   "compressBtn": "압축",
   "clearBtn": "지우기",
   "uploadBtn": "업로드",
@@ -15,54 +15,55 @@
   "exitFullscreenBtn": "전체화면 종료",
   "inputLabel": "JSON 입력",
   "outputLabel": "결과",
+  "language": "언어",
   "lineNumbers": {
     "show": "줄 번호 표시",
     "hide": "줄 번호 숨기기"
   },
   "errors": {
-    "empty": "JSON은 비어있을 수 없습니다",
-    "invalid": "잘못된 JSON",
-    "invalidEscape": "이스케이프 문자를 제거할 수 없습니다. 유효한 JSON 문자열이 아닙니다",
-    "notString": "입력이 JSON 문자열이 아닙니다. 이스케이프 문자를 제거할 수 없습니다",
-    "suggestion": "수정 제안",
+    "empty": "JSON은 비워둘 수 없습니다",
+    "invalid": "유효하지 않은 JSON",
+    "invalidEscape": "유효한 JSON 문자열이 아니어서 이스케이프 문자를 제거할 수 없습니다",
+    "notString": "입력이 JSON 문자열이 아니어서 이스케이프 문자를 제거할 수 없습니다",
+    "suggestion": "고침 제안",
     "autoFixAvailable": "이 오류는 자동으로 수정할 수 있습니다",
-    "clickToFix": "클릭하여 수정사항 적용",
-    "applyFix": "수정사항 적용"
+    "clickToFix": "클릭하여 수정 적용",
+    "applyFix": "수정 적용"
   },
   "success": {
-    "formatted": "JSON 포맷팅이 완료되었습니다",
-    "compressed": "JSON 압축이 완료되었습니다",
-    "copied": "클립보드에 복사되었습니다",
-    "unescaped": "이스케이프 문자 제거가 완료되었습니다",
-    "noEscapeNeeded": "문자열에 이스케이프 해제가 필요하지 않습니다",
-    "fixApplied": "수정사항이 적용되었습니다"
+    "formatted": "JSON 포맷팅 완료",
+    "compressed": "JSON 압축 완료",
+    "copied": "클립보드에 복사됨",
+    "unescaped": "이스케이프 문자 제거 성공",
+    "noEscapeNeeded": "문자열에 이스케이프 제거가 필요하지 않습니다",
+    "fixApplied": "수정이 적용되었습니다"
   },
   "jsonErrors": {
     "unexpectedToken": "예상치 못한 토큰",
     "expected": "예상된",
     "inPosition": "JSON 위치",
-    "clearMarkError": "마커를 지우는 중 오류가 발생했습니다",
-    "setMarkError": "마커를 설정하는 중 오류가 발생했습니다",
-    "fullscreenError": "전체화면 모드에서 오류가 발생했습니다",
-    "saveHistoryError": "기록을 저장하는 중 오류가 발생했습니다",
-    "getHistoryError": "기록을 가져오는 중 오류가 발생했습니다",
-    "clearHistoryError": "기록을 지우는 중 오류가 발생했습니다"
+    "clearMarkError": "마커 지우기 오류",
+    "setMarkError": "마커 설정 오류",
+    "fullscreenError": "전체화면 모드 오류",
+    "saveHistoryError": "기록 저장 오류",
+    "getHistoryError": "기록 가져오기 오류",
+    "clearHistoryError": "기록 지우기 오류"
   },
   "suggestions": {
-    "checkSyntax": "JSON 구문을 확인하세요. 특히 괄호, 중괄호, 따옴표의 짝을 확인하세요",
-    "missingClosingBracket": "닫는 괄호 또는 중괄호가 누락되었습니다",
-    "missingClosingQuote": "닫는 따옴표가 누락되었습니다",
-    "incompleteJson": "JSON이 불완전합니다. 누락된 부분을 확인하세요",
+    "checkSyntax": "JSON 구문을 확인하세요. 특히 괄호, 중괄호, 따옴표의 짝이 맞는지 확인하세요",
+    "missingClosingBracket": "닫는 괄호 또는 중괄호 누락",
+    "missingClosingQuote": "닫는 따옴표 누락",
+    "incompleteJson": "JSON이 불완전합니다. 누락된 부분이 있는지 확인하세요",
     "missingQuotesAroundKey": "속성 이름은 큰따옴표로 둘러싸야 합니다",
-    "trailingComma": "JSON에서는 끝에 쉼표를 사용할 수 없습니다",
-    "missingComma": "값 사이에 쉼표가 누락되었습니다",
-    "singleQuotes": "JSON에서는 작은따옴표 대신 큰따옴표를 사용해야 합니다",
+    "trailingComma": "JSON에서는 끝에 쉼표를 허용하지 않습니다",
+    "missingComma": "값 사이에 쉼표가 없습니다",
+    "singleQuotes": "JSON에서는 작은따옴표 대신 큰따옴표가 필요합니다",
     "booleanCase": "불리언 값은 소문자여야 합니다: {value}",
     "nullCase": "null 값은 소문자여야 합니다",
-    "unescapedQuote": "문자열 내의 따옴표는 이스케이프해야 합니다"
+    "unescapedQuote": "문자열 내의 따옴표는 이스케이프 처리되어야 합니다"
   },
   "footer": {
-    "copyright": "© 2025 JSON 포맷터 | 당신의 효율성 도우미"
+    "copyright": "© 2025 JSON 포맷터 | 효율적인 도우미"
   },
   "languages": {
     "en": "영어",
@@ -76,8 +77,8 @@
   },
   "history": {
     "title": "기록",
-    "empty": "기록이 없습니다",
-    "noResults": "일치하는 기록을 찾을 수 없습니다",
+    "empty": "기록 없음",
+    "noResults": "일치하는 기록 없음",
     "clear": "기록 지우기",
     "copy": "복사",
     "searchPlaceholder": "기록 검색...",
@@ -105,20 +106,20 @@
   "feedback": {
     "title": "피드백",
     "content": "피드백 내용",
-    "contentPlaceholder": "피드백 내용을 입력하세요...",
+    "contentPlaceholder": "피드백을 입력해주세요...",
     "contact": "연락처 (선택사항)",
-    "contactPlaceholder": "이메일 또는 기타 연락처 정보를 입력하세요",
+    "contactPlaceholder": "이메일 또는 기타 연락처 정보를 입력해주세요",
     "submit": "피드백 제출",
     "submitting": "제출 중...",
     "cancel": "취소",
     "success": "피드백을 보내주셔서 감사합니다!",
-    "error": "제출에 실패했습니다. 나중에 다시 시도해 주세요",
+    "error": "제출 실패, 나중에 다시 시도해주세요",
     "validation": {
-      "required": "이 필드를 입력하세요",
-      "invalidEmail": "유효한 이메일 주소를 입력하세요"
+      "required": "이 항목을 입력해주세요",
+      "invalidEmail": "유효한 이메일 주소를 입력해주세요"
     }
   },
-  "showDemoBtn": "데모 표시",
+  "showDemoBtn": "데모 보기",
   "hideDemoBtn": "데모 숨기기",
   "share": "공유",
   "shareMenu": {
@@ -135,6 +136,43 @@
     "history": "기록",
     "contact": "문의하기",
     "privacy": "개인정보처리방침",
-    "terms": "이용약관"
+    "terms": "이용약관",
+    "beautify": "미화",
+    "minify": "축소",
+    "validate": "검증",
+    "json-to-xml": "JSON에서 XML로",
+    "json-to-csv": "JSON에서 CSV로",
+    "json-to-yaml": "JSON에서 YAML로",
+    "json-to-java": "JSON에서 Java로",
+    "json-to-csharp": "JSON에서 C#으로",
+    "json-to-golang": "JSON에서 Go로",
+    "json-to-php": "JSON에서 PHP로",
+    "json-to-python": "JSON에서 Python으로",
+    "json-to-typescript": "JSON에서 TypeScript로",
+    "faq": "자주 묻는 질문",
+    "about": "소개",
+    "sitemap": "사이트맵",
+    "tutorials": "튜토리얼",
+    "blog": "블로그",
+    "images": {
+      "og_image": "이미지",
+      "favicon_16x16": "아이콘",
+      "favicon_32x32": "아이콘",
+      "favicon": "아이콘",
+      "android_chrome_192x192": "크롬 아이콘",
+      "android_chrome_512x512": "크롬 아이콘",
+      "apple_touch_icon": "애플 아이콘",
+      "mstile_70x70": "MS 타일",
+      "mstile_150x150": "MS 타일",
+      "mstile_310x310": "MS 타일",
+      "mstile_310x150": "MS 타일",
+      "logo": "로고",
+      "logo_json": "JSON 로고",
+      "logo_json_16x16": "JSON 작은 로고",
+      "logo_json_32x32": "JSON 중간 로고",
+      "favicon_json": "JSON 파비콘",
+      "favicon_json_16x16": "JSON 작은 파비콘",
+      "favicon_json_32x32": "JSON 중간 파비콘"
+    }
   }
 } 

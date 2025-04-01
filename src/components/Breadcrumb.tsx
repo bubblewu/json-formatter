@@ -28,7 +28,7 @@ export default function Breadcrumb() {
   }, []);
   
   // 移除语言前缀 (确保处理静态资源路径等特殊情况)
-  if (pathname.includes('.') || pathname.startsWith('/_next')) {
+  if (!pathname || pathname.includes('.') || pathname.startsWith('/_next')) {
     return null; // 不显示面包屑导航在静态资源或Next.js内部路径
   }
   
@@ -41,11 +41,24 @@ export default function Breadcrumb() {
   const breadcrumbs = segments.map((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join('/')}`;
     let label = '';
-    try {
-      label = t(`breadcrumb.${segment}`) || segment;
-    } catch (error) {
-      // 如果翻译找不到，直接使用段名
-      label = segment;
+    
+    // 检查是否为图片资源路径
+    if (segment.endsWith('.png') || segment.endsWith('.ico') || segment.endsWith('.svg')) {
+      try {
+        // 将文件名转换为 images 下的键名
+        const key = segment.replace(/[-.]/g, '_').replace(/_png$|_ico$|_svg$/, '');
+        label = t(`breadcrumb.images.${key}`);
+      } catch (error) {
+        // 如果找不到对应的翻译，就使用默认值
+        label = segment.split('.')[0];
+      }
+    } else {
+      try {
+        label = t(`breadcrumb.${segment}`);
+      } catch (error) {
+        // 如果翻译找不到，直接使用段名
+        label = segment;
+      }
     }
     
     return {
@@ -66,61 +79,33 @@ export default function Breadcrumb() {
     : breadcrumbs;
 
   return (
-    <motion.nav 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400 mb-4 overflow-x-auto py-2 scrollbar-hide max-w-full sm:flex-wrap"
-      aria-label="Breadcrumb"
-    >
-      {!isMobile && (
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Link 
-            href="/" 
-            className="flex items-center hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
-            aria-label={t('breadcrumb.home')}
-          >
-            <HomeIcon className="h-4 w-4" />
-            <span className="sr-only">{t('breadcrumb.home')}</span>
-          </Link>
-        </motion.div>
-      )}
-      {displayBreadcrumbs.map((breadcrumb, index) => (
-        <motion.div 
-          key={breadcrumb.href} 
-          className="flex items-center"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          {(index > 0 || !isMobile) && <ChevronRightIcon className="h-4 w-4 mx-1 flex-shrink-0" />}
-          {breadcrumb.isLast ? (
-            <motion.span 
-              className="text-gray-700 dark:text-gray-300 font-medium truncate max-w-[150px] sm:max-w-xs"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              {breadcrumb.label}
-            </motion.span>
+    <nav aria-label="Breadcrumb" className="flex items-center text-sm mb-4">
+      <Link 
+        href="/"
+        className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-300 flex items-center"
+        aria-label={t('breadcrumb.home')}
+      >
+        <HomeIcon className="h-4 w-4 mr-1" />
+        <span>{t('breadcrumb.home')}</span>
+      </Link>
+      
+      {displayBreadcrumbs.map((crumb, idx) => (
+        <div key={idx} className="flex items-center">
+          <ChevronRightIcon className="h-4 w-4 mx-2 text-gray-400" />
+          {crumb.isLast ? (
+            <span className="text-blue-600 dark:text-blue-400 font-medium" aria-current="page">
+              {crumb.label}
+            </span>
           ) : (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link 
+              href={crumb.href} 
+              className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-300"
             >
-              <Link
-                href={breadcrumb.href}
-                className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200 truncate max-w-[150px] sm:max-w-xs inline-block"
-              >
-                {breadcrumb.label}
-              </Link>
-            </motion.div>
+              {crumb.label}
+            </Link>
           )}
-        </motion.div>
+        </div>
       ))}
-    </motion.nav>
+    </nav>
   );
 } 

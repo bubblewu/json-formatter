@@ -1,76 +1,69 @@
 {
-  "title": "JSON форматировщик",
-  "subtitle": "Форматирование, проверка и улучшение JSON данных",
-  "description": "Бесплатный онлайн-инструмент для форматирования, проверки и улучшения ваших JSON данных",
+  "title": "JSON Форматер",
+  "subtitle": "Онлайн JSON Форматер, Валидатор и Украшатель",
+  "description": "Бесплатный онлайн-инструмент для форматирования, проверки, сжатия и экранирования ваших JSON данных.",
   "formatBtn": "Форматировать",
+  "compressBtn": "Сжать",
   "clearBtn": "Очистить",
+  "uploadBtn": "Загрузить",
   "copyBtn": "Копировать",
   "downloadBtn": "Скачать",
-  "uploadBtn": "Загрузить",
-  "compressBtn": "Сжать",
-  "placeholder": "Вставьте ваш JSON сюда...",
-  "language": "Язык",
-  "inputLabel": "Входной JSON",
+  "historyBtn": "История",
+  "backToFormatter": "Вернуться к Форматеру",
+  "removeEscapeBtn": "Убрать экранирование",
+  "fullscreenBtn": "На весь экран",
+  "exitFullscreenBtn": "Выйти из полноэкранного режима",
+  "inputLabel": "Ввод JSON",
   "outputLabel": "Результат",
-  "theme": {
-    "light": "Светлая",
-    "dark": "Тёмная"
-  },
+  "language": "Язык",
   "lineNumbers": {
     "show": "Показать номера строк",
     "hide": "Скрыть номера строк"
   },
   "errors": {
-    "invalid": "Недействительный JSON",
-    "empty": "JSON пуст",
-    "invalidEscape": "Невозможно удалить escape-символы, не является допустимой JSON строкой",
-    "notString": "Ввод не является JSON строкой, невозможно удалить escape-символы",
-    "suggestion": "Предложение по исправлению",
+    "empty": "JSON не может быть пустым",
+    "invalid": "Недопустимый JSON",
+    "invalidEscape": "Невозможно удалить экранирующие символы, не является допустимой JSON строкой",
+    "notString": "Ввод не является JSON строкой, невозможно удалить экранирующие символы",
+    "suggestion": "Предложение исправления",
     "autoFixAvailable": "Эта ошибка может быть исправлена автоматически",
-    "clickToFix": "Нажмите, чтобы применить исправление",
+    "clickToFix": "Нажмите, чтобы применить это исправление",
     "applyFix": "Применить исправление"
   },
   "success": {
-    "copied": "Скопировано в буфер обмена",
     "formatted": "JSON успешно отформатирован",
     "compressed": "JSON успешно сжат",
-    "unescaped": "Escape-символы успешно удалены",
-    "noEscapeNeeded": "Строка не нуждается в удалении escape-символов"
+    "copied": "Скопировано в буфер обмена",
+    "unescaped": "Экранирующие символы успешно удалены",
+    "noEscapeNeeded": "Строка не нуждается в снятии экранирования",
+    "fixApplied": "Исправление применено"
   },
-  "removeEscapeBtn": "Удалить escape",
-  "fullscreenBtn": "Полный экран",
-  "exitFullscreenBtn": "Выйти из полного экрана",
+  "jsonErrors": {
+    "unexpectedToken": "Неожиданный токен",
+    "expected": "Ожидалось",
+    "inPosition": "в JSON на позиции",
+    "clearMarkError": "Ошибка при очистке маркеров",
+    "setMarkError": "Ошибка при установке маркеров",
+    "fullscreenError": "Ошибка в полноэкранном режиме",
+    "saveHistoryError": "Ошибка при сохранении истории",
+    "getHistoryError": "Ошибка при получении истории",
+    "clearHistoryError": "Ошибка при очистке истории"
+  },
+  "suggestions": {
+    "checkSyntax": "Проверьте синтаксис вашего JSON, особенно соответствие скобок, фигурных скобок и кавычек",
+    "missingClosingBracket": "Отсутствует закрывающая скобка или фигурная скобка",
+    "missingClosingQuote": "Отсутствует закрывающая кавычка",
+    "incompleteJson": "Неполный JSON, проверьте наличие отсутствующих частей",
+    "missingQuotesAroundKey": "Имена свойств должны быть заключены в двойные кавычки",
+    "trailingComma": "В JSON не допускаются запятые в конце",
+    "missingComma": "Отсутствует запятая между значениями",
+    "singleQuotes": "В JSON требуются двойные кавычки вместо одинарных",
+    "booleanCase": "Логические значения должны быть в нижнем регистре: {value}",
+    "nullCase": "Значение null должно быть в нижнем регистре",
+    "unescapedQuote": "Кавычки внутри строк должны быть экранированы"
+  },
   "footer": {
-    "copyright": "© 2025 JSON форматировщик | Ваш помощник в повышении эффективности"
-  },
-  "historyBtn": "История",
-  "backToFormatter": "Вернуться к форматировщику",
-  "history": {
-    "title": "История",
-    "empty": "Нет истории",
-    "noResults": "Записи не найдены",
-    "clear": "Очистить историю",
-    "copy": "Копировать",
-    "searchPlaceholder": "Поиск в истории...",
-    "timeFilter": {
-      "all": "Все",
-      "today": "Сегодня",
-      "week": "На этой неделе",
-      "month": "В этом месяце"
-    },
-    "format": "Форматировать",
-    "compress": "Сжать",
-    "unescape": "Убрать экранирование",
-    "operations": {
-      "format": "Форматировать",
-      "compress": "Сжать",
-      "unescape": "Убрать экранирование"
-    },
-    "time": {
-      "today": "Сегодня {time}",
-      "yesterday": "Вчера {time}",
-      "daysAgo": "{days} дней назад {time}"
-    }
+    "copyright": "© 2025 JSON Форматер | Ваш помощник в эффективности"
   },
   "languages": {
     "en": "Английский",
@@ -82,54 +75,57 @@
     "fr": "Французский",
     "ru": "Русский"
   },
-  "jsonErrors": {
-    "unexpectedToken": "Неожиданный токен",
-    "expected": "Ожидается",
-    "inPosition": "в позиции",
-    "clearMarkError": "Ошибка при очистке маркеров",
-    "setMarkError": "Ошибка при установке маркеров ошибок",
-    "fullscreenError": "Ошибка при входе в полноэкранный режим",
-    "saveHistoryError": "Ошибка при сохранении записи истории",
-    "getHistoryError": "Ошибка при получении записей истории",
-    "clearHistoryError": "Ошибка при очистке записей истории"
-  },
-  "showDemoBtn": "Показать демо",
-  "hideDemoBtn": "Скрыть демо",
-  "suggestions": {
-    "checkSyntax": "Проверьте синтаксис JSON, особенно соответствующие скобки, фигурные скобки и кавычки",
-    "missingClosingBracket": "Отсутствует закрывающая скобка или фигурная скобка",
-    "missingClosingQuote": "Отсутствует закрывающая кавычка",
-    "incompleteJson": "JSON неполный, проверьте отсутствующие части",
-    "missingQuotesAroundKey": "Имена свойств должны быть в двойных кавычках",
-    "trailingComma": "Завершающие запятые не допускаются в JSON",
-    "missingComma": "Отсутствует запятая между значениями",
-    "singleQuotes": "JSON требует двойные кавычки вместо одинарных",
-    "booleanCase": "Логические значения должны быть в нижнем регистре: {value}",
-    "nullCase": "Значение null должно быть в нижнем регистре",
-    "unescapedQuote": "Кавычки внутри строк должны быть экранированы"
+  "history": {
+    "title": "Записи истории",
+    "empty": "Нет записей истории",
+    "noResults": "Не найдено соответствующих записей",
+    "clear": "Очистить историю",
+    "copy": "Копировать",
+    "searchPlaceholder": "Поиск по истории...",
+    "timeFilter": {
+      "all": "Все",
+      "today": "Сегодня",
+      "week": "На этой неделе",
+      "month": "В этом месяце"
+    },
+    "format": "Форматировать",
+    "compress": "Сжать",
+    "unescape": "Снять экранирование",
+    "operations": {
+      "format": "Форматировать",
+      "compress": "Сжать",
+      "unescape": "Снять экранирование"
+    },
+    "time": {
+      "today": "Сегодня {time}",
+      "yesterday": "Вчера {time}",
+      "daysAgo": "{days} дней назад {time}"
+    }
   },
   "feedbackBtn": "Обратная связь",
   "feedback": {
     "title": "Обратная связь",
     "content": "Содержание обратной связи",
     "contentPlaceholder": "Пожалуйста, введите вашу обратную связь...",
-    "contact": "Контакт (Необязательно)",
+    "contact": "Контакт (По желанию)",
     "contactPlaceholder": "Пожалуйста, введите ваш email или другую контактную информацию",
-    "submit": "Отправить отзыв",
+    "submit": "Отправить обратную связь",
     "submitting": "Отправка...",
     "cancel": "Отмена",
-    "success": "Спасибо за ваш отзыв!",
-    "error": "Ошибка отправки, пожалуйста, попробуйте позже",
+    "success": "Спасибо за вашу обратную связь!",
+    "error": "Не удалось отправить, пожалуйста, попробуйте позже",
     "validation": {
       "required": "Пожалуйста, заполните это поле",
-      "invalidEmail": "Пожалуйста, введите правильный email-адрес"
+      "invalidEmail": "Пожалуйста, введите действительный адрес электронной почты"
     }
   },
+  "showDemoBtn": "Показать демо",
+  "hideDemoBtn": "Скрыть демо",
   "share": "Поделиться",
   "shareMenu": {
     "title": "Поделиться в",
-    "open": "Открыть меню общего доступа",
-    "close": "Закрыть меню общего доступа"
+    "open": "Открыть меню поделиться",
+    "close": "Закрыть меню поделиться"
   },
   "stats": {
     "totalVisits": "Всего посещений",
@@ -140,6 +136,43 @@
     "history": "История",
     "contact": "Контакты",
     "privacy": "Политика Конфиденциальности",
-    "terms": "Условия Использования"
+    "terms": "Условия Использования",
+    "beautify": "Украсить",
+    "minify": "Минимизировать",
+    "validate": "Проверить",
+    "json-to-xml": "JSON в XML",
+    "json-to-csv": "JSON в CSV",
+    "json-to-yaml": "JSON в YAML",
+    "json-to-java": "JSON в Java",
+    "json-to-csharp": "JSON в C#",
+    "json-to-golang": "JSON в Go",
+    "json-to-php": "JSON в PHP",
+    "json-to-python": "JSON в Python",
+    "json-to-typescript": "JSON в TypeScript",
+    "faq": "ЧЗВ",
+    "about": "О нас",
+    "sitemap": "Карта сайта",
+    "tutorials": "Руководства",
+    "blog": "Блог",
+    "images": {
+      "og_image": "Изображение",
+      "favicon_16x16": "Иконка",
+      "favicon_32x32": "Иконка",
+      "favicon": "Иконка",
+      "android_chrome_192x192": "Иконка Chrome",
+      "android_chrome_512x512": "Иконка Chrome",
+      "apple_touch_icon": "Иконка Apple",
+      "mstile_70x70": "MS Tile",
+      "mstile_150x150": "MS Tile",
+      "mstile_310x310": "MS Tile",
+      "mstile_310x150": "MS Tile",
+      "logo": "Логотип",
+      "logo_json": "Логотип JSON",
+      "logo_json_16x16": "Малый логотип JSON",
+      "logo_json_32x32": "Средний логотип JSON",
+      "favicon_json": "Фавикон JSON",
+      "favicon_json_16x16": "Малый фавикон JSON",
+      "favicon_json_32x32": "Средний фавикон JSON"
+    }
   }
 } 

@@ -1,6 +1,6 @@
 {
-  "title": "JSON Formatter",
-  "subtitle": "Online JSON Formatter, Validator und Beautifier",
+  "title": "JSON Formatierer",
+  "subtitle": "Online JSON Formatierer, Validator und Beautifier",
   "description": "Ein kostenloses Online-Tool zum Formatieren, Validieren, Komprimieren und Escapen Ihrer JSON-Daten.",
   "formatBtn": "Formatieren",
   "compressBtn": "Komprimieren",
@@ -9,12 +9,13 @@
   "copyBtn": "Kopieren",
   "downloadBtn": "Herunterladen",
   "historyBtn": "Verlauf",
-  "backToFormatter": "Zurück zum Formatter",
+  "backToFormatter": "Zurück zum Formatierer",
   "removeEscapeBtn": "Escape entfernen",
   "fullscreenBtn": "Vollbild",
   "exitFullscreenBtn": "Vollbild beenden",
   "inputLabel": "JSON Eingabe",
   "outputLabel": "Ergebnis",
+  "language": "Sprache",
   "lineNumbers": {
     "show": "Zeilennummern anzeigen",
     "hide": "Zeilennummern ausblenden"
@@ -22,8 +23,8 @@
   "errors": {
     "empty": "JSON darf nicht leer sein",
     "invalid": "Ungültiges JSON",
-    "invalidEscape": "Escape-Zeichen können nicht entfernt werden, keine gültige JSON-Zeichenkette",
-    "notString": "Eingabe ist keine JSON-Zeichenkette, Escape-Zeichen können nicht entfernt werden",
+    "invalidEscape": "Escape-Zeichen können nicht entfernt werden, kein gültiger JSON-String",
+    "notString": "Eingabe ist kein JSON-String, Escape-Zeichen können nicht entfernt werden",
     "suggestion": "Korrekturvorschlag",
     "autoFixAvailable": "Dieser Fehler kann automatisch behoben werden",
     "clickToFix": "Klicken Sie, um diese Korrektur anzuwenden",
@@ -34,35 +35,35 @@
     "compressed": "JSON erfolgreich komprimiert",
     "copied": "In die Zwischenablage kopiert",
     "unescaped": "Escape-Zeichen erfolgreich entfernt",
-    "noEscapeNeeded": "Zeichenkette muss nicht unescaped werden",
+    "noEscapeNeeded": "String benötigt keine Escape-Entfernung",
     "fixApplied": "Korrektur wurde angewendet"
   },
   "jsonErrors": {
     "unexpectedToken": "Unerwartetes Token",
     "expected": "Erwartet",
     "inPosition": "in JSON an Position",
-    "clearMarkError": "Fehler beim Löschen der Marker",
-    "setMarkError": "Fehler beim Setzen der Marker",
+    "clearMarkError": "Fehler beim Löschen von Markierungen",
+    "setMarkError": "Fehler beim Setzen von Markierungen",
     "fullscreenError": "Fehler im Vollbildmodus",
     "saveHistoryError": "Fehler beim Speichern des Verlaufs",
     "getHistoryError": "Fehler beim Abrufen des Verlaufs",
     "clearHistoryError": "Fehler beim Löschen des Verlaufs"
   },
   "suggestions": {
-    "checkSyntax": "Überprüfen Sie Ihre JSON-Syntax, besonders die übereinstimmenden Klammern, geschweiften Klammern und Anführungszeichen",
+    "checkSyntax": "Überprüfen Sie Ihre JSON-Syntax, insbesondere übereinstimmende Klammern, geschweifte Klammern und Anführungszeichen",
     "missingClosingBracket": "Fehlende schließende Klammer oder geschweifte Klammer",
     "missingClosingQuote": "Fehlendes schließendes Anführungszeichen",
-    "incompleteJson": "JSON ist unvollständig, überprüfen Sie die fehlenden Teile",
-    "missingQuotesAroundKey": "Eigenschaftsnamen müssen in doppelten Anführungszeichen stehen",
-    "trailingComma": "Nachgestellte Kommas sind in JSON nicht erlaubt",
+    "incompleteJson": "JSON ist unvollständig, prüfen Sie auf fehlende Teile",
+    "missingQuotesAroundKey": "Eigenschaftsnamen müssen von doppelten Anführungszeichen umgeben sein",
+    "trailingComma": "Abschließende Kommas sind in JSON nicht erlaubt",
     "missingComma": "Fehlendes Komma zwischen Werten",
-    "singleQuotes": "JSON erfordert doppelte Anführungszeichen statt einfacher Anführungszeichen",
-    "booleanCase": "Boolesche Werte müssen in Kleinbuchstaben sein: {value}",
-    "nullCase": "null-Wert muss in Kleinbuchstaben sein",
-    "unescapedQuote": "Anführungszeichen innerhalb von Zeichenketten müssen escaped werden"
+    "singleQuotes": "JSON erfordert doppelte Anführungszeichen anstelle von einfachen Anführungszeichen",
+    "booleanCase": "Boolesche Werte müssen kleingeschrieben sein: {value}",
+    "nullCase": "Null-Wert muss kleingeschrieben sein",
+    "unescapedQuote": "Anführungszeichen innerhalb von Strings müssen escaped werden"
   },
   "footer": {
-    "copyright": "© 2025 JSON Formatter | Ihr Effizienzhelfer"
+    "copyright": "© 2025 JSON Formatierer | Ihr Effizienz-Helfer"
   },
   "languages": {
     "en": "Englisch",
@@ -75,8 +76,8 @@
     "ru": "Russisch"
   },
   "history": {
-    "title": "Verlauf",
-    "empty": "Keine Einträge vorhanden",
+    "title": "Verlaufseinträge",
+    "empty": "Keine Verlaufseinträge",
     "noResults": "Keine passenden Einträge gefunden",
     "clear": "Verlauf löschen",
     "copy": "Kopieren",
@@ -85,7 +86,7 @@
       "all": "Alle",
       "today": "Heute",
       "week": "Diese Woche",
-      "month": "Diesen Monat"
+      "month": "Dieser Monat"
     },
     "format": "Formatieren",
     "compress": "Komprimieren",
@@ -112,7 +113,7 @@
     "submitting": "Wird gesendet...",
     "cancel": "Abbrechen",
     "success": "Vielen Dank für Ihr Feedback!",
-    "error": "Senden fehlgeschlagen, bitte versuchen Sie es später erneut",
+    "error": "Übermittlung fehlgeschlagen, bitte versuchen Sie es später erneut",
     "validation": {
       "required": "Bitte füllen Sie dieses Feld aus",
       "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
@@ -128,13 +129,50 @@
   },
   "stats": {
     "totalVisits": "Gesamtbesuche",
-    "onlineUsers": "Online-Benutzer"
+    "onlineUsers": "Benutzer online"
   },
   "breadcrumb": {
     "home": "Startseite",
     "history": "Verlauf",
     "contact": "Kontakt",
     "privacy": "Datenschutzerklärung",
-    "terms": "Nutzungsbedingungen"
+    "terms": "Nutzungsbedingungen",
+    "beautify": "Verschönern",
+    "minify": "Minimieren",
+    "validate": "Validieren",
+    "json-to-xml": "JSON zu XML",
+    "json-to-csv": "JSON zu CSV",
+    "json-to-yaml": "JSON zu YAML",
+    "json-to-java": "JSON zu Java",
+    "json-to-csharp": "JSON zu C#",
+    "json-to-golang": "JSON zu Go",
+    "json-to-php": "JSON zu PHP",
+    "json-to-python": "JSON zu Python",
+    "json-to-typescript": "JSON zu TypeScript",
+    "faq": "FAQ",
+    "about": "Über",
+    "sitemap": "Seitenübersicht",
+    "tutorials": "Tutorials",
+    "blog": "Blog",
+    "images": {
+      "og_image": "Bild",
+      "favicon_16x16": "Icon",
+      "favicon_32x32": "Icon",
+      "favicon": "Icon",
+      "android_chrome_192x192": "Chrome-Icon",
+      "android_chrome_512x512": "Chrome-Icon",
+      "apple_touch_icon": "Apple-Icon",
+      "mstile_70x70": "MS-Kachel",
+      "mstile_150x150": "MS-Kachel",
+      "mstile_310x310": "MS-Kachel",
+      "mstile_310x150": "MS-Kachel",
+      "logo": "Logo",
+      "logo_json": "JSON-Logo",
+      "logo_json_16x16": "Kleines JSON-Logo",
+      "logo_json_32x32": "Mittleres JSON-Logo",
+      "favicon_json": "JSON-Favicon",
+      "favicon_json_16x16": "Kleines JSON-Favicon",
+      "favicon_json_32x32": "Mittleres JSON-Favicon"
+    }
   }
 } 

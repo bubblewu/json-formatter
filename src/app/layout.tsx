@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   keywords: "JSON, formatter, validator, beautify, format JSON, JSON tools, JSON editor, online JSON formatter",
   icons: {
     icon: [
-      { url: '/logo-json.png', type: 'image/png' },
+      { url: '/logo.png', type: 'image/png' },
     ],
     apple: [
-      { url: '/logo-json.png', type: 'image/png' },
+      { url: '/logo.png', type: 'image/png' },
     ],
   },
 };

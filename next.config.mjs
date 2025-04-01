@@ -1,13 +1,12 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
+// 指定配置文件路径
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  env: {
-    _next_intl_trailing_slash: 'false'
-  },
+  trailingSlash: false,
   // 添加Monaco编辑器的webpack配置
   webpack: (config, { isServer }) => {
     if (!isServer) {

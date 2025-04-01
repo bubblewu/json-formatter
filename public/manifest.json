@@ -1,0 +1,59 @@
+{
+  "name": "JSON Format Plus",
+  "short_name": "JSON Format Plus",
+  "description": "格式化、验证和转换JSON数据的在线工具",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "prefer_related_applications": false,
+  "categories": ["developer tools", "utilities", "productivity"],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "JSON格式化工具主界面"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "格式化JSON",
+      "url": "/?action=format",
+      "description": "格式化JSON数据"
+    },
+    {
+      "name": "压缩JSON",
+      "url": "/?action=compress",
+      "description": "压缩JSON数据"
+    },
+    {
+      "name": "JSON转代码",
+      "url": "/?action=convert",
+      "description": "将JSON转换为各种编程语言的代码"
+    }
+  ]
+} 

@@ -1,20 +1,20 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://jsonformatplus.com';
+  
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/api/*',
-          '/_next/*',
-          '/admin/*',
-          '/private/*',
+          '/api/',
+          '/_next/',
+          '/admin/',
+          '/private/',
           '/*.json$',
           '/*.xml$',
-          '/sitemap.xml',
-          '/robots.txt'
         ],
       },
       {
@@ -28,9 +28,35 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot-Image',
         allow: ['/'],
-        disallow: ['/api/*', '/_next/*', '/admin/*'],
+        disallow: ['/api/', '/_next/', '/admin/'],
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
+      },
+      {
+        userAgent: 'Yandex',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
+      },
+      {
+        userAgent: 'Baiduspider',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
+      },
+      {
+        userAgent: 'DuckDuckBot',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
+      },
+      {
+        userAgent: 'Sogou web spider',
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
-    sitemap: 'https://json-formatter.vercel.app/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 } 
