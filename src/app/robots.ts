@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
+import { WEBSITE_URL } from '@/utils/constants';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://jsonformatplus.com';
-  
   return {
     rules: [
       {
@@ -56,7 +55,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: `${WEBSITE_URL}/sitemap.xml`,
+    host: WEBSITE_URL,
   };
 } 

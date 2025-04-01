@@ -1,7 +1,7 @@
 {
   "title": "Formateador JSON",
-  "subtitle": "Formateador, Validador y Embellecedor de JSON Online",
-  "description": "Una herramienta gratuita en línea para formatear, validar, comprimir y escapar tus datos JSON.",
+  "subtitle": "Herramienta online para formatear, validar y comprimir JSON",
+  "description": "Herramienta gratuita online para formatear JSON, que permite formatear, validar, comprimir y escapar datos JSON, ayudando a los desarrolladores a procesar datos JSON de manera más eficiente.",
   "formatBtn": "Formatear",
   "compressBtn": "Comprimir",
   "clearBtn": "Limpiar",
@@ -9,16 +9,16 @@
   "copyBtn": "Copiar",
   "downloadBtn": "Descargar",
   "historyBtn": "Historial",
-  "backToFormatter": "Volver al Formateador",
-  "removeEscapeBtn": "Quitar Escape",
-  "fullscreenBtn": "Completo",
-  "exitFullscreenBtn": "Salir",
+  "backToFormatter": "Volver al formateador",
+  "removeEscapeBtn": "Quitar escape",
+  "fullscreenBtn": "Pantalla completa",
+  "exitFullscreenBtn": "Salir de pantalla completa",
   "inputLabel": "Entrada JSON",
-  "outputLabel": "Resultado",
+  "outputLabel": "Resultado formateado",
   "language": "Idioma",
   "lineNumbers": {
-    "show": "Mostrar Números de Línea",
-    "hide": "Ocultar Números de Línea"
+    "show": "Mostrar números de línea",
+    "hide": "Ocultar números de línea"
   },
   "errors": {
     "empty": "JSON no puede estar vacío",
@@ -135,69 +135,623 @@
     "home": "Inicio",
     "history": "Historial",
     "contact": "Contacto",
-    "privacy": "Política de Privacidad",
-    "terms": "Términos de Uso",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de uso",
     "beautify": "Embellecer",
-    "minify": "Minimizar",
+    "minify": "Comprimir",
     "validate": "Validar",
-    "json-to-xml": "JSON a XML",
-    "json-to-csv": "JSON a CSV",
-    "json-to-yaml": "JSON a YAML",
-    "json-to-java": "JSON a Java",
-    "json-to-csharp": "JSON a C#",
-    "json-to-golang": "JSON a Go",
-    "json-to-php": "JSON a PHP",
-    "json-to-python": "JSON a Python",
-    "json-to-typescript": "JSON a TypeScript",
-    "faq": "Preguntas Frecuentes",
-    "about": "Acerca de",
-    "sitemap": "Mapa del Sitio",
     "tutorials": "Tutoriales",
-    "blog": "Blog",
-    "images": {
-      "og_image": "Imagen",
-      "favicon_16x16": "Icono",
-      "favicon_32x32": "Icono",
-      "favicon": "Icono",
-      "android_chrome_192x192": "Icono de Chrome",
-      "android_chrome_512x512": "Icono de Chrome",
-      "apple_touch_icon": "Icono de Apple",
-      "mstile_70x70": "MS Tile",
-      "mstile_150x150": "MS Tile",
-      "mstile_310x310": "MS Tile",
-      "mstile_310x150": "MS Tile",
-      "logo": "Logo",
-      "logo_json": "Logo JSON",
-      "logo_json_16x16": "Logo JSON Pequeño",
-      "logo_json_32x32": "Logo JSON Mediano",
-      "favicon_json": "Favicon JSON",
-      "favicon_json_16x16": "Favicon JSON Pequeño",
-      "favicon_json_32x32": "Favicon JSON Mediano"
+    "json-schema": "Tutorial de JSON Schema",
+    "json-basics": "Fundamentos de JSON",
+    "json-formats": "Mejores prácticas de formato JSON",
+    "json-vs-xml": "JSON vs XML",
+    "json-localstorage": "JSON y LocalStorage",
+    "json-path": "JSONPath",
+    "json-api": "Diseño de API JSON",
+    "json-to-code": "JSON a código",
+    "blog": "Blog"
+  },
+  "basics": {
+    "pageTitle": "Fundamentos de JSON - Tipos de datos, sintaxis y estructura",
+    "introduction": {
+      "description": "JSON (JavaScript Object Notation) es un formato ligero de intercambio de datos, fácil de leer y escribir para humanos, y fácil de analizar y generar para máquinas. Este tutorial te ayudará a comprender completamente los fundamentos de JSON, incluyendo reglas de sintaxis, tipos de datos y estructura."
     },
-    "json-schema-tutorial": "Tutorial de JSON Schema"
+    "whatIsJson": {
+      "title": "¿Qué es JSON?",
+      "description": "JSON es un formato de intercambio de datos basado en texto y legible por humanos, propuesto por Douglas Crockford a principios de la década de 2000. Su nombre completo es JavaScript Object Notation, y proviene del lenguaje JavaScript, pero ahora es un formato de datos independiente del lenguaje, compatible con casi todos los lenguajes de programación modernos.",
+      "keyFeatures": {
+        "title": "Características clave",
+        "item1": "Ligero - Más conciso que formatos como XML, más eficiente para transferencia y análisis",
+        "item2": "Auto-descriptivo - Formato claro, fácil de entender",
+        "item3": "Independiente del lenguaje - Casi todos los lenguajes de programación tienen bibliotecas para manejar JSON",
+        "item4": "Basado en texto - Utiliza codificación Unicode, puede representar contenido multilingüe",
+        "item5": "Estructurado - Soporta datos anidados, capaz de expresar relaciones de datos complejas"
+      }
+    },
+    "jsonSyntax": {
+      "title": "Sintaxis JSON",
+      "description": "La sintaxis de JSON es muy simple, con solo unas pocas reglas básicas:",
+      "rule1": "Los datos se representan en pares clave-valor, con el formato \"clave\": valor",
+      "rule2": "Los elementos de datos están separados por comas",
+      "rule3": "Los objetos (un conjunto no ordenado de pares clave-valor) se representan con llaves {{}}",
+      "rule4": "Las matrices (una lista ordenada de valores) se representan con corchetes [[]]",
+      "rule5": "Todas las claves deben estar entre comillas dobles",
+      "completeExample": "Aquí hay un ejemplo completo que incluye varios elementos JSON:",
+      "validJson": "Este es un objeto JSON válido, que incluye cadenas, números, booleanos, matrices, objetos anidados y null."
+    },
+    "jsonDataTypes": {
+      "title": "Tipos de datos JSON",
+      "description": "JSON admite los siguientes seis tipos de datos:",
+      "string": "Cadena",
+      "stringDescription": "Datos de texto, deben estar encerrados en comillas dobles, admite caracteres de escape.",
+      "number": "Número",
+      "numberDescription": "Entero o número de punto flotante, no admite valores no numéricos (como NaN o Infinity).",
+      "boolean": "Booleano",
+      "booleanDescription": "true o false (deben estar en minúsculas).",
+      "null": "Null",
+      "nullDescription": "Representa un valor vacío o inexistente, usando null (debe estar en minúsculas).",
+      "object": "Objeto",
+      "objectDescription": "Una colección no ordenada de pares clave-valor, las claves deben ser cadenas, los valores pueden ser cualquier tipo de datos JSON.",
+      "array": "Array",
+      "arrayDescription": "Una colección ordenada de valores, puede contener cualquier tipo de datos JSON, incluso mezclar diferentes tipos.",
+      "noteTitle": "Notas importantes",
+      "noteDescription": "JSON tiene algunas limitaciones importantes que difieren de otros formatos:",
+      "noteItem1": "No admite comentarios",
+      "noteItem2": "Todos los nombres de clave deben estar encerrados en comillas dobles, no en comillas simples",
+      "noteItem3": "No admite valores undefined",
+      "noteItem4": "No admite directamente tipos de fecha (deben convertirse a cadenas o números)",
+      "noteItem5": "No admite funciones o métodos"
+    },
+    "jsonStructure": {
+      "title": "Estructura JSON",
+      "description": "La flexibilidad de JSON permite representar estructuras de datos anidadas complejas, incluyendo objetos y arrays anidados en múltiples niveles. Esto lo hace muy adecuado para representar casi cualquier tipo de datos.",
+      "exampleDescription": "A continuación se muestra un ejemplo de una estructura JSON más compleja, que demuestra cómo organizar datos multinivel:",
+      "exampleExplanation": "Este ejemplo muestra cómo JSON puede representar estructuras de datos complejas a través de objetos y arrays anidados. El catálogo de productos contiene categorías, las categorías contienen productos, y los productos contienen información detallada como especificaciones y listas de colores."
+    },
+    "commonMistakes": {
+      "title": "Errores comunes",
+      "description": "Al trabajar con JSON, hay algunos errores comunes que se deben evitar:",
+      "commonErrors": "Errores comunes de sintaxis JSON",
+      "error1": "Usar comillas simples en lugar de comillas dobles",
+      "error1Description": "JSON requiere que todas las cadenas (incluyendo nombres de claves) usen comillas dobles.",
+      "error2": "Comas extra después del último elemento",
+      "error2Description": "JSON no permite comas después del último elemento, lo que difiere de algunos lenguajes de programación.",
+      "error3": "No poner comillas alrededor de los nombres de propiedades",
+      "error3Description": "Todos los nombres de propiedades de objetos deben tener comillas dobles, a diferencia de los objetos JavaScript donde pueden omitirse.",
+      "error4": "Añadir comentarios en JSON",
+      "error4Description": "JSON no admite comentarios; cualquier forma de comentario causará errores de análisis.",
+      "bestPractices": "Mejores prácticas",
+      "bestPractice1": "Usar herramientas de validación",
+      "bestPractice1Description": "Siempre usa herramientas de validación JSON para verificar si tu JSON es válido.",
+      "bestPractice2": "Usar herramientas de formato",
+      "bestPractice2Description": "Formatear JSON puede mejorar la legibilidad y facilitar la detección de errores.",
+      "bestPractice3": "Prestar atención a los tipos de datos",
+      "bestPractice3Description": "Asegúrate de usar los tipos de datos correctos, especialmente distinguiendo entre cadenas y números.",
+      "bestPractice4": "Manejar caracteres de escape con cuidado",
+      "bestPractice4Description": "Escapa correctamente los caracteres especiales, especialmente comillas y barras invertidas dentro de cadenas.",
+      "bestPractice5": "Entender las características de la biblioteca de análisis",
+      "bestPractice5Description": "Las bibliotecas de análisis JSON en diferentes lenguajes pueden tener diferencias sutiles; comprende el comportamiento específico de la biblioteca que estás utilizando."
+    },
+    "toolsLibraries": {
+      "title": "Herramientas y bibliotecas JSON",
+      "description": "Hay muchas herramientas y bibliotecas que pueden ayudarte a trabajar con JSON:",
+      "onlineTools": "Herramientas en línea",
+      "tool1": "Formateador JSON",
+      "tool1Description": "Formatear datos JSON para mejorar la legibilidad.",
+      "tool2": "Validador JSON",
+      "tool2Description": "Comprobar si la sintaxis JSON es correcta.",
+      "tool3": "Herramienta de comparación JSON",
+      "tool3Description": "Comparar diferencias entre dos objetos JSON.",
+      "tool4": "Convertidor JSON",
+      "tool4Description": "Convertir entre JSON y otros formatos (como XML, CSV).",
+      "programmingLibraries": "Bibliotecas de programación",
+      "library1": "JavaScript",
+      "library1Item1": "JSON.parse() y JSON.stringify() incorporados",
+      "library1Item2": "Lodash - Proporciona más funcionalidad de manipulación JSON",
+      "library1Item3": "json5 - Versión extendida de JSON que admite comentarios",
+      "library2": "Python",
+      "library2Item1": "Módulo json incorporado",
+      "library2Item2": "simplejson - Biblioteca JSON más avanzada",
+      "library2Item3": "ujson - Codificador y decodificador JSON de alto rendimiento",
+      "library3": "Java",
+      "library3Item1": "Jackson - Biblioteca de procesamiento JSON rica en características",
+      "library3Item2": "Gson - Biblioteca JSON desarrollada por Google",
+      "library3Item3": "JSON-java - Biblioteca JSON ligera"
+    },
+    "conclusion": {
+      "title": "Conclusión",
+      "description": "A través de este tutorial, has aprendido los fundamentos de JSON, incluyendo:",
+      "item1": "Conceptos básicos y características de JSON",
+      "item2": "Reglas de sintaxis y tipos de datos JSON",
+      "item3": "Cómo crear y analizar estructuras JSON complejas",
+      "item4": "Errores comunes y mejores prácticas",
+      "item5": "Herramientas y bibliotecas JSON útiles",
+      "finalDescription": "Dominar JSON es una habilidad esencial en el desarrollo de software moderno. Con la prevalencia de APIs y el intercambio de datos, este conocimiento será utilizado frecuentemente a lo largo de tu carrera como desarrollador. Continúa explorando nuestros otros tutoriales para aprender temas más avanzados sobre JSON."
+    },
+    "returnToTutorials": "Volver a la lista de tutoriales",
+    "nextTutorial": "Siguiente tutorial: JSON Schema"
   },
   "schema": {
-    "pageTitle": "Tutorial de JSON Schema - Aprenda a Utilizar JSON Schema",
-    "pageDescription": "Aprenda a utilizar JSON Schema para validar, documentar y anotar sus datos JSON con este tutorial completo",
+    "pageTitle": "Tutorial de JSON Schema",
+    "pageDescription": "Aprende JSON Schema, cómo validar datos JSON e implementar JSON Schema en tus aplicaciones",
     "introduction": {
       "title": "Introducción a JSON Schema",
-      "description": "JSON Schema es un vocabulario que permite anotar y validar documentos JSON. Ayuda a describir la estructura y las restricciones de validación de sus datos JSON. Este tutorial le ayudará a comprender e implementar JSON Schema de manera efectiva."
+      "description": "JSON Schema es un vocabulario que permite anotar y validar documentos JSON. Ayuda a definir la estructura, contenido y reglas de validación de los datos JSON."
     },
     "basics": {
       "title": "Fundamentos de JSON Schema",
-      "description": "En esta sección, cubriremos los conceptos fundamentales de JSON Schema, incluyendo su estructura, tipos de datos, propiedades y restricciones. Aprenderá a crear esquemas básicos para validar documentos JSON simples y a entender estructuras anidadas."
+      "description": "JSON Schema es en sí mismo un documento JSON. Un esquema define:"
+    }
+  },
+  "formats": {
+    "pageTitle": "Mejores prácticas de formato JSON",
+    "introduction": {
+      "title": "Por qué el formato JSON es importante",
+      "description": "Aunque la sintaxis de JSON es simple, los buenos hábitos de formato son esenciales para mejorar la legibilidad, la capacidad de mantenimiento y reducir errores. Ya sea que esté creando respuestas de API, archivos de configuración o almacenamiento de datos, seguir reglas de formato consistentes facilita a usted y a los miembros de su equipo el manejo de datos JSON."
+    },
+    "detailedDescription": "Este tutorial presentará las mejores prácticas de formato JSON, incluyendo indentación, convenciones de nomenclatura, organización de datos y uso de herramientas.",
+    "indentation": {
+      "title": "Indentación y espaciado",
+      "description": "La indentación adecuada es clave para mejorar la legibilidad de JSON:",
+      "guideline1": "Use indentación consistente (2 espacios o 4 espacios son opciones comunes)",
+      "guideline2": "Aumente la indentación un nivel para cada nivel anidado",
+      "guideline3": "Los corchetes y llaves de apertura y cierre para arrays y objetos deben estar alineados",
+      "recommended": "Práctica recomendada:",
+      "notRecommended": "No recomendado:"
+    },
+    "namingConventions": {
+      "title": "Convenciones de nomenclatura",
+      "description": "Las convenciones de nomenclatura consistentes mejoran la legibilidad y mantenibilidad de los datos JSON:",
+      "camelCase": "Use camelCase: Esta es la convención de nomenclatura más común en JSON, como firstName, lastLogin",
+      "avoidUnderscores": "Evite los guiones bajos: Aunque algunas APIs usan snake_case, camelCase es más común en entornos JavaScript",
+      "descriptiveNames": "Use nombres descriptivos: Las claves deben expresar claramente qué datos contienen",
+      "avoidAbbreviations": "Evite abreviaturas: Use palabras completas a menos que la abreviatura sea ampliamente aceptada (como ID)",
+      "consistency": "Mantenga la consistencia: Use la misma convención de nomenclatura en todo su proyecto",
+      "recommended": "Práctica recomendada:",
+      "notRecommended": "No recomendado:"
+    },
+    "dataOrganization": {
+      "title": "Organización de datos",
+      "description": "Organizar adecuadamente las estructuras de datos puede mejorar la legibilidad y eficiencia de uso de JSON:",
+      "groupRelated": "Agrupe propiedades relacionadas: Coloque propiedades relacionadas juntas y use objetos anidados para organizar datos complejos",
+      "logicalOrder": "Organice propiedades en orden lógico: Coloque IDs o nombres primero, seguidos de información detallada",
+      "consistentTypes": "Mantenga tipos de datos consistentes: Por ejemplo, siempre use el mismo formato para fechas",
+      "arrayItems": "Los elementos en arrays deben tener la misma estructura: Si un array contiene objetos, estos objetos deben tener el mismo conjunto de propiedades"
+    },
+    "dateNumberFormats": {
+      "title": "Formatos de fecha y número",
+      "description": "El formato de fechas y números es crucial para la consistencia de datos:",
+      "dateFormats": "Formatos de fecha",
+      "useISO": "Use el formato estándar ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ",
+      "example": "Por ejemplo: \"2023-05-15T14:30:00Z\" o \"2023-05-15\" (solo fecha)",
+      "avoidLocalized": "Evite formatos de fecha localizados, como \"15/05/2023\", que podrían interpretarse de manera diferente en distintas regiones",
+      "numberFormats": "Formatos de número",
+      "avoidSeparators": "Evite usar separadores de miles (como 1.000) en JSON",
+      "currencyPrecision": "Los valores de moneda deben especificar precisión (típicamente dos decimales)",
+      "largeNumbers": "Considere representar números grandes (como aquellos más allá del rango seguro de enteros de JavaScript) como cadenas"
     },
     "validation": {
-      "title": "Validación con JSON Schema",
-      "description": "La validación es uno de los propósitos principales de JSON Schema. Esta sección explica cómo JSON Schema valida datos contra restricciones especificadas, cómo definir reglas de validación y cómo manejar errores de validación de manera efectiva."
+      "title": "Validación y verificación",
+      "description": "Asegúrese de que su JSON esté formateado correctamente y sea válido:",
+      "useTools": "Use herramientas de validación: Valide la validez de JSON con herramientas como JSONLint antes de publicar",
+      "useSchema": "Use JSON Schema: Defina estructuras de datos y reglas de validación",
+      "checkErrors": "Verifique errores comunes: Como comas faltantes, comas extra, comillas sin cerrar, etc.",
+      "autoFormat": "Formato automático: Use características de formato del editor para mantener consistencia",
+      "ourTool": "Puede usar nuestra herramienta de validación JSON para verificar si su JSON es válido."
     },
-    "advanced": {
-      "title": "Características Avanzadas de JSON Schema",
-      "description": "Explore características avanzadas de JSON Schema incluyendo referencias ($ref), validación condicional, validación de formato y vocabularios personalizados. Aprenda a crear esquemas complejos para estructuras de datos JSON sofisticadas."
+    "compression": {
+      "title": "Compresión y embellecimiento",
+      "description": "Elija el formato apropiado para diferentes escenarios:",
+      "devDebug": "Desarrollo y depuración: Use formato embellecido (con indentación y saltos de línea) para mejor legibilidad",
+      "production": "Entorno de producción: Use formato comprimido (elimine todos los espacios en blanco) para reducir el tamaño de datos",
+      "apiResponses": "Respuestas API: Considere proporcionar opciones de formato, permitiendo a los clientes elegir entre formatos embellecido o comprimido",
+      "largeFiles": "Archivos grandes: Siempre use formato comprimido para transmisión y almacenamiento",
+      "beautified": "Formato embellecido (para desarrollo):",
+      "compressed": "Formato comprimido (para producción):"
+    },
+    "whitespacePlacement": {
+      "title": "Colocación de espacios en blanco",
+      "description": "La colocación estratégica de espacios en blanco mejora la legibilidad:",
+      "afterColons": "Añada un espacio después de los dos puntos en pares clave-valor",
+      "afterCommas": "Añada un espacio después de las comas en arrays y objetos",
+      "noExtraSpaces": "No añada espacios antes de los dos puntos o comas",
+      "lineBreaks": "Use saltos de línea para separar propiedades y elementos de array en formato embellecido",
+      "recommended": "Práctica recomendada:",
+      "notRecommended": "No recomendado:"
+    },
+    "securityConsiderations": {
+      "title": "Consideraciones de seguridad",
+      "description": "Tenga cuidado al formatear JSON que pueda contener información sensible:",
+      "sensitiveData": "Nunca incluya datos sensibles (contraseñas, claves API, etc.) en JSON del lado del cliente",
+      "validateInput": "Siempre valide y sanitice la entrada JSON de fuentes externas",
+      "avoidComments": "Recuerde que JSON no admite comentarios - no los use para 'ocultar' datos sensibles",
+      "handleErrors": "Implemente manejo adecuado de errores para fallos de análisis JSON"
     },
     "tools": {
-      "title": "Herramientas y Bibliotecas para JSON Schema",
-      "description": "Descubra herramientas y bibliotecas populares que soportan JSON Schema, como Ajv para Node.js, JsonSchema.Net para creación de esquemas basada en web, y opciones de integración con varios lenguajes de programación y frameworks."
+      "title": "Herramientas de formato",
+      "description": "Varias herramientas pueden ayudarle a mantener un formato JSON consistente:",
+      "onlineTools": "Herramientas en línea:",
+      "ourFormatter": "Nuestro formateador JSON: Formatee y embellezca su JSON con solo un clic",
+      "jsonlint": "JSONLint: Valide JSON e identifique errores de sintaxis",
+      "editorPlugins": "Plugins de editor:",
+      "vscode": "VS Code: Formateo JSON incorporado con integración Prettier",
+      "webstorm": "WebStorm/IntelliJ IDEA: Soporte JSON avanzado con opciones de formato personalizables",
+      "sublime": "Sublime Text: Varios paquetes disponibles para formateo JSON",
+      "cliTools": "Herramientas de línea de comandos:",
+      "jq": "jq: Procesador JSON de línea de comandos con capacidades de formateo",
+      "prettier": "Prettier: Formateador de código que admite JSON y muchos otros lenguajes"
+    },
+    "bestPractices": {
+      "title": "Resumen de mejores prácticas",
+      "description": "Para resumir los puntos clave de las mejores prácticas de formato JSON:",
+      "point1": "Use indentación consistente (2 o 4 espacios)",
+      "point2": "Siga convenciones de nomenclatura consistentes (preferiblemente camelCase)",
+      "point3": "Organice datos relacionados de manera lógica y consistente",
+      "point4": "Use formatos estándar para fechas (ISO 8601) y números",
+      "point5": "Valide JSON antes de usarlo o publicarlo",
+      "point6": "Use formato embellecido para desarrollo y formato comprimido para producción",
+      "point7": "Coloque espacios en blanco estratégicamente para mejorar la legibilidad",
+      "point8": "Considere implicaciones de seguridad al formatear JSON",
+      "point9": "Use herramientas disponibles para automatizar y hacer cumplir reglas de formato"
+    },
+    "conclusion": {
+      "title": "Conclusión",
+      "description": "Las buenas prácticas de formato JSON no solo hacen que sus datos sean más legibles, sino que también reducen errores y mejoran la capacidad de mantenimiento. Al seguir las pautas de este tutorial y utilizar las herramientas adecuadas, puede asegurarse de que sus datos JSON estén bien estructurados, sean consistentes y fáciles de trabajar.",
+      "nextSteps": "Continúe explorando nuestros otros tutoriales de JSON para aprender más sobre cómo trabajar con datos JSON en diferentes contextos."
     }
-  }
-} 
+  },
+  "localstorage": {
+    "pageTitle": "JSON y LocalStorage",
+    "introduction": {
+      "title": "Introducción",
+      "description": "LocalStorage es un mecanismo simple de almacenamiento del lado del cliente proporcionado por los navegadores web, que permite guardar pares clave-valor de forma persistente en el navegador del usuario. Combinado con el formato JSON, LocalStorage se convierte en una poderosa herramienta para almacenar datos estructurados en el desarrollo frontend.",
+      "detailedDescription": "Este tutorial explora cómo utilizar el formato JSON con LocalStorage para implementar el almacenamiento, recuperación, actualización y eliminación de datos locales, así como patrones comunes de aplicación y mejores prácticas."
+    },
+    "basics": {
+      "title": "Conceptos básicos de LocalStorage",
+      "description": "LocalStorage proporciona una API simple de almacenamiento clave-valor donde tanto la clave como el valor deben ser cadenas. Las características principales incluyen:",
+      "feature1": "Los datos persisten entre sesiones del navegador (los datos no se pierden después de cerrar el navegador)",
+      "feature2": "Capacidad de almacenamiento relativamente grande (generalmente alrededor de 5MB según el navegador)",
+      "feature3": "Los datos almacenados no se envían automáticamente al servidor",
+      "feature4": "Restricciones de política del mismo origen (solo se puede acceder a los datos del mismo dominio)",
+      "basicAPI": "API básica:"
+    },
+    "jsonWithLocalstorage": {
+      "title": "Uso de JSON con LocalStorage",
+      "description": "Dado que LocalStorage solo puede almacenar cadenas, si necesita almacenar estructuras de datos complejas como objetos o arrays, necesita usar JSON para la conversión:",
+      "arrayStorage": "De manera similar, puede almacenar arrays usando JSON:"
+    },
+    "commonPatterns": {
+      "title": "Patrones de uso comunes",
+      "wrapper": "1. Creación de un wrapper simple de gestión de datos",
+      "wrapperDescription": "Para hacer más conveniente el uso de LocalStorage, puede crear un wrapper simple:",
+      "updatingObjects": "2. Actualización de objetos almacenados",
+      "updatingDescription": "Cuando necesite actualizar solo algunas propiedades de un objeto ya almacenado:",
+      "arrayManagement": "3. Adición/eliminación de elementos de arrays",
+      "arrayDescription": "Gestión de arrays almacenados en LocalStorage:"
+    },
+    "practicalExamples": {
+      "title": "Ejemplos prácticos",
+      "userPrefs": "Ejemplo 1: Preferencias de usuario",
+      "userPrefsDescription": "Almacenamiento y recuperación de configuraciones de interfaz de usuario:",
+      "shoppingCart": "Ejemplo 2: Carrito de compras",
+      "cartDescription": "Creación de un carrito de compras simple usando LocalStorage:",
+      "formData": "Ejemplo 3: Persistencia de datos de formulario",
+      "formDescription": "Guardar datos de formulario para prevenir pérdida de datos:"
+    },
+    "limitations": {
+      "title": "Limitaciones y consideraciones",
+      "description": "Al usar JSON con LocalStorage, tenga en cuenta las siguientes limitaciones:",
+      "storageLimit": "Límite de almacenamiento: LocalStorage generalmente está limitado a aproximadamente 5MB por dominio",
+      "stringOnly": "Almacenamiento solo de cadenas: LocalStorage solo puede almacenar cadenas, las estructuras complejas requieren conversión JSON",
+      "noExpiration": "Sin mecanismo de expiración: LocalStorage no tiene funcionalidad de caducidad incorporada",
+      "synchronous": "API sincrónica: las operaciones de LocalStorage son sincrónicas y pueden bloquear el hilo principal",
+      "securityPrivacy": "Seguridad y privacidad: no almacene información sensible en LocalStorage",
+      "browserSupport": "Soporte del navegador: ampliamente compatible, pero puede ser limitado por algunas configuraciones de privacidad o modos de incógnito",
+      "serialization": "Limitaciones de serialización: JSON no puede serializar todos los tipos de datos de JavaScript (por ejemplo, funciones, referencias circulares)"
+    },
+    "bestPractices": {
+      "title": "Mejores prácticas",
+      "errorHandling": "Use manejo de errores",
+      "errorDescription": "Siempre use try-catch al analizar JSON desde LocalStorage:",
+      "namespacing": "Use espacios de nombres",
+      "namespaceDescription": "Use prefijos para las claves para evitar conflictos:",
+      "versioning": "Considere el versionado",
+      "versioningDescription": "Agregue información de versión para manejar cambios en la estructura de datos:",
+      "fallbacks": "Proporcione alternativas",
+      "fallbacksDescription": "Siempre maneje casos cuando los datos no estén disponibles:"
+    },
+    "alternatives": {
+      "title": "Alternativas a LocalStorage",
+      "description": "Dependiendo de sus necesidades, puede considerar las siguientes alternativas:",
+      "sessionStorage": "SessionStorage: API similar, pero los datos se borran al cerrar la sesión",
+      "indexedDB": "IndexedDB: potente base de datos del lado del cliente para mayor almacenamiento",
+      "cookies": "Cookies: menor capacidad, pero pueden usarse para interacciones del lado del servidor",
+      "webSQL": "Web SQL: base de datos basada en SQL (obsoleta, pero aún funciona en algunos navegadores)",
+      "cacheAPI": "Cache API: parte de Service Workers, útil para aplicaciones offline-first",
+      "firebase": "Firebase Realtime Database/Firestore: alternativa basada en la nube con capacidades de sincronización",
+      "comparison": "Tabla comparativa:"
+    },
+    "debugging": {
+      "title": "Depuración de LocalStorage",
+      "description": "Consejos para depurar problemas con LocalStorage:",
+      "browserTools": "Uso de herramientas de desarrollo del navegador",
+      "toolsDescription": "Las herramientas de desarrollo del navegador proporcionan formas de inspeccionar y modificar LocalStorage:",
+      "directAccess": "Acceso directo a LocalStorage en la consola:",
+      "logging": "Adición de registro",
+      "loggingDescription": "Agregar registro para seguir las operaciones de LocalStorage:",
+      "clearingData": "Limpieza de datos",
+      "clearingDescription": "Si necesita borrar LocalStorage durante las pruebas:"
+    },
+    "conclusion": {
+      "title": "Conclusión",
+      "description": "La combinación de JSON y LocalStorage proporciona una forma poderosa de almacenar datos estructurados en el navegador. Siguiendo los patrones y mejores prácticas descritos en este tutorial, puede implementar de manera efectiva la persistencia de datos del lado del cliente para sus aplicaciones web.",
+      "keyConcepts": "Conceptos clave aprendidos:",
+      "concept1": "Cómo convertir objetos y arrays de JavaScript a JSON para almacenamiento",
+      "concept2": "Creación de utilidades de ayuda para simplificar la interacción con LocalStorage",
+      "concept3": "Administración de estructuras de datos complejas en LocalStorage",
+      "concept4": "Implementación de patrones comunes como carritos de compras y preferencias de usuario",
+      "concept5": "Comprensión de las limitaciones y alternativas a LocalStorage",
+      "furtherReading": "Para un uso más avanzado, considere explorar la API IndexedDB o bibliotecas de gestión de estado que se integren con el almacenamiento local."
+    },
+    "tutorials": {
+      "title": "Tutoriales relacionados",
+      "otherTutorials": "Consulta nuestros otros tutoriales relacionados:",
+      "jsonBasics": "Fundamentos de JSON",
+      "jsonSchema": "Validación con JSON Schema",
+      "jsonAPIs": "Uso de JSON con APIs"
+    }
+  },
+  "xmlcompare": {
+    "pageTitle": "JSON vs XML",
+    "introduction": {
+      "title": "Introducción",
+      "description": "JSON (JavaScript Object Notation) y XML (eXtensible Markup Language) son dos formatos comunes de intercambio de datos. Aunque ambos se utilizan para transmitir datos entre diferentes sistemas, tienen diferencias significativas en sintaxis, estructura y escenarios de aplicación."
+    },
+    "detailedDescription": "Este tutorial comparará estos dos formatos en detalle, ayudándole a entender sus ventajas y desventajas, para que pueda elegir el formato de datos más adecuado para su proyecto.",
+    "syntaxComparison": {
+      "title": "Comparación de sintaxis",
+      "description": "A continuación se muestra una comparación de JSON y XML representando los mismos datos:",
+      "jsonFormat": "Formato JSON:",
+      "xmlFormat": "Formato XML:"
+    },
+    "syntaxDifferences": {
+      "description": "Del ejemplo anterior, puede ver las principales diferencias sintácticas entre los dos formatos:",
+      "item1": "JSON utiliza llaves {{}} para objetos y corchetes [[]] para arrays",
+      "item2": "XML utiliza etiquetas personalizadas y estructuras anidadas",
+      "item3": "JSON es más conciso, con menos caracteres",
+      "item4": "XML utiliza etiquetas de apertura y cierre, haciendo la estructura más clara pero más verbosa"
+    },
+    "keyDifferences": {
+      "title": "Diferencias clave",
+      "columns": {
+        "feature": "Característica",
+        "json": "JSON",
+        "xml": "XML"
+      },
+      "syntax": {
+        "name": "Sintaxis",
+        "json": "Concisa, basada en pares clave-valor",
+        "xml": "Basada en etiquetas, con etiquetas de apertura y cierre"
+      },
+      "fileSize": {
+        "name": "Tamaño de archivo",
+        "json": "Menor",
+        "xml": "Mayor"
+      },
+      "parsingSpeed": {
+        "name": "Velocidad de análisis",
+        "json": "Más rápida",
+        "xml": "Más lenta"
+      },
+      "dataTypes": {
+        "name": "Tipos de datos",
+        "json": "Soporta cadenas, números, booleanos, arrays, objetos y null",
+        "xml": "Todos los datos son cadenas, requiere definiciones de esquema adicionales"
+      },
+      "commentSupport": {
+        "name": "Soporte de comentarios",
+        "json": "No soportado",
+        "xml": "Soportado"
+      },
+      "namespace": {
+        "name": "Espacios de nombres",
+        "json": "No soportado",
+        "xml": "Soportado"
+      },
+      "readability": {
+        "name": "Legibilidad",
+        "json": "Mejor para estructuras de datos simples",
+        "xml": "Mejor para estructuras de datos complejas"
+      },
+      "languageSupport": {
+        "name": "Soporte de lenguajes",
+        "json": "Soporte nativo en JavaScript, bibliotecas en otros lenguajes",
+        "xml": "Bibliotecas disponibles en todos los principales lenguajes de programación"
+      },
+      "validation": {
+        "name": "Validación",
+        "json": "A través de JSON Schema",
+        "xml": "A través de DTD, XSD"
+      }
+    },
+    "jsonAdvantages": {
+      "title": "Ventajas de JSON",
+      "lightweight": "Ligero: los archivos JSON son típicamente más pequeños que los archivos XML equivalentes, ahorrando ancho de banda y espacio de almacenamiento",
+      "easyParsing": "Análisis simple: la mayoría de los lenguajes de programación tienen bibliotecas integradas o de terceros para el análisis de JSON",
+      "readableWritable": "Fácil de leer y escribir: sintaxis simple, fácilmente entendida por humanos y programas",
+      "javascriptIntegration": "Integración natural con JavaScript: especialmente útil en aplicaciones web",
+      "fasterParsing": "Mayor velocidad de análisis: especialmente en entornos JavaScript",
+      "arraySupport": "Soporte de arrays: soporte nativo para estructuras de array",
+      "popularInApis": "Popular en APIs: la mayoría de las API web modernas utilizan JSON como formato de intercambio de datos"
+    },
+    "xmlAdvantages": {
+      "title": "Ventajas de XML",
+      "validation": "Validación fuerte: proporciona validación estricta de datos a través de DTD o XSD",
+      "namespaces": "Soporte de espacios de nombres: puede usar diferentes vocabularios XML en el mismo documento",
+      "queryLanguage": "Lenguaje de consulta rico: XPath y XQuery proporcionan potentes capacidades de consulta",
+      "comments": "Soporte para comentarios: puede añadir comentarios a documentos XML, mejorando la legibilidad",
+      "complexData": "Representación de datos complejos: mejor adaptado para representar jerarquías complejas y contenido mixto",
+      "ecosystem": "Ecosistema maduro: cuenta con un gran número de herramientas y tecnologías maduras",
+      "selfDescribing": "Auto-descriptivo: los documentos XML son típicamente más auto-descriptivos, incluyendo metadatos"
+    },
+    "whenToUseJson": {
+      "title": "Cuándo usar JSON",
+      "description": "JSON es una mejor opción en las siguientes situaciones:",
+      "webApps": "Aplicaciones web y desarrollo de API",
+      "fastParsing": "Escenarios que requieren análisis rápido",
+      "simpleStructures": "Estructuras de datos relativamente simples",
+      "javascript": "Entornos JavaScript (navegadores, Node.js)",
+      "mobileApps": "Comunicación de aplicaciones móviles",
+      "configFiles": "Archivos de configuración (como package.json)",
+      "bandwidth": "Grandes volúmenes de datos donde el ahorro de ancho de banda es importante"
+    },
+    "whenToUseXml": {
+      "title": "Cuándo usar XML",
+      "description": "XML es una mejor opción en las siguientes situaciones:",
+      "strictValidation": "Se requiere validación estricta de datos",
+      "complexStructures": "Estructuras de documentos complejas",
+      "namespaceNeeded": "Necesidad de usar espacios de nombres",
+      "commentsNeeded": "Necesidad de soportar comentarios",
+      "documentOriented": "Aplicaciones orientadas a documentos (como formatos de archivo Word, Excel)",
+      "soapServices": "Servicios web SOAP",
+      "xsltNeeded": "Necesidad de usar XSLT para transformar datos"
+    },
+    "conversion": {
+      "title": "Conversión entre JSON y XML",
+      "description": "A veces puede necesitar convertir entre los dos formatos. Muchas herramientas en línea y bibliotecas de programación pueden ayudarle con esta tarea:",
+      "ourTool": "Nuestra herramienta de conversión de JSON a XML",
+      "libraries": "Bibliotecas de programación, como xml2js en Node.js",
+      "xslt": "XSLT puede usarse para convertir XML a JSON",
+      "note": "Al convertir, tenga en cuenta que debido a las diferencias estructurales entre los dos formatos, la estructura de datos convertida puede diferir de la estructura original."
+    },
+    "conclusion": {
+      "title": "Conclusión",
+      "description": "JSON y XML tienen sus propias ventajas y desventajas. La elección del formato debe basarse en sus necesidades específicas:",
+      "chooseJson": "Elija JSON si la simplicidad, la velocidad de análisis y la compatibilidad con JavaScript son importantes",
+      "chooseXml": "Elija XML si necesita validación estricta de datos, estructuras de documentos complejas o soporte de espacios de nombres",
+      "modernDev": "En el desarrollo web moderno, JSON se ha convertido en el formato de intercambio de datos predominante, especialmente en APIs RESTful. XML mantiene una posición importante en aplicaciones empresariales, sistemas de documentos y escenarios que requieren validación estricta de datos.",
+      "finalThought": "Comprender las ventajas y desventajas de ambos formatos puede ayudarle a tomar decisiones técnicas más informadas en sus proyectos."
+    }
+  },
+  "tutorials": "Tutoriales",
+  "tutorialsPage": {
+    "description": "Domina JSON desde lo básico hasta técnicas avanzadas con nuestros tutoriales y guías. Ya seas principiante o desarrollador profesional, aquí encontrarás contenido adecuado para ti.",
+    "whyLearnJson": "¿Por qué aprender JSON?",
+    "webStandard": "Estándar web",
+    "webStandardDesc": "JSON es el formato estándar para las API web modernas y el intercambio de datos, con soporte en casi todos los lenguajes de programación.",
+    "lightweight": "Ligero y eficiente",
+    "lightweightDesc": "Comparado con formatos como XML, JSON es más ligero y rápido de analizar, ideal para la transferencia de datos entre frontend y backend.",
+    "richTools": "Herramientas abundantes",
+    "richToolsDesc": "Un rico ecosistema de herramientas facilita el manejo de JSON, desde validación hasta conversión.",
+    "levels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "comingSoon": "Próximamente",
+    "tooltipComingSoon": "Este tutorial está siendo creado actualmente. ¡Mantente atento!",
+    "notFound": "¿No encontraste el tutorial que buscabas?",
+    "addingMore": "Estamos añadiendo constantemente nuevo contenido de tutoriales. Si tienes un tema específico en mente, ¡háznos saber!",
+    "requestTopic": "Solicitar un tema",
+    "commonQuestions": "Preguntas comunes sobre JSON",
+    "questions": {
+      "jsObjectDiff": {
+        "question": "¿Cuál es la diferencia entre JSON y objetos JavaScript?",
+        "answer": "Aunque JSON se basa en la sintaxis de objetos JavaScript, hay varias diferencias clave: JSON es un formato de texto plano, mientras que los objetos JavaScript son entidades vivas; las claves JSON deben estar rodeadas por comillas dobles, los objetos JavaScript no requieren esto; JSON no admite funciones o métodos, mientras que los objetos JavaScript pueden incluir métodos; JSON no permite comentarios, los objetos JavaScript sí."
+      },
+      "validation": {
+        "question": "¿Cómo valido si mi JSON es válido?",
+        "answer": "Puedes usar nuestra herramienta de validación JSON para verificar la validez de tu JSON. Los errores comunes incluyen: comas faltantes o extra, comillas no coincidentes, uso de comillas simples en lugar de dobles, nombres de propiedades sin comillas, etc. JSON válido debe seguir reglas de sintaxis estrictas, y nuestra herramienta te ayudará a identificar y corregir errores."
+      },
+      "dataTypes": {
+        "question": "¿Qué tipos de datos admite JSON?",
+        "answer": "JSON admite seis tipos de datos: cadenas (entre comillas dobles), números (enteros o de punto flotante), booleanos (true o false), arrays (colección ordenada de valores), objetos (colección de pares clave-valor) y null. JSON no admite directamente fechas, funciones, undefined o expresiones regulares."
+      }
+    },
+    "relatedTools": {
+      "title": "Herramientas relacionadas",
+      "formatter": "Formateador JSON",
+      "compressor": "Compresor JSON",
+      "validator": "Validador JSON",
+      "jsonToXml": "JSON a XML"
+    }
+  },
+  "categories": {
+    "basic": {
+      "name": "Conocimientos básicos",
+      "description": "Conceptos fundamentales y uso de JSON"
+    },
+    "advanced": {
+      "name": "Técnicas avanzadas",
+      "description": "Análisis profundo de aplicaciones y técnicas avanzadas de JSON"
+    },
+    "conversion": {
+      "name": "Técnicas de conversión",
+      "description": "Métodos y herramientas para convertir JSON hacia y desde otros formatos"
+    }
+  },
+  "jsonPath": {
+    "description": "Usa JSONPath para consultar y manipular datos JSON"
+  },
+  "jsonApi": {
+    "description": "Aprende a diseñar y construir APIs basadas en JSON"
+  },
+  "jsonToCode": {
+    "description": "Convertir datos JSON a código en varios lenguajes de programación",
+    "pageTitle": "Conversor de JSON a Código",
+    "introduction": {
+      "title": "Introducción a la conversión de JSON a Código",
+      "description": "La conversión de JSON a código es un proceso común en el desarrollo de software que transforma estructuras de datos JSON en clases o tipos de lenguajes de programación. Este enfoque mejora la seguridad de tipos y la experiencia del desarrollador."
+    },
+    "benefits": {
+      "title": "Beneficios de la conversión de JSON a código",
+      "typeSafety": "Seguridad de tipos: Las clases tipadas ayudan a evitar errores en tiempo de ejecución",
+      "intellisense": "Mejor autocompletado/IntelliSense en el IDE",
+      "maintainability": "Mayor mantenibilidad mediante estructuras de datos bien definidas",
+      "validation": "Validación y manejo de errores simplificados",
+      "refactoring": "Soporte para herramientas de refactorización"
+    },
+    "approaches": {
+      "title": "Enfoques de conversión",
+      "manualCreation": "Creación manual: Definir clases basadas en estructuras JSON conocidas",
+      "manualDesc": "Adecuado para estructuras JSON simples o que cambian con poca frecuencia",
+      "codeGeneration": "Generación de código: Crear clases automáticamente desde ejemplos o esquemas JSON",
+      "codeGenDesc": "Recomendado para estructuras JSON complejas o que cambian frecuentemente",
+      "dynamicDeserialization": "Deserialización dinámica: Usar reflexión en tiempo de ejecución",
+      "dynamicDesc": "Útil cuando la estructura no se conoce de antemano"
+    },
+    "languages": {
+      "title": "Lenguajes compatibles",
+      "description": "La conversión de JSON a código puede aplicarse a muchos lenguajes de programación:",
+      "typescript": "TypeScript - Sistema de tipos potente e interfaces",
+      "csharp": "C# - Modelado de datos con clases y propiedades",
+      "java": "Java - Clases POJO y anotaciones Jackson/GSON",
+      "python": "Python - Clases de datos o modelos Pydantic",
+      "golang": "Go - Estructuras y etiquetas",
+      "kotlin": "Kotlin - Clases de datos"
+    },
+    "implementation": {
+      "title": "Métodos de implementación",
+      "description": "Hay varios enfoques comunes para convertir JSON a código:",
+      "manualApproach": "Enfoque manual",
+      "manualDescription": "Para estructuras JSON simples, puede escribir directamente las clases correspondientes:",
+      "toolApproach": "Enfoque basado en herramientas",
+      "toolDescription": "Para estructuras más complejas, se recomienda utilizar herramientas automatizadas:",
+      "onlineTools": "Herramientas en línea",
+      "onlineDescription": "Herramientas en línea para convertir muestras JSON a código en varios lenguajes:"
+    },
+    "bestPractices": {
+      "title": "Mejores prácticas",
+      "naming": "Considerar las convenciones de nomenclatura",
+      "namingDescription": "Las convenciones de nomenclatura JSON y de los lenguajes de programación pueden diferir. Convierta del camelCase o snake_case de JSON a las convenciones del lenguaje.",
+      "validation": "Agregar validación",
+      "validationDescription": "Agregue lógica de validación de datos en las clases generadas para evitar errores en tiempo de ejecución.",
+      "partialData": "Manejar datos parciales",
+      "partialDescription": "Implemente estrategias para manejar casos donde los datos JSON estén incompletos.",
+      "versioning": "Gestión de versiones",
+      "versioningDescription": "Planifique una ruta de actualización cuando la estructura JSON cambie con el tiempo."
+    }
+  },
+  "tutorials": "Tutoriales"
+}

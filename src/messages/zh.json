@@ -154,6 +154,13 @@
     "sitemap": "网站地图",
     "tutorials": "教程",
     "json-schema": "JSON Schema教程",
+    "json-basics": "JSON基础教程",
+    "json-formats": "JSON格式化最佳实践",
+    "json-vs-xml": "JSON与XML比较",
+    "json-localstorage": "JSON与LocalStorage",
+    "json-path": "JSONPath查询",
+    "json-api": "JSON API设计",
+    "json-to-code": "JSON转代码",
     "blog": "博客",
     "images": {
       "og_image": "图片",
@@ -174,6 +181,400 @@
       "favicon_json": "JSON网页图标",
       "favicon_json_16x16": "JSON小网页图标",
       "favicon_json_32x32": "JSON中网页图标"
+    }
+  },
+  "basics": {
+    "pageTitle": "JSON基础 - 数据类型、语法和结构",
+    "introduction": {
+      "description": "JSON（JavaScript对象表示法）是一种轻量级的数据交换格式，易于人阅读和编写，也易于机器解析和生成。本教程将帮助您全面了解JSON的基础知识，包括语法规则、数据类型和结构。"
+    },
+    "whatIsJson": {
+      "title": "什么是JSON",
+      "description": "JSON是一种基于文本的、人类可读的数据交换格式，由Douglas Crockford在2000年代早期提出。它的全称是JavaScript对象表示法（JavaScript Object Notation），源自JavaScript语言，但现在已成为独立于语言的数据格式，被几乎所有现代编程语言支持。",
+      "keyFeatures": {
+        "title": "关键特性",
+        "item1": "轻量级 - 比XML等格式更简洁，传输和解析更高效",
+        "item2": "自描述性 - 格式清晰，易于理解",
+        "item3": "独立于语言 - 几乎所有编程语言都有处理JSON的库",
+        "item4": "基于文本 - 使用Unicode编码，可以表示多语言内容",
+        "item5": "结构化 - 支持嵌套数据，能表达复杂的数据关系"
+      }
+    },
+    "jsonSyntax": {
+      "title": "JSON语法",
+      "description": "JSON的语法非常简单，只有几条基本规则：",
+      "rule1": "数据以键值对形式表示，格式为 \"键\": 值",
+      "rule2": "数据项之间用逗号分隔",
+      "rule3": "对象（一组无序的键值对）用花括号 {{}} 表示",
+      "rule4": "数组（一组有序的值）用方括号 [[]] 表示",
+      "rule5": "所有键必须用双引号包围",
+      "completeExample": "下面是一个包含各种JSON元素的完整示例：",
+      "validJson": "这是一个有效的JSON对象，包含字符串、数字、布尔值、数组、嵌套对象和null值。"
+    },
+    "jsonDataTypes": {
+      "title": "JSON数据类型",
+      "description": "JSON支持以下六种数据类型：",
+      "string": "字符串",
+      "stringDescription": "文本数据，必须用双引号包围，支持转义字符。",
+      "number": "数字",
+      "numberDescription": "整数或浮点数，不支持非数字值（如NaN或Infinity）。",
+      "boolean": "布尔值",
+      "booleanDescription": "true或false（必须是小写）。",
+      "null": "空值",
+      "nullDescription": "表示空值或不存在的值，使用null（必须是小写）。",
+      "object": "对象",
+      "objectDescription": "无序的键值对集合，键必须是字符串，值可以是任何JSON数据类型。",
+      "array": "数组",
+      "arrayDescription": "有序的值集合，可以包含任何JSON数据类型，甚至混合不同类型。",
+      "noteTitle": "重要注意事项",
+      "noteDescription": "JSON有一些与其他格式不同的重要限制：",
+      "noteItem1": "不支持注释",
+      "noteItem2": "所有键名必须用双引号包围，不能用单引号",
+      "noteItem3": "不支持undefined值",
+      "noteItem4": "不直接支持日期类型（需要转换为字符串或数字）",
+      "noteItem5": "不支持函数或方法"
+    },
+    "jsonStructure": {
+      "title": "JSON结构",
+      "description": "JSON的灵活性允许表示复杂的嵌套数据结构，包括多层嵌套的对象和数组。这使得它非常适合表示几乎任何类型的数据。",
+      "exampleDescription": "下面是一个更复杂的JSON结构示例，展示了如何组织多层次数据：",
+      "exampleExplanation": "这个例子展示了JSON如何通过嵌套对象和数组来表示复杂的数据结构。产品目录包含类别，类别包含产品，产品又包含规格和颜色列表等详细信息。"
+    },
+    "commonMistakes": {
+      "title": "常见错误",
+      "description": "处理JSON时，有一些常见的错误需要避免：",
+      "commonErrors": "常见JSON语法错误",
+      "error1": "使用单引号而不是双引号",
+      "error1Description": "JSON要求所有字符串（包括键名）必须使用双引号。",
+      "error2": "最后一项后面多余的逗号",
+      "error2Description": "JSON不允许最后一个元素后有逗号，这与某些编程语言不同。",
+      "error3": "不给属性名加引号",
+      "error3Description": "所有对象属性名必须加双引号，不能像JavaScript对象那样省略。",
+      "error4": "在JSON中添加注释",
+      "error4Description": "JSON不支持注释，任何形式的注释都会导致解析错误。",
+      "bestPractices": "最佳实践",
+      "bestPractice1": "使用验证工具",
+      "bestPractice1Description": "总是使用JSON验证工具检查您的JSON是否有效。",
+      "bestPractice2": "使用格式化工具",
+      "bestPractice2Description": "格式化JSON可以提高可读性，便于发现错误。",
+      "bestPractice3": "注意数据类型",
+      "bestPractice3Description": "确保使用正确的数据类型，特别是区分字符串和数字。",
+      "bestPractice4": "谨慎处理转义字符",
+      "bestPractice4Description": "正确转义特殊字符，尤其是字符串内的引号和反斜杠。",
+      "bestPractice5": "了解解析库的特性",
+      "bestPractice5Description": "不同语言的JSON解析库可能有细微差别，了解您使用的库的具体行为。"
+    },
+    "toolsLibraries": {
+      "title": "JSON工具和库",
+      "description": "有许多工具和库可以帮助您处理JSON：",
+      "onlineTools": "在线工具",
+      "tool1": "JSON格式化工具",
+      "tool1Description": "格式化JSON数据以提高可读性。",
+      "tool2": "JSON验证器",
+      "tool2Description": "检查JSON语法是否正确。",
+      "tool3": "JSON比较工具",
+      "tool3Description": "比较两个JSON对象的差异。",
+      "tool4": "JSON转换器",
+      "tool4Description": "在JSON和其他格式（如XML、CSV）之间转换。",
+      "programmingLibraries": "编程库",
+      "library1": "JavaScript",
+      "library1Item1": "内置的JSON.parse()和JSON.stringify()",
+      "library1Item2": "Lodash - 提供更多JSON操作功能",
+      "library1Item3": "json5 - 支持注释的扩展版JSON",
+      "library2": "Python",
+      "library2Item1": "内置的json模块",
+      "library2Item2": "simplejson - 更高级的JSON库",
+      "library2Item3": "ujson - 高性能JSON编码器和解码器",
+      "library3": "Java",
+      "library3Item1": "Jackson - 功能丰富的JSON处理库",
+      "library3Item2": "Gson - Google开发的JSON库",
+      "library3Item3": "JSON-java - 轻量级JSON库"
+    },
+    "conclusion": {
+      "title": "总结",
+      "description": "通过本教程，您已经学习了JSON的基础知识，包括：",
+      "item1": "JSON的基本概念和特性",
+      "item2": "JSON语法规则和数据类型",
+      "item3": "如何创建和解析复杂的JSON结构",
+      "item4": "常见错误和最佳实践",
+      "item5": "有用的JSON工具和库",
+      "finalDescription": "掌握JSON是现代软件开发的基本技能，随着API和数据交换的普及，这些知识将在您的开发生涯中经常用到。继续探索我们的其他教程，深入学习更多关于JSON的高级主题。"
+    },
+    "returnToTutorials": "返回教程列表",
+    "nextTutorial": "下一个教程：JSON Schema"
+  },
+  "formats": {
+    "pageTitle": "JSON格式化最佳实践",
+    "introduction": {
+      "title": "为什么JSON格式化很重要",
+      "description": "虽然JSON语法简单，但良好的格式化习惯对提高可读性、可维护性和减少错误至关重要。无论您是创建API响应、配置文件还是数据存储，遵循一致的格式化规则都能让您和团队成员更容易处理JSON数据。"
+    },
+    "detailedDescription": "本教程将介绍JSON格式化最佳实践，包括缩进、命名约定、数据组织和工具使用。",
+    "indentation": {
+      "title": "缩进和空格",
+      "description": "适当的缩进是提高JSON可读性的关键：",
+      "guideline1": "使用一致的缩进（2个空格或4个空格是常见选择）",
+      "guideline2": "每个嵌套级别增加一级缩进",
+      "guideline3": "数组和对象的开始和结束括号应该对齐",
+      "recommended": "推荐做法：",
+      "notRecommended": "不推荐做法："
+    },
+    "namingConventions": {
+      "title": "命名约定",
+      "description": "一致的命名约定可以提高JSON数据的可读性和可维护性：",
+      "camelCase": "使用驼峰命名法：这是JSON中最常见的命名约定，如firstName、lastLogin",
+      "avoidUnderscores": "避免使用下划线：虽然一些API使用snake_case，但驼峰命名法在JavaScript环境中更常见",
+      "descriptiveNames": "使用描述性名称：键应该清楚地表达它们包含的数据",
+      "avoidAbbreviations": "避免缩写：使用完整的单词，除非缩写被广泛接受（如ID）",
+      "consistency": "保持一致性：在整个项目中使用相同的命名约定",
+      "recommended": "推荐做法：",
+      "notRecommended": "不推荐做法："
+    },
+    "dataOrganization": {
+      "title": "数据组织",
+      "description": "正确组织数据结构可以提高JSON的可读性和使用效率：",
+      "groupRelated": "分组相关属性：将相关属性放在一起，并使用嵌套对象组织复杂数据",
+      "logicalOrder": "按逻辑顺序排列属性：首先放置ID或名称，然后是详细信息",
+      "consistentTypes": "保持一致的数据类型：例如，始终为日期使用相同的格式",
+      "arrayItems": "数组中的项应该具有相同的结构：如果数组包含对象，这些对象应该具有相同的属性集"
+    },
+    "dateNumberFormats": {
+      "title": "日期和数字格式",
+      "description": "日期和数字格式对数据一致性至关重要：",
+      "dateFormats": "日期格式",
+      "useISO": "使用标准ISO 8601格式：YYYY-MM-DDTHH:mm:ss.sssZ",
+      "example": "例如：\"2023-05-15T14:30:00Z\"或\"2023-05-15\"（仅日期）",
+      "avoidLocalized": "避免使用本地化日期格式，如\"05/15/2023\"，这在不同地区可能会有不同的解释",
+      "numberFormats": "数字格式",
+      "avoidSeparators": "在JSON中避免使用千位分隔符（如1,000）",
+      "currencyPrecision": "货币值应指定精度（通常为两位小数）",
+      "largeNumbers": "考虑将大数字（例如超出JavaScript安全整数范围的数字）表示为字符串"
+    },
+    "validation": {
+      "title": "验证和检查",
+      "description": "确保您的JSON格式正确且有效：",
+      "useTools": "使用验证工具：在发布前用JSONLint等工具验证JSON的有效性",
+      "useSchema": "使用JSON Schema：定义数据结构和验证规则",
+      "checkErrors": "检查常见错误：如缺少逗号、多余逗号、未闭合引号等",
+      "autoFormat": "自动格式化：使用编辑器格式化功能保持一致性",
+      "ourTool": "您可以使用我们的JSON验证工具检查您的JSON是否有效。"
+    },
+    "compression": {
+      "title": "压缩和美化",
+      "description": "为不同场景选择适当的格式：",
+      "devDebug": "开发和调试：使用美化格式（带缩进和换行）以提高可读性",
+      "production": "生产环境：使用压缩格式（删除所有空白）以减少数据大小",
+      "apiResponses": "API响应：考虑提供格式选项，允许客户端在美化或压缩格式之间选择",
+      "largeFiles": "大文件：传输和存储始终使用压缩格式",
+      "beautified": "美化格式（用于开发）：",
+      "compressed": "压缩格式（用于生产）："
+    },
+    "whitespacePlacement": {
+      "title": "空白放置",
+      "description": "空白的战略性放置可以提高可读性：",
+      "afterColons": "在键值对中的冒号后添加空格",
+      "afterCommas": "在数组和对象中的逗号后添加空格",
+      "noExtraSpaces": "不要在冒号或逗号前添加空格",
+      "lineBreaks": "在美化格式中使用换行符分隔属性和数组项",
+      "recommended": "推荐做法：",
+      "notRecommended": "不推荐做法："
+    },
+    "securityConsiderations": {
+      "title": "安全考虑",
+      "description": "格式化可能包含敏感信息的JSON时要小心：",
+      "sensitiveData": "永远不要在客户端JSON中包含敏感数据（密码、API密钥等）",
+      "validateInput": "始终验证和清理来自外部来源的JSON输入",
+      "avoidComments": "记住JSON不支持注释 - 不要用它们来隐藏敏感数据",
+      "handleErrors": "为JSON解析失败实现适当的错误处理"
+    },
+    "tools": {
+      "title": "格式化工具",
+      "description": "几种工具可以帮助您保持一致的JSON格式：",
+      "onlineTools": "在线工具：",
+      "ourFormatter": "我们的JSON格式化工具：只需点击一下即可格式化和美化您的JSON",
+      "jsonlint": "JSONLint：验证JSON并识别语法错误",
+      "editorPlugins": "编辑器插件：",
+      "vscode": "VS Code：内置JSON格式化，与Prettier集成",
+      "webstorm": "WebStorm/IntelliJ IDEA：高级JSON支持，具有可定制的格式化选项",
+      "sublime": "Sublime Text：提供各种JSON格式化包",
+      "cliTools": "命令行工具：",
+      "jq": "jq：具有格式化功能的命令行JSON处理器",
+      "prettier": "Prettier：支持JSON和许多其他语言的代码格式化工具"
+    },
+    "bestPractices": {
+      "title": "最佳实践总结",
+      "description": "总结JSON格式化最佳实践的关键点：",
+      "point1": "使用一致的缩进（2个或4个空格）",
+      "point2": "遵循一致的命名约定（最好是驼峰命名法）",
+      "point3": "有逻辑地组织相关数据并保持一致",
+      "point4": "对日期（ISO 8601）和数字使用标准格式",
+      "point5": "在使用或发布前验证JSON",
+      "point6": "开发使用美化格式，生产使用压缩格式",
+      "point7": "战略性地放置空白以提高可读性",
+      "point8": "考虑格式化JSON时的安全影响",
+      "point9": "使用可用工具自动化和强制执行格式化规则"
+    },
+    "conclusion": {
+      "title": "结论",
+      "description": "良好的JSON格式化实践不仅使数据更易读，还能减少错误并提高可维护性。通过遵循本教程中的指南并使用适当的工具，您可以确保JSON数据结构良好、一致且易于使用。",
+      "nextSteps": "继续探索我们的其他JSON教程，了解更多关于在不同情境下处理JSON数据的知识。"
+    }
+  },
+  "localstorage": {
+    "pageTitle": "JSON和LocalStorage",
+    "introduction": {
+      "title": "简介",
+      "description": "LocalStorage是Web浏览器提供的一种简单的客户端存储机制，允许在用户浏览器中永久存储键值对。结合JSON格式，LocalStorage成为前端开发中存储结构化数据的强大工具。"
+    },
+    "conclusion": {
+      "title": "结论",
+      "description": "JSON和LocalStorage的组合为在浏览器中存储结构化数据提供了强大的方法。通过遵循本教程中描述的模式和最佳实践，您可以有效地为Web应用程序实现客户端数据持久性。",
+      "keyConcepts": "学到的关键概念：",
+      "concept1": "如何将JavaScript对象和数组转换为JSON以进行存储",
+      "concept2": "创建帮助程序实用工具来简化LocalStorage交互",
+      "concept3": "在LocalStorage中管理复杂的数据结构",
+      "concept4": "实现常见模式，如购物车和用户首选项",
+      "concept5": "了解LocalStorage的限制和替代方案",
+      "furtherReading": "对于更高级的用法，请考虑探索IndexedDB API或与本地存储集成的状态管理库。"
+    },
+    "tutorials": {
+      "title": "相关教程",
+      "otherTutorials": "查看我们的其他相关教程：",
+      "jsonBasics": "JSON基础",
+      "jsonSchema": "JSON Schema验证",
+      "jsonAPIs": "使用JSON和API"
+    }
+  },
+  "xmlcompare": {
+    "pageTitle": "JSON与XML比较",
+    "introduction": {
+      "title": "简介",
+      "description": "JSON（JavaScript对象表示法）和XML（可扩展标记语言）是两种常见的数据交换格式。虽然两者都用于在不同系统之间传输数据，但它们在语法、结构和应用场景方面有显著差异。"
+    },
+    "detailedDescription": "本教程将详细比较这两种格式，帮助您了解它们的优缺点，以便您能为项目选择最合适的数据格式。",
+    "syntaxComparison": {
+      "title": "语法比较",
+      "description": "以下是JSON和XML表示相同数据的比较：",
+      "jsonFormat": "JSON格式：",
+      "xmlFormat": "XML格式："
+    },
+    "syntaxDifferences": {
+      "description": "从上面的例子中，您可以看到两种格式之间的主要语法差异：",
+      "item1": "JSON使用花括号{{}}表示对象，方括号[[]]表示数组",
+      "item2": "XML使用自定义标签和嵌套结构",
+      "item3": "JSON更简洁，字符更少",
+      "item4": "XML使用开放和关闭标签，使结构更清晰但更冗长"
+    },
+    "keyDifferences": {
+      "title": "关键差异",
+      "columns": {
+        "feature": "特性",
+        "json": "JSON",
+        "xml": "XML"
+      },
+      "syntax": {
+        "name": "语法",
+        "json": "简洁，基于键值对",
+        "xml": "基于标签，有开始和结束标签"
+      },
+      "fileSize": {
+        "name": "文件大小",
+        "json": "较小",
+        "xml": "较大"
+      },
+      "parsingSpeed": {
+        "name": "解析速度",
+        "json": "更快",
+        "xml": "更慢"
+      },
+      "dataTypes": {
+        "name": "数据类型",
+        "json": "支持字符串、数字、布尔值、数组、对象和null",
+        "xml": "所有数据都是字符串，需要额外的模式定义"
+      },
+      "commentSupport": {
+        "name": "注释支持",
+        "json": "不支持",
+        "xml": "支持"
+      },
+      "namespace": {
+        "name": "命名空间",
+        "json": "不支持",
+        "xml": "支持"
+      },
+      "readability": {
+        "name": "可读性",
+        "json": "简单数据结构更好",
+        "xml": "复杂数据结构更好"
+      },
+      "languageSupport": {
+        "name": "语言支持",
+        "json": "JavaScript原生支持，其他语言有库",
+        "xml": "所有主要编程语言都有可用的库"
+      },
+      "validation": {
+        "name": "验证",
+        "json": "通过JSON Schema",
+        "xml": "通过DTD、XSD"
+      }
+    },
+    "jsonAdvantages": {
+      "title": "JSON优势",
+      "lightweight": "轻量级：JSON文件通常比等效的XML文件小，节省带宽和存储空间",
+      "easyParsing": "简单解析：大多数编程语言都有内置或第三方库用于JSON解析",
+      "readableWritable": "易于阅读和编写：简单的语法，人类和程序都容易理解",
+      "javascriptIntegration": "与JavaScript自然集成：特别适用于Web应用程序",
+      "fasterParsing": "更快的解析速度：尤其是在JavaScript环境中",
+      "arraySupport": "数组支持：对数组结构的原生支持",
+      "popularInApis": "在API中流行：大多数现代Web API使用JSON作为数据交换格式"
+    },
+    "xmlAdvantages": {
+      "title": "XML优势",
+      "validation": "强大的验证：通过DTD或XSD提供严格的数据验证",
+      "namespaces": "命名空间支持：可以在同一文档中使用不同的XML词汇",
+      "queryLanguage": "丰富的查询语言：XPath和XQuery提供强大的查询功能",
+      "comments": "支持注释：可以向XML文档添加注释，提高可读性",
+      "complexData": "复杂数据表示：更适合表示复杂层次结构和混合内容",
+      "ecosystem": "成熟的生态系统：拥有大量成熟的工具和技术",
+      "selfDescribing": "自描述性：XML文档通常更具自描述性，包括元数据"
+    },
+    "whenToUseJson": {
+      "title": "何时使用JSON",
+      "description": "在以下情况下，JSON是更好的选择：",
+      "webApps": "Web应用程序和API开发",
+      "fastParsing": "需要快速解析的场景",
+      "simpleStructures": "相对简单的数据结构",
+      "javascript": "JavaScript环境（浏览器，Node.js）",
+      "mobileApps": "移动应用程序通信",
+      "configFiles": "配置文件（如package.json）",
+      "bandwidth": "带宽节省重要的大量数据"
+    },
+    "whenToUseXml": {
+      "title": "何时使用XML",
+      "description": "在以下情况下，XML是更好的选择：",
+      "strictValidation": "需要严格的数据验证",
+      "complexStructures": "复杂的文档结构",
+      "namespaceNeeded": "需要使用命名空间",
+      "commentsNeeded": "需要支持注释",
+      "documentOriented": "面向文档的应用程序（如Word、Excel文件格式）",
+      "soapServices": "SOAP Web服务",
+      "xsltNeeded": "需要使用XSLT转换数据"
+    },
+    "conversion": {
+      "title": "JSON和XML之间的转换",
+      "description": "有时您可能需要在两种格式之间进行转换。许多在线工具和编程库可以帮助您完成此任务：",
+      "ourTool": "我们的JSON到XML转换工具",
+      "libraries": "编程库，如Node.js中的xml2js",
+      "xslt": "XSLT可用于将XML转换为JSON",
+      "note": "转换时，请注意由于两种格式之间的结构差异，转换后的数据结构可能与原始结构不同。"
+    },
+    "conclusion": {
+      "title": "结论",
+      "description": "JSON和XML各有优缺点。格式选择应基于您的特定需求：",
+      "chooseJson": "如果简单性、解析速度和JavaScript兼容性很重要，请选择JSON",
+      "chooseXml": "如果需要严格的数据验证、复杂的文档结构或命名空间支持，请选择XML",
+      "modernDev": "在现代Web开发中，JSON已成为主流数据交换格式，特别是在RESTful API中。XML在企业应用程序、文档系统和需要严格数据验证的场景中仍然占有重要地位。",
+      "finalThought": "了解两种格式的优缺点可以帮助您在项目中做出更明智的技术选择。"
     }
   },
   "schema": {
@@ -221,6 +622,125 @@
         "javavalidator": "json-schema-validator - 基于Java的验证器",
         "registry": "用于API开发的Schema Registry工具"
       }
+    }
+  },
+  "tutorials": "教程",
+  "tutorialsPage": {
+    "description": "通过我们的教程和指南，从基础到高级掌握JSON。无论您是初学者还是专业开发者，这里都有适合您的内容。",
+    "whyLearnJson": "为什么学习JSON?",
+    "webStandard": "网络标准",
+    "webStandardDesc": "JSON是现代Web API和数据交换的标准格式，几乎所有编程语言都支持。",
+    "lightweight": "轻量高效",
+    "lightweightDesc": "相比XML等格式，JSON更轻量、解析更快，是前后端数据传输的理想选择。",
+    "richTools": "工具丰富",
+    "richToolsDesc": "丰富的工具生态系统使处理JSON变得简单，从验证到转换都有专门工具。",
+    "levels": {
+      "beginner": "初级",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "comingSoon": "即将推出",
+    "tooltipComingSoon": "此教程正在创建中，敬请期待！",
+    "notFound": "还没找到你要的教程？",
+    "addingMore": "我们正在不断添加新的教程内容。如果你有特定主题的需求，请告诉我们！",
+    "requestTopic": "请求教程主题",
+    "commonQuestions": "常见JSON问题",
+    "questions": {
+      "jsObjectDiff": {
+        "question": "JSON和JavaScript对象有什么区别？",
+        "answer": "虽然JSON基于JavaScript对象语法，但它们有几个关键区别：JSON是纯文本格式，而JavaScript对象是活动实体；JSON键必须用双引号包围，JavaScript对象可以不用；JSON不支持函数或方法，而JavaScript对象可以包含方法；JSON不允许注释，JavaScript对象可以。"
+      },
+      "validation": {
+        "question": "如何验证我的JSON是否有效？",
+        "answer": "您可以使用我们的JSON验证工具来检查JSON的有效性。常见错误包括：缺少或多余的逗号、引号不匹配、使用单引号而非双引号、属性名未加引号等。有效的JSON必须遵循严格的语法规则，我们的工具会帮您找出并修复错误。"
+      },
+      "dataTypes": {
+        "question": "JSON支持哪些数据类型？",
+        "answer": "JSON支持六种数据类型：字符串（用双引号包围）、数字（整数或浮点数）、布尔值（true或false）、数组（有序值集合）、对象（键值对集合）和null。JSON不直接支持日期、函数、undefined或正则表达式等类型。"
+      }
+    },
+    "relatedTools": {
+      "title": "相关工具",
+      "formatter": "JSON格式化",
+      "compressor": "JSON压缩",
+      "validator": "JSON验证",
+      "jsonToXml": "JSON转XML"
+    }
+  },
+  "categories": {
+    "basic": {
+      "name": "基础知识",
+      "description": "JSON的基本概念和使用方法"
+    },
+    "advanced": {
+      "name": "高级技巧",
+      "description": "深入了解JSON的高级应用和技术"
+    },
+    "conversion": {
+      "name": "转换技术",
+      "description": "JSON与其他格式的转换方法和工具"
+    }
+  },
+  "jsonPath": {
+    "description": "使用JSONPath查询和操作JSON数据"
+  },
+  "jsonApi": {
+    "description": "学习设计和构建基于JSON的API"
+  },
+  "jsonToCode": {
+    "description": "将JSON数据转换为各种编程语言的代码",
+    "pageTitle": "JSON转代码转换器",
+    "introduction": {
+      "title": "JSON转代码简介",
+      "description": "JSON转代码是软件开发中的常见过程，它将JSON数据结构转换为编程语言类或类型。这种方法增强了类型安全性并改善了开发者体验。"
+    },
+    "benefits": {
+      "title": "JSON转代码的优势",
+      "typeSafety": "类型安全：类型化类有助于避免运行时错误",
+      "intellisense": "更好的IDE智能提示/自动完成",
+      "maintainability": "通过定义明确的数据结构提高可维护性",
+      "validation": "简化验证和错误处理",
+      "refactoring": "支持代码重构工具"
+    },
+    "approaches": {
+      "title": "转换方法",
+      "manualCreation": "手动创建：基于已知JSON结构定义类",
+      "manualDesc": "适用于简单或很少更改的JSON结构",
+      "codeGeneration": "代码生成：从JSON示例或模式自动创建类",
+      "codeGenDesc": "推荐用于复杂或频繁变化的JSON结构",
+      "dynamicDeserialization": "动态反序列化：使用运行时反射",
+      "dynamicDesc": "当结构事先未知时很有用"
+    },
+    "languages": {
+      "title": "支持的语言",
+      "description": "JSON转代码可以应用于多种编程语言：",
+      "typescript": "TypeScript - 强大的类型系统和接口",
+      "csharp": "C# - 使用类和属性进行数据建模",
+      "java": "Java - POJO类和Jackson/GSON注解",
+      "python": "Python - 数据类或Pydantic模型",
+      "golang": "Go - 结构体和标签",
+      "kotlin": "Kotlin - 数据类"
+    },
+    "implementation": {
+      "title": "实现方法",
+      "description": "有几种常见的方法可以将JSON转换为代码：",
+      "manualApproach": "手动方法",
+      "manualDescription": "对于简单的JSON结构，您可以直接编写相应的类：",
+      "toolApproach": "基于工具的方法",
+      "toolDescription": "对于更复杂的结构，建议使用自动化工具：",
+      "onlineTools": "在线工具",
+      "onlineDescription": "将JSON样本转换为各种语言代码的在线工具："
+    },
+    "bestPractices": {
+      "title": "最佳实践",
+      "naming": "考虑命名约定",
+      "namingDescription": "JSON和编程语言的命名约定可能不同。将JSON的驼峰命名法或下划线命名法转换为语言的惯例。",
+      "validation": "添加验证",
+      "validationDescription": "在生成的类中添加数据验证逻辑，以防止运行时错误。",
+      "partialData": "处理部分数据",
+      "partialDescription": "实现策略来处理JSON数据不完整的情况。",
+      "versioning": "版本管理",
+      "versioningDescription": "计划当JSON结构随时间变化时的升级路径。"
     }
   }
 } 

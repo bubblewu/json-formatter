@@ -1,18 +1,15 @@
-import { useTranslations } from 'next-intl';
-import Head from 'next/head';
-import BreadcrumbNav from '@/components/Breadcrumb';
-import { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'JSON Schema Tutorial',
-  description: 'Learn about JSON Schema, validation, and how to implement JSON Schema in your applications',
-};
+import { useTranslations } from 'next-intl';
+import BreadcrumbNav from '@/components/Breadcrumb';
+import MetadataClient from './metadata.client';
 
 export default function JsonSchemaTutorial() {
   const t = useTranslations('schema');
   
   return (
     <div className="container mx-auto px-4 py-8">
+      <MetadataClient />
       <BreadcrumbNav />
       
       <h1 className="text-3xl font-bold mb-6">{t('pageTitle')}</h1>

@@ -1,21 +1,21 @@
 import { locales } from '@/i18n/request';
 import { MetadataRoute } from 'next';
+import { WEBSITE_URL } from '@/utils/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://jsonformatplus.com';
   const currentDate = new Date().toISOString();
   
   // 为每种语言生成主页URL
   const homeUrls = locales.map(locale => ({
-    url: `${baseUrl}/${locale}`,
+    url: `${WEBSITE_URL}/${locale}`,
     lastModified: currentDate,
     changeFrequency: 'daily' as const,
     priority: 1.0,
     alternates: {
       languages: {
-        'x-default': `${baseUrl}/en`,
+        'x-default': `${WEBSITE_URL}/en`,
         ...Object.fromEntries(
-          locales.map(l => [l, `${baseUrl}/${l}`])
+          locales.map(l => [l, `${WEBSITE_URL}/${l}`])
         )
       }
     }
@@ -40,15 +40,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 为每种语言生成工具页面URL
   const toolUrls = toolPages.flatMap(tool => 
     locales.map(locale => ({
-      url: `${baseUrl}/${locale}/${tool.path}`,
+      url: `${WEBSITE_URL}/${locale}/${tool.path}`,
       lastModified: currentDate,
       changeFrequency: tool.changeFreq,
       priority: tool.priority,
       alternates: {
         languages: {
-          'x-default': `${baseUrl}/en/${tool.path}`,
+          'x-default': `${WEBSITE_URL}/en/${tool.path}`,
           ...Object.fromEntries(
-            locales.map(l => [l, `${baseUrl}/${l}/${tool.path}`])
+            locales.map(l => [l, `${WEBSITE_URL}/${l}/${tool.path}`])
           )
         }
       }
@@ -69,15 +69,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 为每种语言生成信息页面URL
   const infoUrls = infoPages.flatMap(page => 
     locales.map(locale => ({
-      url: `${baseUrl}/${locale}/${page.path}`,
+      url: `${WEBSITE_URL}/${locale}/${page.path}`,
       lastModified: currentDate,
       changeFrequency: page.changeFreq,
       priority: page.priority,
       alternates: {
         languages: {
-          'x-default': `${baseUrl}/en/${page.path}`,
+          'x-default': `${WEBSITE_URL}/en/${page.path}`,
           ...Object.fromEntries(
-            locales.map(l => [l, `${baseUrl}/${l}/${page.path}`])
+            locales.map(l => [l, `${WEBSITE_URL}/${l}/${page.path}`])
           )
         }
       }
@@ -86,15 +86,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   // 教程页面
   const tutorialUrls = locales.map(locale => ({
-    url: `${baseUrl}/${locale}/tutorials`,
+    url: `${WEBSITE_URL}/${locale}/tutorials`,
     lastModified: currentDate,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
     alternates: {
       languages: {
-        'x-default': `${baseUrl}/en/tutorials`,
+        'x-default': `${WEBSITE_URL}/en/tutorials`,
         ...Object.fromEntries(
-          locales.map(l => [l, `${baseUrl}/${l}/tutorials`])
+          locales.map(l => [l, `${WEBSITE_URL}/${l}/tutorials`])
         )
       }
     }
@@ -102,15 +102,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   // 博客页面
   const blogUrls = locales.map(locale => ({
-    url: `${baseUrl}/${locale}/blog`,
+    url: `${WEBSITE_URL}/${locale}/blog`,
     lastModified: currentDate,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
     alternates: {
       languages: {
-        'x-default': `${baseUrl}/en/blog`,
+        'x-default': `${WEBSITE_URL}/en/blog`,
         ...Object.fromEntries(
-          locales.map(l => [l, `${baseUrl}/${l}/blog`])
+          locales.map(l => [l, `${WEBSITE_URL}/${l}/blog`])
         )
       }
     }
