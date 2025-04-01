@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
-import MetadataClient from './metadata.client';
 
 export default function TutorialsPage() {
   const t = useTranslations();
@@ -141,8 +140,6 @@ export default function TutorialsPage() {
   
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <MetadataClient />
-      
       <Breadcrumb />
       
       <header className="mb-12 text-center">

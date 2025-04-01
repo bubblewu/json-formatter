@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import MetadataClient from './metadata.client';
 
 export default function JsonBasicsPage() {
   const t = useTranslations('basics');
@@ -62,8 +61,6 @@ false`;
   
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <MetadataClient />
-      
       <Breadcrumb />
       
       <motion.div
