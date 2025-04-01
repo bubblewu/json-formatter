@@ -1,7 +1,7 @@
 {
-  "title": "JSONフォーマッター",
-  "subtitle": "オンラインJSONフォーマッター、バリデーター、ビューティファイアー",
-  "description": "JSONデータを無料でフォーマット、検証、圧縮、エスケープできるオンラインツール。",
+  "title": "JSON フォーマッター",
+  "subtitle": "オンラインJSON フォーマット、検証、圧縮ツール",
+  "description": "無料のオンラインJSONフォーマットツールで、JSONのフォーマット、検証、圧縮、エスケープ処理を行い、開発者がJSONデータをより効率的に処理できるよう支援します。",
   "formatBtn": "フォーマット",
   "compressBtn": "圧縮",
   "clearBtn": "クリア",
@@ -12,29 +12,30 @@
   "backToFormatter": "フォーマッターに戻る",
   "removeEscapeBtn": "エスケープ解除",
   "fullscreenBtn": "全画面",
-  "exitFullscreenBtn": "全画面解除",
+  "exitFullscreenBtn": "全画面終了",
   "inputLabel": "JSON入力",
-  "outputLabel": "結果",
+  "outputLabel": "フォーマット結果",
+  "language": "言語",
   "lineNumbers": {
-    "show": "行番号を表示",
-    "hide": "行番号を非表示"
+    "show": "行番号表示",
+    "hide": "行番号非表示"
   },
   "errors": {
-    "empty": "JSONは空にできません",
-    "invalid": "無効なJSON",
-    "invalidEscape": "エスケープ文字を削除できません。有効なJSON文字列ではありません",
-    "notString": "入力はJSON文字列ではありません。エスケープ文字を削除できません",
+    "empty": "JSONが空です",
+    "invalid": "無効なJSONです",
+    "invalidEscape": "有効なJSON文字列ではないため、エスケープ文字を削除できません",
+    "notString": "入力はJSON文字列ではないため、エスケープ文字を削除できません",
     "suggestion": "修正提案",
-    "autoFixAvailable": "このエラーは自動修正できます",
+    "autoFixAvailable": "このエラーは自動的に修正できます",
     "clickToFix": "クリックして修正を適用",
     "applyFix": "修正を適用"
   },
   "success": {
-    "formatted": "JSONのフォーマットが完了しました",
-    "compressed": "JSONの圧縮が完了しました",
+    "formatted": "JSON整形完了",
+    "compressed": "JSON圧縮完了",
     "copied": "クリップボードにコピーしました",
-    "unescaped": "エスケープ文字の削除が完了しました",
-    "noEscapeNeeded": "文字列にエスケープ解除は不要です",
+    "unescaped": "エスケープ文字の削除に成功しました",
+    "noEscapeNeeded": "文字列にはエスケープ解除が必要ありません",
     "fixApplied": "修正が適用されました"
   },
   "jsonErrors": {
@@ -49,20 +50,20 @@
     "clearHistoryError": "履歴のクリア中にエラーが発生しました"
   },
   "suggestions": {
-    "checkSyntax": "JSONの構文を確認してください。特に括弧、中括弧、引用符の対応を確認",
+    "checkSyntax": "JSONの構文、特に括弧、中括弧、引用符の対応を確認してください",
     "missingClosingBracket": "閉じ括弧または中括弧が不足しています",
     "missingClosingQuote": "閉じ引用符が不足しています",
-    "incompleteJson": "JSONが不完全です。不足している部分を確認してください",
-    "missingQuotesAroundKey": "プロパティ名は二重引用符で囲む必要があります",
-    "trailingComma": "JSONでは末尾のカンマは使用できません",
-    "missingComma": "値の間にカンマが不足しています",
-    "singleQuotes": "JSONでは単一引用符の代わりに二重引用符を使用する必要があります",
-    "booleanCase": "ブール値は小文字である必要があります：{value}",
-    "nullCase": "null値は小文字である必要があります",
+    "incompleteJson": "JSONが不完全です。不足している箇所を確認してください",
+    "missingQuotesAroundKey": "プロパティ名はダブルクォーテーションで囲む必要があります",
+    "trailingComma": "JSONでは末尾のカンマは許可されていません",
+    "missingComma": "値の間にカンマがありません",
+    "singleQuotes": "JSONではシングルクォーテーションではなくダブルクォーテーションが必要です",
+    "booleanCase": "ブール値は小文字でなければなりません: {value}",
+    "nullCase": "null値は小文字でなければなりません",
     "unescapedQuote": "文字列内の引用符はエスケープする必要があります"
   },
   "footer": {
-    "copyright": "© 2025 JSONフォーマッター | あなたの効率化ヘルパー"
+    "copyright": "© 2025 JSONフォーマッター | 効率化サポート"
   },
   "languages": {
     "en": "英語",
@@ -75,10 +76,10 @@
     "ru": "ロシア語"
   },
   "history": {
-    "title": "履歴",
-    "empty": "履歴はありません",
+    "title": "履歴記録",
+    "empty": "履歴がありません",
     "noResults": "一致する記録が見つかりません",
-    "clear": "履歴を消去",
+    "clear": "履歴をクリア",
     "copy": "コピー",
     "searchPlaceholder": "履歴を検索...",
     "timeFilter": {
@@ -87,11 +88,11 @@
       "week": "今週",
       "month": "今月"
     },
-    "format": "フォーマット",
+    "format": "整形",
     "compress": "圧縮",
     "unescape": "エスケープ解除",
     "operations": {
-      "format": "フォーマット",
+      "format": "整形",
       "compress": "圧縮",
       "unescape": "エスケープ解除"
     },
@@ -105,16 +106,16 @@
   "feedback": {
     "title": "フィードバック",
     "content": "フィードバック内容",
-    "contentPlaceholder": "フィードバック内容を入力してください...",
+    "contentPlaceholder": "フィードバックを入力してください...",
     "contact": "連絡先（任意）",
-    "contactPlaceholder": "メールアドレスまたはその他の連絡先情報を入力してください",
+    "contactPlaceholder": "メールアドレスまたはその他の連絡先を入力してください",
     "submit": "フィードバックを送信",
     "submitting": "送信中...",
     "cancel": "キャンセル",
     "success": "フィードバックありがとうございます！",
     "error": "送信に失敗しました。後でもう一度お試しください",
     "validation": {
-      "required": "この項目を入力してください",
+      "required": "このフィールドを入力してください",
       "invalidEmail": "有効なメールアドレスを入力してください"
     }
   },
@@ -122,12 +123,530 @@
   "hideDemoBtn": "デモを隠す",
   "share": "共有",
   "shareMenu": {
-    "title": "で共有",
+    "title": "共有先",
     "open": "共有メニューを開く",
     "close": "共有メニューを閉じる"
   },
   "stats": {
     "totalVisits": "総訪問数",
     "onlineUsers": "オンラインユーザー"
-  }
+  },
+  "breadcrumb": {
+    "home": "ホーム",
+    "history": "履歴",
+    "contact": "お問い合わせ",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "beautify": "整形",
+    "minify": "圧縮",
+    "validate": "検証",
+    "tutorials": "チュートリアル",
+    "json-schema": "JSON Schemaチュートリアル",
+    "json-basics": "JSON基本",
+    "json-formats": "JSONフォーマットのベストプラクティス",
+    "json-vs-xml": "JSONとXMLの比較",
+    "json-localstorage": "JSONとLocalStorage",
+    "json-path": "JSONPath",
+    "json-api": "JSON API設計",
+    "json-to-code": "JSONからコードへの変換",
+    "blog": "ブログ"
+  },
+  "basics": {
+    "pageTitle": "JSON基本 - データ型、構文、構造",
+    "introduction": {
+      "description": "JSON（JavaScript Object Notation）は、人間が読み書きしやすく、機械が解析・生成しやすい軽量のデータ交換フォーマットです。このチュートリアルでは、JSON の基本（構文ルール、データ型、構造）について包括的に学びます。"
+    },
+    "whatIsJson": {
+      "title": "JSONとは",
+      "description": "JSONはテキストベースの人間が読みやすいデータ交換フォーマットで、2000年代初頭にDouglas Crockfordによって提案されました。JavaScript Object Notationの略で、JavaScriptに由来していますが、現在では言語に依存しないデータ形式となり、ほぼすべての現代プログラミング言語でサポートされています。",
+      "keyFeatures": {
+        "title": "主な特徴",
+        "item1": "軽量 - XMLなどの形式よりもシンプルで、転送や解析が効率的",
+        "item2": "自己記述的 - フォーマットが明確で理解しやすい",
+        "item3": "言語非依存 - ほぼすべてのプログラミング言語にJSONを処理するライブラリがある",
+        "item4": "テキストベース - Unicodeエンコーディングを使用し、多言語コンテンツを表現可能",
+        "item5": "構造化 - ネストされたデータをサポートし、複雑なデータ関係を表現できる"
+      }
+    },
+    "jsonSyntax": {
+      "title": "JSON構文",
+      "description": "JSONの構文は非常にシンプルで、いくつかの基本ルールがあります：",
+      "rule1": "データはキーと値のペアで表され、形式は \"キー\": 値",
+      "rule2": "データ項目はカンマで区切られる",
+      "rule3": "オブジェクト（キーと値のペアの順序なしセット）は中括弧 {{}} で表される",
+      "rule4": "配列（値の順序付きリスト）は角括弧 [[]] で表される",
+      "rule5": "すべてのキーは二重引用符で囲む必要がある",
+      "completeExample": "以下はさまざまなJSON要素を含む完全な例です：",
+      "validJson": "これは有効なJSONオブジェクトで、文字列、数値、ブール値、配列、ネストされたオブジェクト、nullを含んでいます。"
+    },
+    "jsonDataTypes": {
+      "title": "JSONデータ型",
+      "description": "JSONは以下の6つのデータ型をサポートしています：",
+      "string": "文字列",
+      "stringDescription": "テキストデータ、必ず二重引用符で囲む必要があり、エスケープ文字をサポートしています。",
+      "number": "数値",
+      "numberDescription": "整数または浮動小数点数、非数値（NaNやInfinityなど）はサポートしていません。",
+      "boolean": "ブール値",
+      "booleanDescription": "true または false（必ず小文字）。",
+      "null": "Null",
+      "nullDescription": "空または存在しない値を表し、null（必ず小文字）を使用します。",
+      "object": "オブジェクト",
+      "objectDescription": "キーと値のペアの順序なしコレクション、キーは文字列でなければならず、値は任意のJSONデータ型が可能です。",
+      "array": "配列",
+      "arrayDescription": "値の順序付きコレクション、任意のJSONデータ型を含むことができ、異なる型を混在させることも可能です。",
+      "noteTitle": "重要な注意点",
+      "noteDescription": "JSONには他のフォーマットと異なる重要な制限があります：",
+      "noteItem1": "コメントをサポートしていない",
+      "noteItem2": "すべてのキー名は単一引用符ではなく二重引用符で囲む必要がある",
+      "noteItem3": "undefined値をサポートしていない",
+      "noteItem4": "日付型を直接サポートしていない（文字列または数値に変換する必要がある）",
+      "noteItem5": "関数やメソッドをサポートしていない"
+    },
+    "jsonStructure": {
+      "title": "JSON構造",
+      "description": "JSONの柔軟性により、複数レイヤーのネストされたオブジェクトや配列を含む、複雑なネストされたデータ構造を表現できます。これにより、ほぼあらゆる種類のデータを表現するのに非常に適しています。",
+      "exampleDescription": "以下は、複数レベルのデータをどのように構成するかを示すより複雑なJSON構造の例です：",
+      "exampleExplanation": "この例は、ネストされたオブジェクトと配列を通じてJSONが複雑なデータ構造をどのように表現できるかを示しています。製品カタログにはカテゴリが含まれ、カテゴリには製品が含まれ、製品には仕様や色リストなどの詳細情報が含まれています。"
+    },
+    "commonMistakes": {
+      "title": "よくある間違い",
+      "description": "JSONを扱う際に、避けるべきよくある間違いがいくつかあります：",
+      "commonErrors": "よくあるJSON構文エラー",
+      "error1": "二重引用符の代わりに単一引用符を使用する",
+      "error1Description": "JSONでは、すべての文字列（キー名を含む）に二重引用符を使用する必要があります。",
+      "error2": "最後の項目の後に余分なカンマがある",
+      "error2Description": "JSONでは最後の要素の後にカンマを許可していません。これは一部のプログラミング言語とは異なります。",
+      "error3": "プロパティ名に引用符をつけない",
+      "error3Description": "すべてのオブジェクトのプロパティ名は二重引用符で囲む必要があります。JavaScriptオブジェクトでは省略できるのとは異なります。",
+      "error4": "JSONにコメントを追加する",
+      "error4Description": "JSONはコメントをサポートしていません。どのような形式のコメントも解析エラーを引き起こします。",
+      "bestPractices": "ベストプラクティス",
+      "bestPractice1": "検証ツールを使用する",
+      "bestPractice1Description": "常にJSON検証ツールを使用して、JSONが有効かどうかを確認してください。",
+      "bestPractice2": "フォーマットツールを使用する",
+      "bestPractice2Description": "JSONをフォーマットすると可読性が向上し、エラーを発見しやすくなります。",
+      "bestPractice3": "データ型に注意する",
+      "bestPractice3Description": "正しいデータ型を使用していることを確認してください。特に文字列と数値を区別することが重要です。",
+      "bestPractice4": "エスケープ文字を慎重に扱う",
+      "bestPractice4Description": "特殊文字、特に文字列内の引用符やバックスラッシュを適切にエスケープしてください。",
+      "bestPractice5": "解析ライブラリの特徴を理解する",
+      "bestPractice5Description": "異なる言語のJSON解析ライブラリには微妙な違いがある場合があります。使用しているライブラリの特定の動作を理解してください。"
+    },
+    "toolsLibraries": {
+      "title": "JSONツールとライブラリ",
+      "description": "JSONの作業を支援する多くのツールとライブラリがあります：",
+      "onlineTools": "オンラインツール",
+      "tool1": "JSONフォーマッター",
+      "tool1Description": "JSONデータをフォーマットして可読性を向上させます。",
+      "tool2": "JSON検証ツール",
+      "tool2Description": "JSON構文が正しいかどうかをチェックします。",
+      "tool3": "JSON比較ツール",
+      "tool3Description": "2つのJSONオブジェクト間の違いを比較します。",
+      "tool4": "JSON変換ツール",
+      "tool4Description": "JSONと他のフォーマット（XMLやCSVなど）の間で変換します。",
+      "programmingLibraries": "プログラミングライブラリ",
+      "library1": "JavaScript",
+      "library1Item1": "組み込みのJSON.parse()とJSON.stringify()",
+      "library1Item2": "Lodash - より多くのJSON操作機能を提供",
+      "library1Item3": "json5 - コメントをサポートするJSONの拡張バージョン",
+      "library2": "Python",
+      "library2Item1": "組み込みのjsonモジュール",
+      "library2Item2": "simplejson - より高度なJSONライブラリ",
+      "library2Item3": "ujson - 高性能JSONエンコーダーとデコーダー",
+      "library3": "Java",
+      "library3Item1": "Jackson - 機能豊富なJSON処理ライブラリ",
+      "library3Item2": "Gson - Googleが開発したJSONライブラリ",
+      "library3Item3": "JSON-java - 軽量JSONライブラリ"
+    },
+    "conclusion": {
+      "title": "結論",
+      "description": "このチュートリアルを通じて、JSONの基本を学びました：",
+      "item1": "JSONの基本概念と特徴",
+      "item2": "JSON構文ルールとデータ型",
+      "item3": "複雑なJSON構造の作成と解析方法",
+      "item4": "一般的なエラーとベストプラクティス",
+      "item5": "有用なJSONツールとライブラリ",
+      "finalDescription": "JSONのマスターは現代のソフトウェア開発における必須スキルです。APIとデータ交換の普及により、これらの知識は開発キャリアを通じて頻繁に使用されることになります。他のチュートリアルも引き続き探索して、JSONに関するより高度なトピックを学びましょう。"
+    },
+    "returnToTutorials": "チュートリアル一覧に戻る",
+    "nextTutorial": "次のチュートリアル：JSON Schema"
+  },
+  "schema": {
+    "pageTitle": "JSON Schemaチュートリアル",
+    "pageDescription": "JSON Schemaを学び、JSONデータの検証方法とアプリケーションでのJSON Schemaの実装方法を理解する",
+    "introduction": {
+      "title": "JSON Schemaの紹介",
+      "description": "JSON Schemaは、JSONドキュメントに注釈を付け、検証するための語彙です。JSONデータの構造、内容、検証ルールを定義するのに役立ちます。"
+    },
+    "basics": {
+      "title": "JSON Schemaの基本",
+      "description": "JSON Schema自体がJSONドキュメントです。スキーマは以下を定義します："
+    }
+  },
+  "formats": {
+    "pageTitle": "JSONフォーマットのベストプラクティス",
+    "introduction": {
+      "title": "なぜJSONフォーマットが重要なのか",
+      "description": "JSONの構文はシンプルですが、適切なフォーマット習慣は可読性、保守性を高め、エラーを減らすために重要です。APIレスポンス、設定ファイル、データストレージのいずれを作成する場合でも、一貫したフォーマットルールに従うことで、あなたとチームメンバーがJSONデータをより簡単に扱えるようになります。"
+    },
+    "conclusion": {
+      "title": "結論",
+      "description": "優れたJSONフォーマット手法は、データの可読性を向上させるだけでなく、エラーを減らし、保守性を高めます。このチュートリアルのガイドラインに従い、適切なツールを使用することで、JSONデータが適切に構造化され、一貫性があり、扱いやすくなることを確保できます。",
+      "nextSteps": "引き続き他のJSONチュートリアルを探索して、さまざまな状況でのJSONデータの操作についてさらに学びましょう。"
+    }
+  },
+  "localstorage": {
+    "pageTitle": "JSONとLocalStorage",
+    "introduction": {
+      "title": "はじめに",
+      "description": "LocalStorageはWebブラウザが提供するシンプルなクライアントサイドストレージメカニズムで、ユーザーのブラウザ内にキーと値のペアを永続的に保存できます。JSON形式と組み合わせることで、LocalStorageはフロントエンド開発における構造化データ保存の強力なツールとなります。",
+      "detailedDescription": "このチュートリアルでは、JSON形式をLocalStorageと共に使用してローカルデータの保存、取得、更新、削除を実装する方法と、一般的なアプリケーションシナリオとベストプラクティスを紹介します。"
+    },
+    "basics": {
+      "title": "LocalStorageの基本",
+      "description": "LocalStorageは、キーと値の両方が文字列である必要がある単純なキーと値のストレージAPIを提供します。主な特徴は次のとおりです：",
+      "feature1": "ブラウザセッション間でデータが保持される（ブラウザを閉じた後もデータは失われない）",
+      "feature2": "比較的大きなストレージ容量（通常はブラウザによって約5MB）",
+      "feature3": "保存されたデータは自動的にサーバーに送信されない",
+      "feature4": "同一オリジンポリシーの制限（同じドメインからのデータにのみアクセス可能）",
+      "basicAPI": "基本API："
+    },
+    "jsonWithLocalstorage": {
+      "title": "JSONとLocalStorageの使用",
+      "description": "LocalStorageは文字列のみを保存できるため、オブジェクトや配列などの複雑なデータ構造を保存する必要がある場合は、JSONを使用して変換する必要があります：",
+      "arrayStorage": "同様に、JSONを使用して配列を保存することもできます："
+    },
+    "commonPatterns": {
+      "title": "一般的な使用パターン",
+      "wrapper": "1. シンプルなデータ管理ラッパーの作成",
+      "wrapperDescription": "LocalStorageをより便利に使用するために、シンプルなラッパーを作成できます：",
+      "updatingObjects": "2. 保存されたオブジェクトの更新",
+      "updatingDescription": "既に保存されているオブジェクトのプロパティの一部を更新する必要がある場合：",
+      "arrayManagement": "3. 配列項目の追加/削除",
+      "arrayDescription": "LocalStorageに保存された配列の管理："
+    },
+    "practicalExamples": {
+      "title": "実用的な例",
+      "userPrefs": "例1：ユーザー設定",
+      "userPrefsDescription": "ユーザーインターフェース設定の保存と取得：",
+      "shoppingCart": "例2：ショッピングカート",
+      "cartDescription": "LocalStorageを使用した簡単なショッピングカートの作成：",
+      "formData": "例3：フォームデータの永続化",
+      "formDescription": "データ損失を防ぐためのフォームデータの保存："
+    },
+    "limitations": {
+      "title": "制限事項と考慮点",
+      "description": "LocalStorageをJSONと併用する際には、以下の制限事項に注意してください：",
+      "storageLimit": "ストレージ制限：LocalStorageは通常、ドメインごとに約5MBの制限があります",
+      "stringOnly": "文字列のみのストレージ：LocalStorageは文字列のみを保存でき、複雑なデータにはJSON変換が必要です",
+      "noExpiration": "有効期限メカニズムなし：LocalStorageには組み込みの有効期限機能がありません",
+      "synchronous": "同期API：LocalStorage操作は同期的で、メインスレッドをブロックする可能性があります",
+      "securityPrivacy": "セキュリティとプライバシー：LocalStorageに機密情報を保存しないでください",
+      "browserSupport": "ブラウザサポート：広くサポートされていますが、一部のプライバシー設定やシークレットモードではアクセスが制限される場合があります",
+      "serialization": "シリアル化の制限：JSONはすべてのJavaScriptデータ型（関数や循環参照など）をシリアル化できません"
+    },
+    "bestPractices": {
+      "title": "ベストプラクティス",
+      "errorHandling": "エラー処理を使用する",
+      "errorDescription": "LocalStorageからJSONを解析する際は、常にtry-catchを使用してください：",
+      "namespacing": "名前空間の使用",
+      "namespaceDescription": "競合を避けるためにキーにプレフィックスを使用してください：",
+      "versioning": "バージョン管理の検討",
+      "versioningDescription": "データ構造の変更を処理するためにバージョン情報を追加してください：",
+      "fallbacks": "フォールバックの提供",
+      "fallbacksDescription": "データが利用できない場合の処理を常に行ってください："
+    },
+    "alternatives": {
+      "title": "LocalStorageの代替手段",
+      "description": "ニーズに応じて、以下の代替手段を検討することができます：",
+      "sessionStorage": "SessionStorage：同様のAPIですが、セッション終了時にデータがクリアされます",
+      "indexedDB": "IndexedDB：より大きな容量を持つクライアントサイドストレージのための強力なデータベース",
+      "cookies": "Cookie：容量は小さいですが、サーバーサイドの相互作用に使用できます",
+      "webSQL": "Web SQL：SQLベースのデータベース（非推奨ですが、一部のブラウザではまだ機能します）",
+      "cacheAPI": "Cache API：Service Workersの一部で、オフラインファーストアプリケーションに役立ちます",
+      "firebase": "Firebase Realtime Database/Firestore：同期機能を持つクラウドベースの代替手段",
+      "comparison": "比較表："
+    },
+    "debugging": {
+      "title": "LocalStorageのデバッグ",
+      "description": "LocalStorageの問題をデバッグするためのヒント：",
+      "browserTools": "ブラウザ開発ツールの使用",
+      "toolsDescription": "ブラウザの開発ツールはLocalStorageを検査して変更する方法を提供します：",
+      "directAccess": "コンソールで直接LocalStorageにアクセスする：",
+      "logging": "ロギングの追加",
+      "loggingDescription": "LocalStorage操作を追跡するためのロギングを追加する：",
+      "clearingData": "データのクリア",
+      "clearingDescription": "テスト時にLocalStorageをクリアする必要がある場合："
+    },
+    "conclusion": {
+      "title": "結論",
+      "description": "JSONとLocalStorageの組み合わせは、ブラウザ内に構造化データを保存する強力な方法を提供します。このチュートリアルで説明したパターンとベストプラクティスに従うことで、Webアプリケーションのクライアントサイドデータ永続化を効果的に実装できます。",
+      "keyConcepts": "学んだ主要な概念：",
+      "concept1": "JavaScriptオブジェクトと配列を保存用にJSONに変換する方法",
+      "concept2": "LocalStorageとの対話を簡素化するヘルパーユーティリティの作成",
+      "concept3": "LocalStorage内の複雑なデータ構造の管理",
+      "concept4": "ショッピングカートやユーザー設定などの一般的なパターンの実装",
+      "concept5": "LocalStorageの制限と代替手段の理解",
+      "furtherReading": "より高度な使用法については、IndexedDB APIやローカルストレージと統合する状態管理ライブラリを検討してみてください。"
+    },
+    "tutorials": {
+      "title": "関連チュートリアル",
+      "otherTutorials": "他の関連チュートリアルをチェックしてください：",
+      "jsonBasics": "JSON基本",
+      "jsonSchema": "JSON Schema検証",
+      "jsonAPIs": "JSONとAPIの使用"
+    }
+  },
+  "xmlcompare": {
+    "pageTitle": "JSONとXMLの比較",
+    "introduction": {
+      "title": "はじめに",
+      "description": "JSON（JavaScript Object Notation）とXML（eXtensible Markup Language）は、2つの一般的なデータ交換形式です。どちらも異なるシステム間でデータを転送するために使用されますが、構文、構造、およびアプリケーションシナリオに大きな違いがあります。"
+    },
+    "detailedDescription": "このチュートリアルでは、これら2つの形式を詳細に比較し、それぞれの長所と短所を理解して、プロジェクトに最適なデータ形式を選択できるようサポートします。",
+    "syntaxComparison": {
+      "title": "構文比較",
+      "description": "以下は同じデータを表すJSONとXMLの比較です：",
+      "jsonFormat": "JSON形式：",
+      "xmlFormat": "XML形式："
+    },
+    "syntaxDifferences": {
+      "description": "上記の例から、2つの形式間の主な構文の違いが分かります：",
+      "item1": "JSONはオブジェクトに中括弧{{}}、配列に角括弧[[]]を使用します",
+      "item2": "XMLはカスタムタグとネスト構造を使用します",
+      "item3": "JSONはより簡潔で、文字数が少なくなります",
+      "item4": "XMLは開始タグと終了タグを使用し、構造がより明確になりますが、より冗長です"
+    },
+    "keyDifferences": {
+      "title": "主な違い",
+      "columns": {
+        "feature": "機能",
+        "json": "JSON",
+        "xml": "XML"
+      },
+      "syntax": {
+        "name": "構文",
+        "json": "簡潔、キーと値のペアに基づく",
+        "xml": "タグベース、開始タグと終了タグを持つ"
+      },
+      "fileSize": {
+        "name": "ファイルサイズ",
+        "json": "小さい",
+        "xml": "大きい"
+      },
+      "parsingSpeed": {
+        "name": "解析速度",
+        "json": "速い",
+        "xml": "遅い"
+      },
+      "dataTypes": {
+        "name": "データ型",
+        "json": "文字列、数値、真偽値、配列、オブジェクト、nullをサポート",
+        "xml": "すべてのデータは文字列であり、追加のスキーマ定義が必要"
+      },
+      "commentSupport": {
+        "name": "コメントサポート",
+        "json": "サポートなし",
+        "xml": "サポートあり"
+      },
+      "namespace": {
+        "name": "名前空間",
+        "json": "サポートなし",
+        "xml": "サポートあり"
+      },
+      "readability": {
+        "name": "読みやすさ",
+        "json": "単純なデータ構造に適している",
+        "xml": "複雑なデータ構造に適している"
+      },
+      "languageSupport": {
+        "name": "言語サポート",
+        "json": "JavaScriptでのネイティブサポート、他の言語ではライブラリ",
+        "xml": "すべての主要なプログラミング言語でライブラリが利用可能"
+      },
+      "validation": {
+        "name": "検証",
+        "json": "JSON Schemaを通じて",
+        "xml": "DTD、XSDを通じて"
+      }
+    },
+    "jsonAdvantages": {
+      "title": "JSONの利点",
+      "lightweight": "軽量：JSON ファイルは同等のXMLファイルより一般的に小さく、帯域幅とストレージスペースを節約できます",
+      "easyParsing": "簡単な解析：ほとんどのプログラミング言語には、JSON解析のための組み込みまたはサードパーティのライブラリがあります",
+      "readableWritable": "読み書きが容易：シンプルな構文で、人間とプログラムの両方が理解しやすい",
+      "javascriptIntegration": "JavaScriptとの自然な統合：特にWebアプリケーションで有用",
+      "fasterParsing": "より速い解析速度：特にJavaScript環境において",
+      "arraySupport": "配列サポート：配列構造のネイティブサポート",
+      "popularInApis": "APIでの人気：ほとんどの現代WebAPIはデータ交換形式としてJSONを使用します"
+    },
+    "xmlAdvantages": {
+      "title": "XMLの利点",
+      "validation": "強力な検証：DTDまたはXSDによる厳格なデータ検証を提供",
+      "namespaces": "名前空間サポート：同じドキュメント内で異なるXML語彙を使用可能",
+      "queryLanguage": "豊富なクエリ言語：XPathとXQueryが強力なクエリ機能を提供",
+      "comments": "コメントのサポート：XMLドキュメントにコメントを追加でき、読みやすさを向上",
+      "complexData": "複雑なデータ表現：複雑な階層と混合コンテンツの表現に適している",
+      "ecosystem": "成熟したエコシステム：多数の成熟したツールと技術が存在する",
+      "selfDescribing": "自己記述的：XMLドキュメントはメタデータを含み、より自己記述的である傾向があります"
+    },
+    "whenToUseJson": {
+      "title": "JSONを使うべき場合",
+      "description": "次のような状況ではJSONが適しています：",
+      "webApps": "WebアプリケーションとAPI開発",
+      "fastParsing": "高速解析が必要なシナリオ",
+      "simpleStructures": "比較的単純なデータ構造",
+      "javascript": "JavaScript環境（ブラウザ、Node.js）",
+      "mobileApps": "モバイルアプリケーション通信",
+      "configFiles": "設定ファイル（package.jsonなど）",
+      "bandwidth": "帯域幅の節約が重要な大量データ"
+    },
+    "whenToUseXml": {
+      "title": "XMLを使うべき場合",
+      "description": "次のような状況ではXMLが適しています：",
+      "strictValidation": "厳格なデータ検証が必要",
+      "complexStructures": "複雑な文書構造",
+      "namespaceNeeded": "名前空間の使用が必要",
+      "commentsNeeded": "コメントのサポートが必要",
+      "documentOriented": "ドキュメント指向アプリケーション（Word、Excelファイル形式など）",
+      "soapServices": "SOAPウェブサービス",
+      "xsltNeeded": "データ変換にXSLTの使用が必要"
+    },
+    "conversion": {
+      "title": "JSONとXML間の変換",
+      "description": "場合によっては、2つの形式間で変換する必要があります。多くのオンラインツールとプログラミングライブラリがこのタスクを支援できます：",
+      "ourTool": "当社のJSONからXMLへの変換ツール",
+      "libraries": "プログラミングライブラリ（Node.jsのxml2jsなど）",
+      "xslt": "XSLTはXMLをJSONに変換するために使用できます",
+      "note": "変換する際は、2つの形式間の構造的な違いにより、変換されたデータ構造が元の構造と異なる可能性があることに注意してください。"
+    },
+    "conclusion": {
+      "title": "結論",
+      "description": "JSONとXMLにはそれぞれ長所と短所があります。フォーマットの選択は、あなたの特定のニーズに基づいて行うべきです：",
+      "chooseJson": "シンプルさ、解析速度、およびJavaScriptとの互換性が重要な場合は、JSONを選択してください",
+      "chooseXml": "厳格なデータ検証、複雑な文書構造、または名前空間のサポートが必要な場合は、XMLを選択してください",
+      "modernDev": "現代のWeb開発では、JSONは特にRESTful APIでメインストリームのデータ交換フォーマットになっています。XMLは企業アプリケーション、文書システム、および厳格なデータ検証が必要なシナリオで重要な位置を維持しています。",
+      "finalThought": "両方のフォーマットの長所と短所を理解することで、プロジェクトでより情報に基づいた技術的選択ができるようになります。"
+    }
+  },
+  "tutorials": "チュートリアル",
+  "tutorialsPage": {
+    "description": "基本から応用まで、チュートリアルとガイドでJSONをマスターしましょう。初心者からプロの開発者まで、あなたに適したコンテンツが見つかります。",
+    "whyLearnJson": "なぜJSONを学ぶべきか？",
+    "webStandard": "ウェブ標準",
+    "webStandardDesc": "JSONは現代のWeb APIとデータ交換の標準フォーマットで、ほぼすべてのプログラミング言語でサポートされています。",
+    "lightweight": "軽量で効率的",
+    "lightweightDesc": "XMLなどの形式と比較して、JSONはより軽量で解析が速く、フロントエンドとバックエンド間のデータ転送に最適です。",
+    "richTools": "豊富なツール",
+    "richToolsDesc": "豊富なツールエコシステムがJSONの処理を簡単にし、検証から変換まで専用のツールが揃っています。",
+    "levels": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    },
+    "comingSoon": "近日公開",
+    "tooltipComingSoon": "このチュートリアルは現在作成中です。お楽しみに！",
+    "notFound": "お探しのチュートリアルが見つかりませんでしたか？",
+    "addingMore": "私たちは常に新しいチュートリアルコンテンツを追加しています。特定のトピックについてご要望があれば、ぜひお知らせください！",
+    "requestTopic": "トピックをリクエスト",
+    "commonQuestions": "よくあるJSON質問",
+    "questions": {
+      "jsObjectDiff": {
+        "question": "JSONとJavaScriptオブジェクトの違いは何ですか？",
+        "answer": "JSONはJavaScriptオブジェクト構文に基づいていますが、いくつかの重要な違いがあります：JSONはプレーンテキスト形式ですが、JavaScriptオブジェクトは実体です；JSONのキーは二重引用符で囲む必要がありますが、JavaScriptオブジェクトではこれが不要です；JSONは関数やメソッドをサポートしませんが、JavaScriptオブジェクトはメソッドを含むことができます；JSONはコメントを許可しませんが、JavaScriptオブジェクトでは可能です。"
+      },
+      "validation": {
+        "question": "JSONが有効かどうかを検証するにはどうすればよいですか？",
+        "answer": "当社のJSON検証ツールを使用して、JSONの有効性を確認できます。一般的なエラーには、カンマの欠落や余分、引用符の不一致、二重引用符の代わりに単一引用符を使用する、引用符のないプロパティ名などがあります。有効なJSONは厳格な構文ルールに従う必要があり、当社のツールはエラーを特定して修正するのに役立ちます。"
+      },
+      "dataTypes": {
+        "question": "JSONはどのようなデータ型をサポートしていますか？",
+        "answer": "JSONは6つのデータ型をサポートしています：文字列（二重引用符で囲まれた）、数値（整数または浮動小数点）、ブール値（true または false）、配列（順序付けられた値のコレクション）、オブジェクト（キーと値のペアのコレクション）、およびnull。JSONは日付、関数、undefined、または正規表現を直接サポートしていません。"
+      }
+    },
+    "relatedTools": {
+      "title": "関連ツール",
+      "formatter": "JSONフォーマッター",
+      "compressor": "JSON圧縮ツール",
+      "validator": "JSON検証ツール",
+      "jsonToXml": "JSONからXMLへの変換"
+    }
+  },
+  "categories": {
+    "basic": {
+      "name": "基本知識",
+      "description": "JSONの基本概念と使用法"
+    },
+    "advanced": {
+      "name": "高度なテクニック",
+      "description": "JSONの高度なアプリケーションと技術の詳細"
+    },
+    "conversion": {
+      "name": "変換テクニック",
+      "description": "JSONと他のフォーマット間の変換方法とツール"
+    }
+  },
+  "jsonPath": {
+    "description": "JSONPathを使用してJSONデータをクエリおよび操作する"
+  },
+  "jsonApi": {
+    "description": "JSONベースのAPIの設計と構築を学ぶ"
+  },
+  "jsonToCode": {
+    "description": "JSONデータを様々なプログラミング言語のコードに変換する",
+    "pageTitle": "JSONからコードへの変換ツール",
+    "introduction": {
+      "title": "JSONからコードへの変換入門",
+      "description": "JSONからコードへの変換は、JSONデータ構造をプログラミング言語のクラスや型に変換するソフトウェア開発における一般的なプロセスです。このアプローチは型の安全性と開発者体験を向上させます。"
+    },
+    "benefits": {
+      "title": "JSONからコードへの変換の利点",
+      "typeSafety": "型の安全性：型付きクラスは実行時エラーの回避に役立ちます",
+      "intellisense": "IDE内での優れた補完機能/IntelliSense",
+      "maintainability": "明確に定義されたデータ構造による保守性の向上",
+      "validation": "簡素化された検証とエラー処理",
+      "refactoring": "コードリファクタリングツールのサポート"
+    },
+    "approaches": {
+      "title": "変換アプローチ",
+      "manualCreation": "手動作成：既知のJSON構造に基づいてクラスを定義する",
+      "manualDesc": "単純または変更頻度の低いJSON構造に適しています",
+      "codeGeneration": "コード生成：JSONサンプルまたはスキーマから自動的にクラスを作成する",
+      "codeGenDesc": "複雑または頻繁に変更されるJSON構造に推奨されます",
+      "dynamicDeserialization": "動的デシリアライゼーション：実行時リフレクションを使用する",
+      "dynamicDesc": "構造が事前に分からない場合に役立ちます"
+    },
+    "languages": {
+      "title": "サポートされている言語",
+      "description": "JSONからコードへの変換は多くのプログラミング言語に適用できます：",
+      "typescript": "TypeScript - 強力な型システムとインターフェース",
+      "csharp": "C# - クラスとプロパティによるデータモデリング",
+      "java": "Java - POJOクラスとJackson/GSONアノテーション",
+      "python": "Python - データクラスまたはPydanticモデル",
+      "golang": "Go - 構造体とタグ",
+      "kotlin": "Kotlin - データクラス"
+    },
+    "implementation": {
+      "title": "実装方法",
+      "description": "JSONをコードに変換するための一般的なアプローチがいくつかあります：",
+      "manualApproach": "手動アプローチ",
+      "manualDescription": "単純なJSON構造の場合、対応するクラスを直接記述できます：",
+      "toolApproach": "ツールベースのアプローチ",
+      "toolDescription": "より複雑な構造では、自動化ツールの使用をお勧めします：",
+      "onlineTools": "オンラインツール",
+      "onlineDescription": "JSONサンプルを様々な言語のコードに変換するオンラインツール："
+    },
+    "bestPractices": {
+      "title": "ベストプラクティス",
+      "naming": "命名規則の検討",
+      "namingDescription": "JSONとプログラミング言語の命名規則は異なる場合があります。JSONのキャメルケースまたはスネークケースを言語の規則に変換します。",
+      "validation": "検証の追加",
+      "validationDescription": "実行時エラーを防ぐために、生成されたクラスにデータ検証ロジックを追加します。",
+      "partialData": "部分的なデータの処理",
+      "partialDescription": "JSONデータが不完全な場合の対処戦略を実装します。",
+      "versioning": "バージョン管理",
+      "versioningDescription": "JSON構造が時間とともに変化する場合のアップグレードパスを計画します。"
+    }
+  },
+  "tutorials": "チュートリアル"
 } 

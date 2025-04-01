@@ -6,12 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod": "NODE_ENV=production next build && node .next/standalone/server.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@monaco-editor/react": "^4.7.0",
+    "framer-motion": "^12.6.2",
     "next": "14.0.4",
-    "next-intl": "^3.4.2",
+    "next-intl": "^3.4.0",
+    "next-seo": "^6.6.0",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
