@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
@@ -61,8 +60,6 @@ false`;
   
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <Breadcrumb />
-      
       <motion.div
         initial="hidden"
         animate="visible"

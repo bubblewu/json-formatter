@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
 
 export default function TutorialsPage() {
   const t = useTranslations();
@@ -140,8 +139,6 @@ export default function TutorialsPage() {
   
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <Breadcrumb />
-      
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
           {t('tutorials')}

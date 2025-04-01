@@ -1,15 +1,12 @@
 "use client";
 
 import { useTranslations } from 'next-intl';
-import BreadcrumbNav from '@/components/Breadcrumb';
 
 export default function JsonFormatsTutorial() {
   const t = useTranslations('formats');
   
   return (
     <div className="container mx-auto px-4 py-8">
-      <BreadcrumbNav />
-      
       <h1 className="text-3xl font-bold mb-6">{t('pageTitle')}</h1>
       
       <div className="space-y-12">
