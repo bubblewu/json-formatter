@@ -29,7 +29,7 @@ A powerful online tool to format, validate, and beautify your JSON data. The JSO
 
 ## Live Demo
 
-Visit [https://json-formatter.vercel.app](https://json-formatter.vercel.app) to use the JSON Formatter online.
+Visit [https://www.jsonformatplus.com](https://www.jsonformatplus.com) to use the JSON Formatter online.
 
 ## Open Source
 

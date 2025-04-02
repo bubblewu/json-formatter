@@ -187,7 +187,7 @@ export default function StructuredData() {
     },
     "sameAs": [
       "https://twitter.com/jsonformatplus",
-      "https://github.com/jsonformatplus",
+      "https://github.com/bubblewu/json-formatter",
       "https://www.facebook.com/jsonformatplus"
     ]
   };
