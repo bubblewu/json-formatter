@@ -46,28 +46,28 @@ export default function manifest(): MetadataRoute.Manifest {
         name: '格式化JSON',
         short_name: '格式化',
         description: '格式化JSON数据',
-        url: '/zh/beautify',
+        url: '/',
         icons: [{ src: '/file.svg', sizes: '96x96' }]
       },
       {
         name: '转换为XML',
         short_name: 'JSON到XML',
         description: '将JSON转换为XML',
-        url: '/zh/json-to-xml',
+        url: '/',
         icons: [{ src: '/file.svg', sizes: '96x96' }]
       },
       {
         name: '转换为CSV',
         short_name: 'JSON到CSV',
         description: '将JSON转换为CSV',
-        url: '/zh/json-to-csv',
+        url: '/',
         icons: [{ src: '/file.svg', sizes: '96x96' }]
       },
       {
         name: '转换为代码',
         short_name: 'JSON到代码',
         description: '将JSON转换为编程语言代码',
-        url: '/zh/json-to-java',
+        url: '/',
         icons: [{ src: '/file.svg', sizes: '96x96' }]
       }
     ]
