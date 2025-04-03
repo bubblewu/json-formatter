@@ -119,9 +119,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 组合所有URL （无效页面不展示）
   return [
     ...homeUrls,
-    // ...toolUrls,
-    // ...infoUrls,
     ...tutorialUrls,
-    // ...blogUrls
   ];
 } 
